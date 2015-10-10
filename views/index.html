@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="main">
 <head>
     <meta charset="UTF-8">
     <title>OpenDataVisualizer</title>
 </head>
-<body>
-Hello!
+<body ng-controller="mainController as main">
+    <span ng-bind="main.hello"></span>
+    <a href="" ng-click="main.toAbout()">About</a>
+    <ng-view></ng-view>
+
+<script type="text/javascript" src="/js/libraries/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/js/libraries/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/libraries/angular.min.js"></script>
+<script type="text/javascript" src="/js/libraries/angular-route.min.js"></script>
+<script type="text/javascript" src="/js/libraries/underscore-min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/js/controllers/mainController.js"></script>
+<script type="text/javascript" src="/js/routing.js"></script>
+<script type="text/javascript" src="/pages/about/aboutController.js"></script>
 </body>
 </html>
