@@ -1,0 +1,23 @@
+{
+  "name": "OpenDataVisualizer",
+  "version": "0.0.1",
+  "private": true,
+  "description": "New Swagger API Project",
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.12.3",
+    "swagger-express-mw": "0.0.x",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "should": "^5.2.0",
+    "supertest": "^0.15.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Max95474/OpenDataVisualizer.git"
+  }
+}
