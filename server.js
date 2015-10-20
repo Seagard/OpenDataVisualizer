@@ -2,6 +2,7 @@
 
 var SwaggerExpress = require('swagger-express-mw');
 var express = require('express');
+var fs = require('fs');
 var app = express();
 module.exports = app; // for testing
 
@@ -25,3 +26,10 @@ app.get('/', function(req, res) {
 
 app.listen(port);
 console.log('Server is listening on port 3000');
+
+//test
+var analyse = require('./analyse/analyse.js');
+var datasets = [];
+datasets.push(JSON.parse(fs.readFileSync('./data/revenue.json').toString()));
+datasets.push(JSON.parse(fs.readFileSync('./data/expence.json').toString()));
+analyse.joinDatasets(datasets);
