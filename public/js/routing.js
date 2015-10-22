@@ -1,7 +1,13 @@
 angular.module( 'main' ).config(function($routeProvider){
     $routeProvider
-        .when('/about', {
-            templateUrl: '../pages/about/about.html'
+        .when('/data', {
+            templateUrl: '../pages/data.html'
         })
-        .otherwise({redirectTo: '/'});
+        .when('/graphic', {
+            templateUrl: '../pages/graphic.html'
+        })
+        .when('/map', {
+            templateUrl: '../pages/map.html'
+        })
+        .otherwise({redirectTo: '/data'});
 });
