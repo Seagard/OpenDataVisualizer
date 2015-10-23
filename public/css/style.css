@@ -1175,3 +1175,9 @@ body, html {
 	cursor: pointer;
 	cursor: hand;
 }
+
+#main {
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}
