@@ -22,7 +22,9 @@ function loadData(callback) {
       console.log('Error getting data:');
       console.log(err);
     }).on('end', function() {
-      fs.writeFile('data/expence.json', expence);
+      var obj = JSON.parse(expence).result;
+      obj.type = 'expence';
+      fs.writeFile('data/expence.json', JSON.stringify(obj));
       filesSaved();
     });
   });
@@ -34,14 +36,16 @@ function loadData(callback) {
       console.log('Error getting data:');
       console.log(err);
     }).on('end', function() {
-      fs.writeFile('data/revenue.json', revenue);
-      console.log(revenue);
+      var obj = JSON.parse(revenue).result;
+      obj.type = 'revenue';
+      fs.writeFile('data/revenue.json', JSON.stringify(obj));
       filesSaved();
     });
   });
 
   var filesSaved = _.after(2, function() {
-    callback();
+    if(callback != undefined)
+      callback();
   });
 }
 
@@ -50,11 +54,12 @@ function joinDatasets(datasets) {
   var resultDataset = {};
   resultDataset.records = [];
   datasets.forEach((dataset) => {
-    var data = dataset.result;
-    if(!resultDataset.fields) resultDataset.fields = data.fields;
-    data.fields.push({id: 'District', type: 'text'});
-    data.records.forEach(function(record) {
+    if(!resultDataset.fields) resultDataset.fields = dataset.fields;
+    dataset.fields.push({id: 'district', type: 'text'});
+    dataset.fields.push({id: 'type', type: 'text'});
+    dataset.records.forEach(function(record) {
       record.district = district;
+      record.type = dataset.type;
       resultDataset.records.push(record);
     });
   });

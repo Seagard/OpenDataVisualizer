@@ -1,3 +1,22 @@
 <div ng-controller="dataController as data">
-    Data
+    <div id="table-wrapper">
+        <div id="table-scroll">
+            <table class="table" border="1">
+                <thead>
+                <tr>
+                    <td ng-repeat="field in data.dataset.fields">
+                        <span ng-bind="data.dataset.fields[$index].id"></span>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="record in data.dataset.records">
+                    <td ng-repeat="field in data.dataset.fields">
+                        <span ng-bind="record[field.id]"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

@@ -28,8 +28,9 @@ app.listen(port);
 console.log('Server is listening on port 3000');
 
 //test
-var analyse = require('./analyse/analyse.js');
-var datasets = [];
-datasets.push(JSON.parse(fs.readFileSync('./data/revenue.json').toString()));
-datasets.push(JSON.parse(fs.readFileSync('./data/expence.json').toString()));
-analyse.joinDatasets(datasets);
+//var analyse = require('./analyse/analyse.js');
+//analyse.loadData();
+//var datasets = [];
+//datasets.push(JSON.parse(fs.readFileSync('./data/revenue.json').toString()));
+//datasets.push(JSON.parse(fs.readFileSync('./data/expence.json').toString()));
+//analyse.joinDatasets(datasets);
