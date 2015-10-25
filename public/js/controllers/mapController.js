@@ -1,6 +1,7 @@
 angular.module('main').controller('mapController', function(DatasetFactory, FilterFactory) {
     var vm = this;
 
+    initMap();
 
     DatasetFactory.getUnitedDataset(function(data) {
         vm.datasets = data;
