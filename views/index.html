@@ -7,6 +7,16 @@
 <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 <script src="js/libraries/jquery.min.js"></script>
+	<script type="text/javascript">
+		var map;
+		function initMap() {
+			map = new google.maps.Map(document.getElementById('map'), {
+				center: {lat: 46.4447, lng: 30.6983},
+				zoom: 8
+			});
+		}
+	</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaL34OGHlD9TpvJGoPT1MT4bZ_wJAjGNQ&callback=initMap"></script>
 </head>
 
 <body ng-controller="mainController as main">
@@ -54,6 +64,7 @@
 					   step="1">
 				<span ng-if="field.type == 'range'">{{field.selectedVal}}</span>
 			</div>
+			<br>
 			<button ng-click="filter.applyFilter();">Apply</button>
 		</div>
 	</div>
