@@ -35,4 +35,6 @@ angular.module('main').controller('mainController', function($location) {
     function removeActive() {
         $('.fakelink').removeClass('active');
     }
+
+
 });

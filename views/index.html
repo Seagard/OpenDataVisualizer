@@ -36,8 +36,25 @@
 		<div class="left" style="height: 100%">
 			<ng-view></ng-view>
 		</div>
-		<div class="right" ng-controller="filterController as filter">
-
+		<div class="right filter" ng-controller="filterController as filter">
+			<div ng-repeat="field in filter.fields">
+				<label ng-if="field.type == 'select'" for="{{field.id}}"><span ng-bind="field.id"></span></label>
+				<br>
+				<select class="dropdown" ng-if="field.type == 'select'" id="{{field.id}}" ng-model="field.selectedVal">
+					<option ng-repeat="value in field.values" value="{{value.id}}">{{value.name}}</option>
+				</select>
+				<label ng-if="field.type == 'range'" for="{{field.id}}"><span ng-bind="field.id"></span></label>
+				<br>
+				<input ng-if="field.type == 'range'"
+					   id="{{field.id}}"
+					   type="range"
+					   min="{{field.minVal}}"
+					   max="{{field.maxVal}}"
+					   ng-model="field.selectedVal"
+					   step="1">
+				<span ng-if="field.type == 'range'">{{field.selectedVal}}</span>
+			</div>
+			<button ng-click="filter.applyFilter();">Apply</button>
 		</div>
 	</div>
 </div>
@@ -50,6 +67,7 @@
 <script type="text/javascript" src="/js/main.js"></script>
 <script type="text/javascript" src="/js/routing.js"></script>
 <script type="text/javascript" src="/js/factories/DatasetFactory.js"></script>
+<script type="text/javascript" src="/js/factories/FilterFactory.js"></script>
 <script type="text/javascript" src="/js/controllers/mainController.js"></script>
 <script type="text/javascript" src="/js/controllers/dataController.js"></script>
 <script type="text/javascript" src="/js/controllers/graphicController.js"></script>

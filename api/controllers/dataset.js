@@ -19,5 +19,5 @@ function getUnitedDatasets(req, res) {
 
 module.exports = {
   getDatasets: getDatasets,
-  getUnitedDatasets: getUnitedDatasets
+  getUnitedDataset: getUnitedDatasets
 }

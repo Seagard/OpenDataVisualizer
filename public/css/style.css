@@ -1201,3 +1201,12 @@ table, th, td {
 #table-wrapper table {
 	width:100%;
 }
+
+.dropdown {
+	width: 100%
+}
+
+.filter {
+	position: relative;
+	padding: 10px;
+}

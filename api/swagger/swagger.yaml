@@ -32,7 +32,7 @@ paths:
     x-swagger-router-controller: dataset
     get:
       description: Returns all datasets
-      operationId: getUnitedDatasets
+      operationId: getUnitedDataset
       responses:
         200:
           description: Success

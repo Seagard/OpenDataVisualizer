@@ -20,7 +20,7 @@ angular.module('main').factory('DatasetFactory', function($http) {
         });
     }
 
-    function getUnitedDatasets(callback) {
+    function getUnitedDataset(callback) {
         $http({
             type: 'GET',
             url: '/api/dataset/united'
@@ -40,6 +40,6 @@ angular.module('main').factory('DatasetFactory', function($http) {
 
     return {
         getAllDatasets: getAllDatasets,
-        getUnitedDatasets: getUnitedDatasets
+        getUnitedDataset: getUnitedDataset
     }
 });
