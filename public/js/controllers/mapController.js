@@ -3,14 +3,7 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
 
     initMap();
 
-    DatasetFactory.getUnitedDataset(function(data) {
-        vm.datasets = data;
-        dataLoaded();
+    FilterFactory.registerOnFilterChangedEvent(function(fields) {
+
     });
-
-    function dataLoaded() {
-        FilterFactory.registerOnFilterChangedEvent(function(fields) {
-
-        });
-    }
 });
