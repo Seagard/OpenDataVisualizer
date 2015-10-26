@@ -1,1 +1,1 @@
-var app = angular.module('main', ['ngRoute']);
+var app = angular.module('main', ['highcharts-ng', 'ngRoute']);
