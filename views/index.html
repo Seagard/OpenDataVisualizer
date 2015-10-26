@@ -11,6 +11,7 @@
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaL34OGHlD9TpvJGoPT1MT4bZ_wJAjGNQ&callback=initMap"></script>
 </head>
 
+
 <body ng-controller="mainController as main">
 <div style="margin-left: 10%; margin-right: 10%; height: 100%">
 	<div class="header_bg">
@@ -56,7 +57,7 @@
 					   step="1">
 				<span ng-if="field.type == 'range'">{{field.selectedVal}}</span>
 			</div>
-			<button ng-click="filter.applyFilter();">Apply</button>
+			<button onclick="highlightArea()" ng-click="filter.applyFilter();" >Apply</button>
 		</div>
 	</div>
 </div>

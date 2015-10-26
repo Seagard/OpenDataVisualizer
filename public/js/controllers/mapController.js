@@ -15,6 +15,9 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
         });
     }
 
+});
+
+
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 46.4447, lng: 30.6983},
@@ -60,4 +63,3 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
     function removePolygon() {
          bermudaTriangle.setMap(null);
     }
-});
