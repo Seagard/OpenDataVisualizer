@@ -5,6 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 <script src="js/libraries/jquery.min.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaL34OGHlD9TpvJGoPT1MT4bZ_wJAjGNQ&callback=initMap"></script>
@@ -55,20 +56,17 @@
 					   step="1">
 				<span ng-if="field.type == 'range'">{{field.selectedVal}}</span>
 			</div>
-			<br>
-			<button ng-click="filter.applyFilter();" onclick="highlightArea()">Apply</button>
+			<button ng-click="filter.applyFilter();">Apply</button>
 		</div>
 	</div>
 </div>
-<script type="text/javascript">
-
-
-</script>
+<script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript" src="/js/libraries/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="/js/libraries/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/libraries/angular.min.js"></script>
 <script type="text/javascript" src="/js/libraries/angular-route.min.js"></script>
 <script type="text/javascript" src="/js/libraries/underscore-min.js"></script>
+<script type="text/javascript" src="/js/libraries/highcharts-ng.js"></script>
 <script type="text/javascript" src="/js/main.js"></script>
 <script type="text/javascript" src="/js/routing.js"></script>
 <script type="text/javascript" src="/js/factories/DatasetFactory.js"></script>
