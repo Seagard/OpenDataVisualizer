@@ -1,4 +1,4 @@
-angular.module('main').controller('graphicController', function($scope) {
+angular.module('main').controller('graphicController', function($scope, DatasetFactory) {
     $scope.chartConfig = {
 
         options: {
@@ -46,4 +46,8 @@ angular.module('main').controller('graphicController', function($scope) {
             //setup some logic for the chart
         }
     };
+
+    DatasetFactory.getAllDatasets(function (dataset) {
+        //console.log(dataset[0]);
+    });
 });
