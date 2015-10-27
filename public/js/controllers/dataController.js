@@ -2,10 +2,8 @@ angular.module('main').controller('dataController', function(DatasetFactory, Fil
     var vm = this;
     DatasetFactory.getUnitedDataset(function(data) {
         vm.dataset = data;
-        activate();
     });
-
-    function activate() {
-
-    }
+    FilterFactory.registerOnFilterChangedEvent(function(data) {
+        vm.dataset = data;
+    });
 });
