@@ -1,17 +1,15 @@
-angular.module('main').controller('graphicController', function($scope, DatasetFactory, FilterFactory) {
+angular.module('main').controller('graphicController', function(DatasetFactory, FilterFactory) {
     var vm = this;
 
     DatasetFactory.getUnitedDataset(function(data) {
          vm.dataset = data;
-        setConfig(data);
+         setConfig(data);
     });
 
     function setConfig(data) {
-        vm.chartConfig = {
+        /*vm.chartConfig = {
 
             options: {
-                //This is the Main Highcharts chart config. Any Highchart options are valid here.
-                //will be overriden by values specified below.
                 chart: {
                     type: 'bar'
                 },
@@ -22,9 +20,6 @@ angular.module('main').controller('graphicController', function($scope, DatasetF
                     }
                 }
             },
-            //The below properties are watched separately for changes.
-
-            //Series object (optional) - a list of series using normal highcharts series options.
             series: [{
                 data: [10, 15, 12, 8, 7]
             }],
@@ -53,10 +48,41 @@ angular.module('main').controller('graphicController', function($scope, DatasetF
             func: function (chart) {
                 //setup some logic for the chart
             }
-        };
+        };*/
+
+        console.log('setconfig(data);');
+        console.log(data);
     }
 
     FilterFactory.registerOnFilterChangedEvent(function(dataset) {
-        console.log(dataset);
+        dataset.records;
+        vm.chartConfig = {
+            options: {
+                type: 'Bar'
+            },/*
+            plotOptions: {
+                series: {
+                    stacking: ""
+                }
+            },*/
+            series: [
+                {
+                    name: 'Fact',
+                    data: [parseInt(dataset.records[0].Fact)],
+                    type: 'bar'
+                }, {
+                    name: 'Plan',
+                    data: [parseInt(dataset.records[0].Plan)],
+                    type: 'bar'
+                }
+            ],
+            title: {
+                text: dataset.records[0].Code
+            },
+            size: {
+                width: 600,
+                height: 450
+            }
+        };
     });
 });
