@@ -42,7 +42,7 @@ angular.module('main').controller('filterController', function(DatasetFactory, F
                         filterField.maxVal = value;
                     }
                 });
-                filterField.selectedVal = 0;
+                filterField.selectedVal = filterField.maxVal;
             }
             vm.fields.push(filterField);
             vm.filteredDataset.fields = vm.fields;
