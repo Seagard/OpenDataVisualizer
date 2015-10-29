@@ -18,7 +18,7 @@ angular.module('main').controller('filterController', function(DatasetFactory, F
             filterField.id = dataSetField.id;
             if(dataSetField.type == 'text') {
                 filterField.type = 'select';
-                filterField.selectedVal = 0;
+                filterField.selectedVal = -1;
                 filterField.values = [];
                 var values = [];
                 vm.dataset.records.forEach(function(record) {
@@ -58,13 +58,17 @@ angular.module('main').controller('filterController', function(DatasetFactory, F
             }
             vm.fields.forEach(function(field, i) {
                 if(field.type == 'select') {
-                    var code = record[field.id];
-                    var value = field.values[field.selectedVal].name;
-                    if(code == value) {
+                    if(field.selectedVal == -1) {
                         recordFlags[i] = true;
+                    } else {
+                        var code = record[field.id];
+                        var value = field.values[field.selectedVal].name;
+                        if(code == value) {
+                            recordFlags[i] = true;
+                        }
                     }
                 } else if(field.type == 'range') {
-                    if(parseInt(record[field.id]) < field.selectedVal) {
+                    if(parseInt(record[field.id]) <= field.selectedVal) {
                         recordFlags[i] = true;
                     }
                 }
