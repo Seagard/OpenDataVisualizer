@@ -1,4 +1,4 @@
-angular.module('main').controller('dataController', function(DatasetFactory, FilterFactory) {
+angular.module('main').controller('DataController', function(DatasetFactory, FilterFactory) {
     var vm = this;
 
     function activate() {

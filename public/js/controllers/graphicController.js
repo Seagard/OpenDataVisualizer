@@ -54,35 +54,35 @@ angular.module('main').controller('graphicController', function(DatasetFactory, 
         console.log(data);
     }
 
-    //FilterFactory.registerOnFilterChangedEvent(function(dataset) {
-    //    dataset.records;
-    //    vm.chartConfig = {
-    //        options: {
-    //            type: 'Bar'
-    //        },/*
-    //        plotOptions: {
-    //            series: {
-    //                stacking: ""
-    //            }
-    //        },*/
-    //        series: [
-    //            {
-    //                name: 'Fact',
-    //                data: [parseInt(dataset.records[0].Fact)],
-    //                type: 'bar'
-    //            }, {
-    //                name: 'Plan',
-    //                data: [parseInt(dataset.records[0].Plan)],
-    //                type: 'bar'
-    //            }
-    //        ],
-    //        title: {
-    //            text: dataset.records[0].Code
-    //        },
-    //        size: {
-    //            width: 600,
-    //            height: 450
-    //        }
-    //    };
-    //});
+    FilterFactory.registerOnFilterChangedEvent(function(dataset) {
+        dataset.records;
+        vm.chartConfig = {
+            options: {
+                type: 'Bar'
+            },/*
+            plotOptions: {
+                series: {
+                    stacking: ""
+                }
+            },*/
+            series: [
+                {
+                    name: 'Fact',
+                    data: [parseInt(dataset.records[0].Fact)],
+                    type: 'bar'
+                }, {
+                    name: 'Plan',
+                    data: [parseInt(dataset.records[0].Plan)],
+                    type: 'bar'
+                }
+            ],
+            title: {
+                text: dataset.records[0].Code
+            },
+            size: {
+                width: 600,
+                height: 450
+            }
+        };
+    });
 });
