@@ -53,7 +53,7 @@ function joinDatasets(datasets) {
   var district = 'Біляєвський';
   var resultDataset = {};
   resultDataset.records = [];
-  datasets.forEach((dataset) => {
+  datasets.forEach(function(dataset) {
     if(!resultDataset.fields) resultDataset.fields = dataset.fields;
     dataset.fields.push({id: 'district', type: 'text'});
     dataset.fields.push({id: 'type', type: 'text'});

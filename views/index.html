@@ -46,7 +46,8 @@
 			<div ng-repeat="field in filter.fields">
 				<label ng-if="field.type == 'select'" for="{{field.id}}"><span ng-bind="field.id"></span></label>
 				<br>
-				<select class="dropdown" ng-if="field.type == 'select'" id="{{field.id}}" ng-model="field.selectedVal">
+				<select class="dropdown" ng-change="filter.applyFilter(field.id, field.selectedVal)"  ng-if="field.type == 'select'" id="{{field.id}}" ng-model="field.selectedVal">
+					<option value="-1" selected="selected">------</option>
 					<option ng-repeat="value in field.values" value="{{value.id}}">{{value.name}}</option>
 				</select>
 
@@ -61,11 +62,15 @@
 					   min="{{field.minVal}}"
 					   max="{{field.maxVal}}"
 					   ng-model="field.selectedVal"
+					   ng-change="filter.applyFilter(field.id, field.selectedVal)"
 					   step="1">
 				<span ng-if="field.type == 'range'">{{field.selectedVal}}</span>
 			</div>
+<<<<<<< HEAD
 
 				<button onclick="highlightArea()" ng-click="filter.applyFilter();" >Apply</button>
+=======
+>>>>>>> c73b1a825c2a1d9d07786847d2d74732e259cadc
 		</div>
 	</div>
 </div>
@@ -83,7 +88,8 @@
 <script type="text/javascript" src="/js/factories/DatasetFactory.js"></script>
 <script type="text/javascript" src="/js/factories/FilterFactory.js"></script>
 <script type="text/javascript" src="/js/controllers/mainController.js"></script>
-<script type="text/javascript" src="/js/controllers/dataController.js"></script>
+<!--<script type="text/javascript" src="/js/controllers/dataController.js"></script>-->
+<script type="text/javascript" src="/coffee/dataController.js"></script>
 <script type="text/javascript" src="/js/controllers/graphicController.js"></script>
 <script type="text/javascript" src="/js/controllers/mapController.js"></script>
 <script type="text/javascript" src="/js/controllers/filterController.js"></script>

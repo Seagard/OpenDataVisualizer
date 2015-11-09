@@ -2,8 +2,13 @@ angular.module('main').controller('filterController', function(DatasetFactory, F
     var vm = this;
     vm.fields = [];
 
+    vm.filteredDataset = {};
+    vm.filteredDataset.fields = [];
+    vm.filteredDataset.records = [];
+
     DatasetFactory.getUnitedDataset(function(data) {
         vm.dataset = data;
+        console.log(vm.dataset);
         datasetsLoaded();
     });
 
@@ -13,27 +18,16 @@ angular.module('main').controller('filterController', function(DatasetFactory, F
             filterField.id = dataSetField.id;
             if(dataSetField.type == 'text') {
                 filterField.type = 'select';
-                filterField.selectedVal = 0;
+                filterField.selectedVal = -1;
                 filterField.values = [];
-                vm.dataset.records.forEach(function(record, i) {
-                    filterField.values.push({id: i + 1, name: record[dataSetField.id]});
+                var values = [];
+                vm.dataset.records.forEach(function(record) {
+                    if(!_.contains(values, record[dataSetField.id]))
+                        values.push(record[dataSetField.id]);
                 });
-                //var values = [];
-                //vm.dataset.records.forEach(function(record) {
-                //    if(values.length != 0) {
-                //        for(var i = 0; i < filterField.values.length; i++) {
-                //            if(values[i] == record[dataSetField.id]) {
-                //                values.push(record[dataSetField.id]);
-                //            }
-                //        }
-                //    } else {
-                //        values.push(record[dataSetField.id]);
-                //    }
-                //});
-                //values.forEach(function(value, i) {
-                //    filterField.values.push({id: i, name: value});
-                //});
-
+                values.forEach(function(value, i) {
+                     filterField.values.push({id: i, name: value});
+                });
             }
             else if(dataSetField.type == 'int') {
                 filterField.type = 'range';
@@ -48,14 +42,42 @@ angular.module('main').controller('filterController', function(DatasetFactory, F
                         filterField.maxVal = value;
                     }
                 });
-                filterField.selectedVal = 0;
+                filterField.selectedVal = filterField.maxVal;
             }
             vm.fields.push(filterField);
+            vm.filteredDataset.fields = vm.fields;
         });
     }
 
     vm.applyFilter = function() {
-        console.log('Apply');
-        FilterFactory.notifyFilterChangedEvent(vm.fields);
+        vm.filteredDataset.records = [];
+        vm.dataset.records.forEach(function(record) {
+            var recordFlags = [];
+            for(var i = 0; i < vm.fields.length; i++) {
+                recordFlags.push(false);
+            }
+            vm.fields.forEach(function(field, i) {
+                if(field.type == 'select') {
+                    if(field.selectedVal == -1) {
+                        recordFlags[i] = true;
+                    } else {
+                        var code = record[field.id];
+                        var value = field.values[field.selectedVal].name;
+                        if(code == value) {
+                            recordFlags[i] = true;
+                        }
+                    }
+                } else if(field.type == 'range') {
+                    if(parseInt(record[field.id]) <= field.selectedVal) {
+                        recordFlags[i] = true;
+                    }
+                }
+            });
+            if(!_.contains(recordFlags, false)) {
+                vm.filteredDataset.records.push(record);
+            }
+        });
+
+        FilterFactory.notifyFilterChangedEvent(vm.filteredDataset);
     }
 });
