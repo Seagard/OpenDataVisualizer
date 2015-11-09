@@ -9,6 +9,9 @@
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 <script src="js/libraries/jquery.min.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaL34OGHlD9TpvJGoPT1MT4bZ_wJAjGNQ&callback=initMap"></script>
+ <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
+
+
 </head>
 
 
@@ -46,6 +49,10 @@
 				<select class="dropdown" ng-if="field.type == 'select'" id="{{field.id}}" ng-model="field.selectedVal">
 					<option ng-repeat="value in field.values" value="{{value.id}}">{{value.name}}</option>
 				</select>
+
+			
+
+
 				<label ng-if="field.type == 'range'" for="{{field.id}}"><span ng-bind="field.id"></span></label>
 				<br>
 				<input ng-if="field.type == 'range'"
@@ -57,10 +64,12 @@
 					   step="1">
 				<span ng-if="field.type == 'range'">{{field.selectedVal}}</span>
 			</div>
-			<button onclick="highlightArea()" ng-click="filter.applyFilter();" >Apply</button>
+
+				<button onclick="highlightArea()" ng-click="filter.applyFilter();" >Apply</button>
 		</div>
 	</div>
 </div>
+ <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
 <script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript" src="/js/libraries/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="/js/libraries/bootstrap.min.js"></script>
@@ -70,6 +79,7 @@
 <script type="text/javascript" src="/js/libraries/highcharts-ng.js"></script>
 <script type="text/javascript" src="/js/main.js"></script>
 <script type="text/javascript" src="/js/routing.js"></script>
+
 <script type="text/javascript" src="/js/factories/DatasetFactory.js"></script>
 <script type="text/javascript" src="/js/factories/FilterFactory.js"></script>
 <script type="text/javascript" src="/js/controllers/mainController.js"></script>

@@ -6,6 +6,8 @@ var fs = require('fs');
 var app = express();
 module.exports = app; // for testing
 
+var contents = fs.readFileSync('data/regions.json');
+
 var config = {
   appRoot: __dirname // required config
 };
@@ -24,9 +26,16 @@ app.get('/', function(req, res) {
     res.sendFile(__dirname + '/views/index.html');
 });
 
+app.get('/json', function(req, res) {    
+    res.send(JSON.parse(contents));
+});
+
+
 app.listen(port);
 console.log('Server is listening on port 3000');
 
+
+//}
 //test
 //var analyse = require('./analyse/analyse.js');
 //analyse.loadData();

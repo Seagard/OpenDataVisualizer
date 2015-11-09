@@ -17,29 +17,53 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
 
 });
 
+    var districts, coords;
 
-        function initMap() {
+     $.getJSON("/json", function( data ) { 
+                districts = data;
+            });        
+
+
+   function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 46.4447, lng: 30.6983},
                 zoom: 8
             });
-        }
-            
- 
-        function highlightArea() {
-        /*  var e = document.getElementById("district");
-            var strUser = e.options[e.selectedIndex].text;
-                if(strUser == 'Біляєвський') {  */   
-                    moveMap(46.571497, 30.331853);
-                    var triangleCoords = [
-                        {lat: 46.631412, lng: 29.962437},
-                         {lat: 46.628583, lng: 30.153325},
-                         {lat: 46.522384, lng: 30.658696}
-        ];
 
-  // Construct the polygon.
+            for (var i = 0; i < districts.length; i++) {
+                var district = new google.maps.Polygon({
+                    paths: districts[i].coords,
+                    strokeColor: 'black',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 1,
+                    fillColor: '#C3E1FF',
+                    fillOpacity: 0.35
+            });
+
+            district.setMap(map);
+
+            google.maps.event.addListener(district, 'mouseover', function() {
+                 this.setOptions({fillColor: 'green'});
+            });
+
+            google.maps.event.addListener(district, 'mouseout', function() {
+                 this.setOptions({fillColor: '#C3E1FF'});
+            });
+
+             google.maps.event.addListener(district, 'click', function() {
+                 this.setMap(null);
+            });
+            }
+        }
+           
+        function highlightArea() {
+
+
+                moveMap(46.60680405,30.3363759975028);
+                coords = districts[0].coords;
+
             var district = new google.maps.Polygon({
-                paths: triangleCoords,
+                paths: coords,
                 strokeColor: '#FF0000',
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
@@ -48,11 +72,12 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
             });
 
             district.setMap(map);
-            google.maps.event.addListener(district, 'click', function() {
+
+           google.maps.event.addListener(district, 'click', function() {
                  this.setMap(null);
             });
-    //}
-}
+
+    }
 
     function moveMap(lat, lng) {
         var center = new google.maps.LatLng(lat, lng);
