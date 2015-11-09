@@ -84,6 +84,3 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
          map.setZoom(10);
     }
 
-    function removePolygon() {
-         bermudaTriangle.setMap(null);
-    }
