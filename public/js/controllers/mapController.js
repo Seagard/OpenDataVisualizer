@@ -25,9 +25,10 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
 
    function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: 46.4447, lng: 30.6983},
-                zoom: 8
+                center: {lat: 46.748359, lng: 30.150735},
+                zoom: 7
             });
+
 
             for (var i = 0; i < districts.length; i++) {
                 var district = new google.maps.Polygon({
@@ -49,17 +50,19 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
                  this.setOptions({fillColor: '#C3E1FF'});
             });
 
-             google.maps.event.addListener(district, 'click', function() {
-                 this.setMap(null);
-            });
             }
         }
            
         function highlightArea() {
 
-
                 moveMap(46.60680405,30.3363759975028);
-                coords = districts[0].coords;
+               
+                 for (var i = 0; i < districts.length; i++) {
+                    if(districts[i].district == 'Belyaevskiy')
+                        coords = districts[i].coords;
+                 }
+
+
 
             var district = new google.maps.Polygon({
                 paths: coords,
