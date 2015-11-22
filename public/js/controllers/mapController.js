@@ -1,6 +1,7 @@
 angular.module('main').controller('mapController', function(DatasetFactory, FilterFactory) {
     var vm = this;
     var districts, coords, firstSet;
+    var markers = [];
 
     DatasetFactory.getUnitedDataset(function(data) {
         vm.datasets = data;
@@ -98,13 +99,34 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
     }
 
     function showPlaces() {
-                var places = firstSet.result.records;
+         
+        var places = firstSet.result.records;
        for (var i = 0; i < places.length; i++) {
             var marker = new google.maps.Marker ({
                 position: new google.maps.LatLng(places[i].lat, places[i].lon),
-                map: map
+                map: map,
+                info: places[i].Nazva
             });
+
+         markers.push(marker);
+            
+            var infowindow = new google.maps.InfoWindow({
+            content: "gjhg"
+            });
+
+            google.maps.event.addListener(marker, 'mouseover', function() {
+                infowindow.setContent(this.info);
+                infowindow.open(map, this);
+            });
+
+         google.maps.event.addListener(marker, 'click', function() {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+            });
+
         }
+
     }
 
     function moveMap(lat, lng) {
