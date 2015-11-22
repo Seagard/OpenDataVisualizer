@@ -1,9 +1,37 @@
 angular.module('main').controller('graphicController', function(DatasetFactory, FilterFactory) {
     var vm = this;
 
-    DatasetFactory.getUnitedDataset(function(data) {
-         vm.dataset = data;
-         setConfig(data);
+    DatasetFactory.getUnitedDataset(function(dataset) {
+         vm.dataset = dataset;
+         setConfig(dataset);
+        vm.chartConfig = {
+            options: {
+                type: 'Bar'
+            },/*
+             plotOptions: {
+             series: {
+             stacking: ""
+             }
+             },*/
+            series: [
+                {
+                    name: 'Fact',
+                    data: [parseInt(dataset.records[0].Fact)],
+                    type: 'bar'
+                }, {
+                    name: 'Plan',
+                    data: [parseInt(dataset.records[0].Plan)],
+                    type: 'bar'
+                }
+            ],
+            title: {
+                text: dataset.records[0].Code
+            },
+            size: {
+                width: 600,
+                height: 450
+            }
+        };
     });
 
     function setConfig(data) {
@@ -55,34 +83,35 @@ angular.module('main').controller('graphicController', function(DatasetFactory, 
     }
 
     FilterFactory.registerOnFilterChangedEvent(function(dataset) {
-        dataset.records;
-        vm.chartConfig = {
-            options: {
-                type: 'Bar'
-            },/*
-            plotOptions: {
-                series: {
-                    stacking: ""
+        if(dataset.records) {
+            vm.chartConfig = {
+                options: {
+                    type: 'Bar'
+                },/*
+                 plotOptions: {
+                 series: {
+                 stacking: ""
+                 }
+                 },*/
+                series: [
+                    {
+                        name: 'Fact',
+                        data: [parseInt(dataset.records[0].Fact)],
+                        type: 'bar'
+                    }, {
+                        name: 'Plan',
+                        data: [parseInt(dataset.records[0].Plan)],
+                        type: 'bar'
+                    }
+                ],
+                title: {
+                    text: dataset.records[0].Code
+                },
+                size: {
+                    width: 600,
+                    height: 450
                 }
-            },*/
-            series: [
-                {
-                    name: 'Fact',
-                    data: [parseInt(dataset.records[0].Fact)],
-                    type: 'bar'
-                }, {
-                    name: 'Plan',
-                    data: [parseInt(dataset.records[0].Plan)],
-                    type: 'bar'
-                }
-            ],
-            title: {
-                text: dataset.records[0].Code
-            },
-            size: {
-                width: 600,
-                height: 450
-            }
-        };
+            };
+        }
     });
 });

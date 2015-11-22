@@ -1,4 +1,4 @@
-angular.module('main').controller('filterController', function(DatasetFactory, FilterFactory) {
+angular.module('main').controller('FilterController', function(DatasetFactory, FilterFactory) {
     var vm = this;
     vm.fields = [];
 
