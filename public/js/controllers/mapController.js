@@ -1,6 +1,6 @@
 angular.module('main').controller('mapController', function(DatasetFactory, FilterFactory) {
     var vm = this;
-    var districts, coords;
+    var districts, coords, firstSet;
 
     DatasetFactory.getUnitedDataset(function(data) {
         vm.datasets = data;
@@ -16,15 +16,25 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
                     if(fields[i].id == 'district' && fields[i].selectedVal != -1) {
                         highlightArea();
                     }
+
+                    if(fields[i].id == 'type' && fields[i].selectedVal != -1) {
+                       showPlaces();
+                    }
                 }
             }
         });
     }
 
+    $.getJSON("/json1", function( data ) {
+        firstSet = data;
+    });
+
     $.getJSON("/json", function( data ) {
         districts = data;
         activate();
     });
+
+
 
     function activate() {
 
@@ -55,6 +65,8 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
             });
 
         }
+
+
     }
 
     function highlightArea() {
@@ -83,6 +95,16 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
             this.setMap(null);
         });
 
+    }
+
+    function showPlaces() {
+                var places = firstSet.result.records;
+       for (var i = 0; i < places.length; i++) {
+            var marker = new google.maps.Marker ({
+                position: new google.maps.LatLng(places[i].lat, places[i].lon),
+                map: map
+            });
+        }
     }
 
     function moveMap(lat, lng) {
