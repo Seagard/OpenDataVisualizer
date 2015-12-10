@@ -102,10 +102,11 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
          
         var places = firstSet.result.records;
        for (var i = 0; i < places.length; i++) {
+            var content= "Район: " + places[i].Nazva +  "<br>" + "Координати: " + places[i].lat + ", " + places[i].lon;
             var marker = new google.maps.Marker ({
                 position: new google.maps.LatLng(places[i].lat, places[i].lon),
                 map: map,
-                info: places[i].Nazva
+                info: content
             });
 
          markers.push(marker);
