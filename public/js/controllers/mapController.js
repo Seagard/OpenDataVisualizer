@@ -1,6 +1,7 @@
 angular.module('main').controller('mapController', function(DatasetFactory, FilterFactory) {
     var vm = this;
-    var districts, coords;
+    var districts, coords, firstSet;
+    var markers = [];
 
     DatasetFactory.getUnitedDataset(function(data) {
         vm.datasets = data;
@@ -16,15 +17,25 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
                     if(fields[i].id == 'district' && fields[i].selectedVal != -1) {
                         highlightArea();
                     }
+
+                    if(fields[i].id == 'type' && fields[i].selectedVal != -1) {
+                       showPlaces();
+                    }
                 }
             }
         });
     }
 
+    $.getJSON("/json1", function( data ) {
+        firstSet = data;
+    });
+
     $.getJSON("/json", function( data ) {
         districts = data;
         activate();
     });
+
+
 
     function activate() {
 
@@ -55,6 +66,8 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
             });
 
         }
+
+
     }
 
     function highlightArea() {
@@ -82,6 +95,37 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
         google.maps.event.addListener(district, 'click', function() {
             this.setMap(null);
         });
+
+    }
+
+    function showPlaces() {
+         
+        var places = firstSet.result.records;
+       for (var i = 0; i < places.length; i++) {
+            var marker = new google.maps.Marker ({
+                position: new google.maps.LatLng(places[i].lat, places[i].lon),
+                map: map,
+                info: places[i].Nazva
+            });
+
+         markers.push(marker);
+            
+            var infowindow = new google.maps.InfoWindow({
+            content: "gjhg"
+            });
+
+            google.maps.event.addListener(marker, 'mouseover', function() {
+                infowindow.setContent(this.info);
+                infowindow.open(map, this);
+            });
+
+         google.maps.event.addListener(marker, 'click', function() {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+            });
+
+        }
 
     }
 
