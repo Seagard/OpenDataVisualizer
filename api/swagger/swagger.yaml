@@ -33,35 +33,16 @@ paths:
     get:
       description: Returns all datasets
       operationId: getUnitedDataset
+      parameters:
+        - name: id
+          description: Dataset id
+          in: query
+          type: integer
       responses:
         200:
           description: Success
           schema:
             $ref: "#/definitions/Dataset"
-  /hello:
-    # binds a127 app logic to a route
-    x-swagger-router-controller: hello_world
-    get:
-      description: Returns 'Hello' to the caller
-      # used as the method name of the controller
-      operationId: hello
-      parameters:
-        - name: name
-          in: query
-          description: The name of the person to whom to say hello
-          required: false
-          type: string
-      responses:
-        200:
-          description: Success
-          schema:
-            # a pointer to a definition
-            $ref: "#/definitions/HelloWorldResponse"
-        # responses may fall through to errors
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
   /about:
     x-swagger-router-controller: hello_world
     get:
@@ -74,19 +55,7 @@ paths:
             $ref: "#/definitions/AboutResponse"
 # complex objects have schema definitions
 definitions:
-  HelloWorldResponse:
-    required:
-      - message
-    properties:
-      message:
-        type: string
   AboutResponse:
-    properties:
-      message:
-        type: string
-  ErrorResponse:
-    required:
-      - message
     properties:
       message:
         type: string
