@@ -1,4 +1,4 @@
-angular.module('main').controller('graphicController', function(DatasetFactory, FilterFactory) {
+angular.module('main').controller('GraphicController', function(DatasetFactory, FilterFactory) {
     var vm = this;
 
     DatasetFactory.getUnitedDataset(function(dataset) {

@@ -1,3 +1,5 @@
+/.gitignore
+/bower_components
 # IDE files
 .idea
 
