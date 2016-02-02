@@ -5,10 +5,10 @@
       'ui.router'
     ])
     .config(function($locationProvider, $stateProvider, $urlRouterProvider) {
-      $locationProvider.html5Mode({
-        enabled: true,
-        requireBase: false
-      }).hashPrefix('!');
+      //$locationProvider.html5Mode({
+      //  enabled: true,
+      //  requireBase: false
+      //}).hashPrefix('!');
       $urlRouterProvider.otherwise('/data');
       $stateProvider
         .state('data', {
