@@ -23,7 +23,7 @@
         })
         .state('map', {
           url: '/map',
-          templateUrl: '../page/map.html',
+          templateUrl: '../pages/map.html',
           controller: 'MapController'
         })
   })
