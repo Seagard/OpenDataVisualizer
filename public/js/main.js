@@ -17,7 +17,8 @@
           controller: 'DataController',
           onEnter: ['$stateParams', '$rootScope', 'DatasetFactory',
             function($stateParams, $rootScope, DatasetFactory) {
-              DatasetFactory.getDatasetById($stateParams.datasetId);
+              if($stateParams.datasetId)
+                DatasetFactory.getDatasetById($stateParams.datasetId);
           }]
         })
         .state('graphic', {

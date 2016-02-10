@@ -49,12 +49,13 @@ function loadDataset(req, res) {
     '/api/action/datastore/search.json?resource_id=' + datasetId)
   .then(function(resp) {
     if(resp.match(/Caught exception.*does not exist/)) {
-      console.log('[Error] Dataset not found');
+      console.log('[Error] Dataset ' + datasetId + ' not found');
       res.redirect('/');
-      return;
+    } else {
+      if(!fs.existsSync('data/' + datasetId + '.json'))
+        fs.writeFile('data/' + datasetId + '.json', JSON.stringify(resp));
+      res.redirect('/?datasetId=' + datasetId);
     }
-    fs.writeFile('data/' + datasetId + '.json', JSON.stringify(resp));
-    res.redirect('/?datasetId=' + datasetId);
   }).catch(function(err) {
     res.json(err);
   });
@@ -65,8 +66,9 @@ function getDatasetById(req, res, next) {
   if(datasetId == 'undefined') {
     res.status(406).send('Dataset id required');
   } else {
-    var resp = JSON.parse(fs.readFileSync('data/' + datasetId + '.json'));
-    res.send(resp);
+    if(fs.existsSync('data/' + datasetId + '.json'))
+      res.send(JSON.parse(fs.readFileSync('data/' + datasetId + '.json')));
+    else res.status(404).send('Dataset not found');
   }
 }
 
