@@ -6,9 +6,15 @@ angular.module('main').controller('FilterController', function(DatasetFactory, F
     vm.filteredDataset.fields = [];
     vm.filteredDataset.records = [];
 
-    DatasetFactory.getUnitedDataset(function(data) {
-        vm.dataset = data;
-        console.log(vm.dataset);
+    //DatasetFactory.getUnitedDataset(function(data) {
+    //    vm.dataset = data;
+    //    console.log(vm.dataset);
+    //    datasetsLoaded();
+    //});
+
+    DatasetFactory.registerOnDatasetLoadedEvent(function(data) {
+        console.log('Dataset loaded: ', data.result);
+        vm.dataset = data.result;
         datasetsLoaded();
     });
 
@@ -36,6 +42,20 @@ angular.module('main').controller('FilterController', function(DatasetFactory, F
                 filterField.values = [];
                 vm.dataset.records.forEach(function(record) {
                     var value = parseInt(record[filterField.id]);
+                    if(value < filterField.minVal) {
+                        filterField.minVal = value;
+                    } else if(value > filterField.maxVal) {
+                        filterField.maxVal = value;
+                    }
+                });
+                filterField.selectedVal = filterField.maxVal;
+            } else if(dataSetField.type == 'float') {
+                filterField.type = 'range';
+                filterField.minVal = 0;
+                filterField.maxVal = 0;
+                filterField.values = [];
+                vm.dataset.records.forEach(function(record) {
+                    var value = parseFloat(record[filterField.id]);
                     if(value < filterField.minVal) {
                         filterField.minVal = value;
                     } else if(value > filterField.maxVal) {

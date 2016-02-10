@@ -16,21 +16,26 @@ var port = process.env.PORT || 3000;
 
 app.use(express.static(__dirname + '/public'));
 
-SwaggerExpress.create(config, function(err, swaggerExpress) {
-  if (err) { throw err; }
-  // install middleware
-  swaggerExpress.register(app);
-});
+/**
+ *  API
+ * */
+//require('./api/dataset')(app);
+var datasetApi = require('./api/dataset');
+
+app.get(apiUrl + '/dataset/all', datasetApi.getAllDatasets);
+app.get(apiUrl + '/dataset/united', datasetApi.getUnitedDatasets);
+app.get(apiUrl + '/dataset/:id', datasetApi.getDatasetById);
+app.get('/open/:id', datasetApi.loadDataset);
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/views/index.html');
 });
 
-app.get('/json', function(req, res) {    
+app.get('/json', function(req, res) {
     res.send(JSON.parse(contents));
 });
 
-app.get('/json1', function(req, res) {    
+app.get('/json1', function(req, res) {
     res.send(JSON.parse(data));
 });
 
