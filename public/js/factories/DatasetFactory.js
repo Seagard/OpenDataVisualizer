@@ -3,6 +3,20 @@ angular.module('main').factory('DatasetFactory', function($http) {
     var allDatasets;
     var unitedDatasets;
 
+    var datasetLoadedCallbacks = [];
+
+    function registerOnDatasetLoadedEvent(callback) {
+        if(datasetLoadedCallbacks.indexOf(callback) == -1) {
+            datasetLoadedCallbacks.push(callback);
+        }
+    }
+
+    function notifyDatasetLoaded(dataset) {
+        datasetLoadedCallbacks.forEach(function(callback) {
+            callback(dataset);
+        })
+    }
+
     function getAllDatasets(callback) {
         $http({
             type: 'GET',
@@ -38,6 +52,13 @@ angular.module('main').factory('DatasetFactory', function($http) {
         });
     }
 
+    function getDatasetById(datasetId) {
+        console.log('Loading dataset: ', datasetId);
+        $http.get('/api/dataset/' + datasetId).then(function(resp) {
+            notifyDatasetLoaded(resp.data);
+        }).catch(function(err) {
+            console.log(err);
+        })
     function getExampleDatasets() {
         return exampleDatasets;
     }
@@ -49,6 +70,7 @@ angular.module('main').factory('DatasetFactory', function($http) {
     console.log('Datasets: ', exampleDatasets);
 
     return {
+        registerOnDatasetLoadedEvent: registerOnDatasetLoadedEvent,
         getAllDatasets: getAllDatasets,
         getUnitedDataset: getUnitedDataset,
         getExampleDatasets: getExampleDatasets
