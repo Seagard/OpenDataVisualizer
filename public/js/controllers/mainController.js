@@ -1,4 +1,4 @@
-angular.module('main').controller('mainController', function() {
+angular.module('main').controller('mainController', function($rootScope, $timeout) {
     var vm = this;
     //todo do this with Angular.js
     vm.buttons = ['Дані', 'Інфографіка', 'Карта'];

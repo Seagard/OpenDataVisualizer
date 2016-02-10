@@ -38,8 +38,19 @@ angular.module('main').factory('DatasetFactory', function($http) {
         });
     }
 
+    function getDatasetById(datasetId) {
+        console.log('Loading dataset: ', datasetId);
+        $http.get('/api/dataset/' + datasetId).then(function(resp) {
+            //todo: notify controllers
+            console.log('Dataset loaded: ', resp);
+        }).catch(function(err) {
+            console.log(err);
+        })
+    }
+
     return {
         getAllDatasets: getAllDatasets,
-        getUnitedDataset: getUnitedDataset
+        getUnitedDataset: getUnitedDataset,
+        getDatasetById: getDatasetById
     }
 });

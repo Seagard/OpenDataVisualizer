@@ -5,16 +5,20 @@
       'ui.router'
     ])
     .config(function($locationProvider, $stateProvider, $urlRouterProvider) {
-      //$locationProvider.html5Mode({
-      //  enabled: true,
-      //  requireBase: false
-      //}).hashPrefix('!');
-      $urlRouterProvider.otherwise('/data');
+      $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+      }).hashPrefix('!');
+      $urlRouterProvider.otherwise('/');
       $stateProvider
         .state('data', {
-          url: '/data',
+          url: '/?datasetId',
           templateUrl: '../pages/data.html',
-          controller: 'DataController'
+          controller: 'DataController',
+          onEnter: ['$stateParams', '$rootScope', 'DatasetFactory',
+            function($stateParams, $rootScope, DatasetFactory) {
+              DatasetFactory.getDatasetById($stateParams.datasetId);
+          }]
         })
         .state('graphic', {
           url: '/graphic',

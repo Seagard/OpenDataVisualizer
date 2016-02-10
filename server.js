@@ -1,11 +1,10 @@
 'use strict';
 
-/**
- *  Node modules
- * */
 var express = require('express');
 var fs = require('fs');
 var app = express();
+
+var apiUrl = '/api';
 
 app.use(express.static(__dirname + '/public'));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
@@ -13,7 +12,13 @@ app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 /**
  *  API
  * */
-require('./api/dataset')(app);
+//require('./api/dataset')(app);
+var datasetApi = require('./api/dataset');
+
+app.get(apiUrl + '/dataset/all', datasetApi.getAllDatasets);
+app.get(apiUrl + '/dataset/united', datasetApi.getUnitedDatasets);
+app.get(apiUrl + '/open/:id', datasetApi.loadDataset);
+app.get(apiUrl + '/dataset/:id', datasetApi.getDatasetById);
 
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/public/index.html');
