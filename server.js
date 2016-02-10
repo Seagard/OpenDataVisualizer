@@ -17,8 +17,8 @@ var datasetApi = require('./api/dataset');
 
 app.get(apiUrl + '/dataset/all', datasetApi.getAllDatasets);
 app.get(apiUrl + '/dataset/united', datasetApi.getUnitedDatasets);
-app.get(apiUrl + '/open/:id', datasetApi.loadDataset);
 app.get(apiUrl + '/dataset/:id', datasetApi.getDatasetById);
+app.get('/open/:id', datasetApi.loadDataset);
 
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/public/index.html');
