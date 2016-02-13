@@ -1,3 +1,10 @@
 <div ng-controller="GraphicController as graphic">
-    <highchart id="chart" config="graphic.chartConfig" style=" height:100%;"></highchart>
+    <canvas id="line" class="chart chart-line" chart-data="data"
+            chart-labels="labels" chart-legend="true" chart-series="series"
+            chart-click="onClick" >
+    </canvas>
+
+    <canvas id="bar" class="chart chart-bar"
+            chart-data="data" chart-labels="labels"> chart-series="series"
+    </canvas>
 </div>

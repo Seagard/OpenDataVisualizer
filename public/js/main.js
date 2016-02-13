@@ -1,8 +1,8 @@
 (function() {
   angular.module('main',
     [
-      'highcharts-ng',
-      'ui.router'
+      'ui.router',
+        'chart.js'
     ])
     .config(function($locationProvider, $stateProvider, $urlRouterProvider) {
       $locationProvider.html5Mode({
@@ -13,8 +13,8 @@
       $stateProvider
         .state('data', {
           url: '/?datasetId',
-          templateUrl: '../pages/data.html',
-          controller: 'DataController',
+          templateUrl: '../pages/graphic.html',
+          controller: 'GraphicController',
           onEnter: ['$stateParams', '$rootScope', 'DatasetFactory',
             function($stateParams, $rootScope, DatasetFactory) {
               if($stateParams.datasetId)

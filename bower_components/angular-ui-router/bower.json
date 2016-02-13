@@ -3,7 +3,8 @@
   "version": "0.2.15",
   "main": "./release/angular-ui-router.js",
   "dependencies": {
-    "angular": ">= 1.0.8"
+    "angular": ">= 1.0.8",
+    "angular-chart.js": "^0.8.8"
   },
   "ignore": [
     "**/.*",

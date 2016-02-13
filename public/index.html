@@ -4,75 +4,124 @@
 <title>Візуалізація відкритих даних</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" media="all" />
+	<link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css">
+<link href="css/main.css" rel="stylesheet" type="text/css" media="all" />
 </head>
 <body ng-controller="mainController as main">
-<div style="margin-left: 10%; margin-right: 10%; height: 100%">
-	<div class="header_bg">
-		<div class="wrap">
-			<div class="header">
-				<div id="main">
-				<div class="logo">
-					<img style="height: 50px; vertical-align: text-top" src="images/logo.png" alt="" />
-					<p style="display: inline-block; font-size: xx-large; vertical-align: text-top">Візуалізація відкритих даних</p>
-				</div>
-				<div class="nav">
-					<ul>
-						<li id="dataButton" class="fakelink"><a ui-sref="data" class="scroll">Дані</a></li>
-						<li id="graphicButton" class="fakelink"><a ui-sref="graphic" class="scroll">Інфографіка</a></li>
-						<li id="mapButton" class="fakelink"><a ui-sref="map" class="scroll">Карта</a></li>
-					</ul>
-				</div>
+<div class="container-fluid no-padding" style="height: 100%">
+	<!--<div class="header_bg">-->
+		<!--<div class="wrap">-->
+			<!--<div class="header">-->
+				<!--<div id="main">-->
+				<!--<div class="logo">-->
+					<!--<img style="height: 50px; vertical-align: text-top" src="images/logo.png" alt="" />-->
+					<!--<p style="display: inline-block; font-size: xx-large; vertical-align: text-top">Візуалізація відкритих даних</p>-->
+				<!--</div>-->
+				<!--<div class="nav">-->
+					<!--<ul>-->
+						<!--<li id="dataButton" class="fakelink"><a ui-sref="data" class="scroll">Дані</a></li>-->
+						<!--<li id="graphicButton" class="fakelink"><a ui-sref="graphic" class="scroll">Інфографіка</a></li>-->
+						<!--<li id="mapButton" class="fakelink"><a ui-sref="map" class="scroll">Карта</a></li>-->
+					<!--</ul>-->
+				<!--</div>-->
+			<!--</div>-->
+				<!--<div class="clear"> </div>-->
+			<!--</div>-->
+		<!--</div>-->
+	<!--</div>-->
+
+	<nav class="navbar navbar-inverse navbar-static-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Візуалізація Відкритих Даних</a>
 			</div>
-				<div class="clear"> </div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li><a ui-sref="graphic" ng-show="">Інфографіка</a></li>
+					<li><a ui-sref="map">Карта</a></li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+	</nav>
+
+	<div class="container-fluid no-padding main-content">
+
+		<div class="col-sm-3 no-padding">
+			<div id="sidebar-wrapper">
+				<ul class="sidebar-nav">
+					<h3 class="sidebar-brand">Категорії</h3>
+					<li>
+						<a ui-sref="graphic">Тест 1</a>
+					</li>
+					<li>
+						<a>Тест 2</a>
+					</li>
+				</ul>
 			</div>
+		</div>
+
+		<div class="col-sm-9">
+
+			<ui-view></ui-view>
+
 		</div>
 	</div>
-	<div class="container" style="height: 80%">
-		<div class="left" style="height: 100%">
-			<div ui-view></div>
-		</div>
-		<div class="right filter" ng-controller="FilterController as filter">
-			<div ng-repeat="field in filter.fields">
-				<label ng-if="field.type == 'select'" for="{{field.id}}"><span ng-bind="field.id"></span></label>
-				<br>
-				<select class="dropdown" ng-change="filter.applyFilter(field.id, field.selectedVal)"  ng-if="field.type == 'select'" id="{{field.id}}" ng-model="field.selectedVal">
-					<option value="-1" selected="selected"></option>
-					<option ng-repeat="value in field.values" value="{{value.id}}">{{value.name}}</option>
-				</select>
 
-			
+	<!--<div class="container" style="height: 80%">-->
+		<!--<div class="left" style="height: 100%">-->
+			<!--<div ui-view></div>-->
+		<!--</div>-->
+		<!--<div class="right filter" ng-controller="FilterController as filter">-->
+			<!--<div ng-repeat="field in filter.fields">-->
+				<!--<label ng-if="field.type == 'select'" for="{{field.id}}"><span ng-bind="field.id"></span></label>-->
+				<!--<br>-->
+				<!--<select class="dropdown" ng-change="filter.applyFilter(field.id, field.selectedVal)"  ng-if="field.type == 'select'" id="{{field.id}}" ng-model="field.selectedVal">-->
+					<!--<option value="-1" selected="selected"></option>-->
+					<!--<option ng-repeat="value in field.values" value="{{value.id}}">{{value.name}}</option>-->
+				<!--</select>-->
 
 
-				<label ng-if="field.type == 'range'" for="{{field.id}}"><span ng-bind="field.id"></span></label>
-				<br>
-				<input ng-if="field.type == 'range'"
-					   id="{{field.id}}"
-					   type="range"
-					   min="{{field.minVal}}"
-					   max="{{field.maxVal}}"
-					   value="field.selectedVal"
-					   ng-model="field.selectedVal"
-					   ng-change="filter.applyFilter(field.id, field.selectedVal)"
-					   step="1">
-				<span ng-if="field.type == 'range'">{{field.selectedVal}}</span>
-			</div>
-		</div>
-	</div>
+
+
+				<!--<label ng-if="field.type == 'range'" for="{{field.id}}"><span ng-bind="field.id"></span></label>-->
+				<!--<br>-->
+				<!--<input ng-if="field.type == 'range'"-->
+					   <!--id="{{field.id}}"-->
+					   <!--type="range"-->
+					   <!--min="{{field.minVal}}"-->
+					   <!--max="{{field.maxVal}}"-->
+					   <!--value="field.selectedVal"-->
+					   <!--ng-model="field.selectedVal"-->
+					   <!--ng-change="filter.applyFilter(field.id, field.selectedVal)"-->
+					   <!--step="1">-->
+				<!--<span ng-if="field.type == 'range'">{{field.selectedVal}}</span>-->
+			<!--</div>-->
+		<!--</div>-->
+	<!--</div>-->
 </div>
 
 <!-- TODO: If need some of this libs or modules, use Bower to install it -->
-<!--<script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript" src="/js/libraries/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="/js/libraries/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/libraries/angular.min.js"></script>
 <script type="text/javascript" src="/js/libraries/underscore-min.js"></script>
-<script type="text/javascript" src="/js/libraries/highcharts-ng.js"></script>
-<script type="text/javascript" src="/js/main.js"></script>-->
 
 <!-- Angular modules -->
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/Chart.js/Chart.min.js"></script>
+<script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
 <!-- Angular modules -->
+
+<script type="text/javascript" src="/js/main.js"></script>
+
 
 <script type="text/javascript" src="/js/factories/DatasetFactory.js"></script>
 <script type="text/javascript" src="/js/factories/FilterFactory.js"></script>
