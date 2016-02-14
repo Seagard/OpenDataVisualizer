@@ -6,11 +6,8 @@ var analyse = require('../analyse/analyse.js');
 
 function getAllDatasets(req, res) {
   var datasets = [];
-  datasets.push(JSON.parse(fs.readFileSync('data/revenue.json')));
-  datasets.push(JSON.parse(fs.readFileSync('data/expence.json')));
-  datasets.push(JSON.parse(fs.readFileSync('data/dataset0.json')));
-  datasets.push(JSON.parse(fs.readFileSync('data/dataset1.json')));
-  datasets.push(JSON.parse(fs.readFileSync('data/dataset2.json')));
+  datasets.push(JSON.parse(fs.readFileSync('data/f21ab8d3-617a-4563-ba77-b40a036d8f93.json')));
+  datasets.push(JSON.parse(fs.readFileSync('data/60421860-508e-4e69-afda-a18713e0f45b.json')));
   res.json(datasets);
 }
 

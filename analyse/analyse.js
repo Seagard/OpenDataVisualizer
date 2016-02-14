@@ -59,7 +59,7 @@ function loadData(host, path) {
     var options = {
       host: host,
       path: path
-    }
+    };
 
     http.get(options, function(resp) {
       resp.on('data', function(chunk) {
@@ -103,7 +103,7 @@ function joinDatasets2(datasets) {
       else if(i == 2) record.year = '2014';
       resultDataset.records.push(record);
     })
-  })
+  });
   return resultDataset;
 }
 
