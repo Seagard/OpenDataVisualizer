@@ -9,5 +9,8 @@ angular.module( 'main' ).config(function($routeProvider){
         .when('/map', {
             templateUrl: '../pages/map.html'
         })
+        .when('/editor', {
+            templateUrl: '../pages/editor.html'
+        })
         .otherwise({redirectTo: '/data'});
 });

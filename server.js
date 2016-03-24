@@ -15,6 +15,7 @@ var config = {
 var port = process.env.PORT || 3000;
 
 app.use(express.static(__dirname + '/public'));
+app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
 SwaggerExpress.create(config, function(err, swaggerExpress) {
   if (err) { throw err; }
