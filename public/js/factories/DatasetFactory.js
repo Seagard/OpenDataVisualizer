@@ -54,11 +54,12 @@ angular.module('main').factory('DatasetFactory', function($http) {
 
     function getDatasetById(datasetId) {
         console.log('Loading dataset: ', datasetId);
-        $http.get('/api/dataset/' + datasetId).then(function(resp) {
+        $http.get('/api/dataset/' + datasetId).then(function (resp) {
             notifyDatasetLoaded(resp.data);
-        }).catch(function(err) {
+        }).catch(function (err) {
             console.log(err);
         })
+    }
     function getExampleDatasets() {
         return exampleDatasets;
     }
