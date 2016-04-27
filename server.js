@@ -4,6 +4,9 @@ var express = require('express');
 var fs = require('fs');
 var app = express();
 
+var contents = fs.readFileSync('data/regions.json');
+var data = fs.readFileSync('data/data1.json');
+
 var apiUrl = '/api';
 
 app.use(express.static(__dirname + '/public'));
@@ -20,7 +23,11 @@ app.get(apiUrl + '/dataset/united', datasetApi.getUnitedDatasets);
 app.get(apiUrl + '/dataset/:id', datasetApi.getDatasetById);
 app.get('/open/:id', datasetApi.loadDataset);
 
-app.get('/', function(req, res) {
+app.get('/json', function(req, res) {
+  res.send(JSON.parse(contents));
+});
+
+app.get('/*', function(req, res) {
   res.sendFile(__dirname + '/public/index.html');
 });
 

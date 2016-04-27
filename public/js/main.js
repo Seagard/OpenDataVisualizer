@@ -9,10 +9,10 @@
         enabled: true,
         requireBase: false
       }).hashPrefix('!');
-      $urlRouterProvider.otherwise('/');
+      $urlRouterProvider.otherwise('/data');
       $stateProvider
         .state('data', {
-          url: '/?datasetId',
+          url: '/data?datasetId',
           templateUrl: '../pages/data.html',
           controller: 'DataController',
           onEnter: ['$stateParams', '$rootScope', 'DatasetFactory',

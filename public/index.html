@@ -7,8 +7,8 @@
 <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/main.css" rel="stylesheet" type="text/css" media="all" />
 <script src="js/libraries/jquery.min.js"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaL34OGHlD9TpvJGoPT1MT4bZ_wJAjGNQ&callback=initMap"></script>
 <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
 
@@ -48,7 +48,7 @@
 					<option ng-repeat="value in field.values" value="{{value.id}}">{{value.name}}</option>
 				</select>
 
-			
+
 
 
 				<label ng-if="field.type == 'range'" for="{{field.id}}"><span ng-bind="field.id"></span></label>
@@ -73,7 +73,7 @@
 <script src="/bower_components/angular-aria/angular-aria.js"></script>
 <script src="/bower_components/angular-animate/angular-animate.js"></script>
 <script src="/bower_components/angular-material/angular-material.js"></script>
-
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaL34OGHlD9TpvJGoPT1MT4bZ_wJAjGNQ"></script>
 <script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript" src="/js/libraries/jquery.min.js"></script>
 <script type="text/javascript" src="/js/libraries/bootstrap.min.js"></script>

@@ -75,7 +75,7 @@ angular.module('main').factory('DatasetFactory', function($http) {
         registerOnDatasetLoadedEvent: registerOnDatasetLoadedEvent,
         getAllDatasets: getAllDatasets,
         getUnitedDataset: getUnitedDataset,
-        getExampleDatasets: getExampleDatasets
+        getExampleDatasets: getExampleDatasets,
         getDatasetById: getDatasetById
     }
 });
