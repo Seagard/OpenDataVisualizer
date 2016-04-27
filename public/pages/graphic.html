@@ -1,4 +1,4 @@
-<div ng-controller="graphicController as graphic">
+<div ng-controller="GraphicController as graphic">
     <highchart id="chart" config="graphic.chartConfig" style=" height:100%;"></highchart>
     <select ng-model="graphic.selected" ng-options="option.text for option in graphic.options" ng-change="graphic.changeChartSettings()"></select>
 </div>

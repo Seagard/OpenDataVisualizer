@@ -1,9 +1,10 @@
 'use strict';
 
 var fs = require('fs');
-var analyse = require('../../analyse/analyse.js');
+var http = require('http');
+var analyse = require('../analyse/analyse.js');
 
-function getDatasets(req, res) {
+function getAllDatasets(req, res) {
   var datasets = [];
   datasets.push(JSON.parse(fs.readFileSync('data/revenue.json')));
   datasets.push(JSON.parse(fs.readFileSync('data/expence.json')));
@@ -42,7 +43,58 @@ function getUnitedDatasets(req, res) {
   }
 }
 
+function loadDataset(req, res) {
+  var datasetId = req.params.id;
+  loadData('data.ngorg.od.ua',
+    '/api/action/datastore/search.json?resource_id=' + datasetId)
+  .then(function(resp) {
+    if(resp.match(/Caught exception.*does not exist/)) {
+      console.log('[Error] Dataset ' + datasetId + ' not found');
+      res.redirect('/');
+    } else {
+      if(!fs.existsSync('data/' + datasetId + '.json'))
+        fs.writeFile('data/' + datasetId + '.json', JSON.stringify(resp));
+      res.redirect('/?datasetId=' + datasetId);
+    }
+  }).catch(function(err) {
+    res.json(err);
+  });
+}
+
+function getDatasetById(req, res, next) {
+  var datasetId = req.params.id;
+  if(datasetId == 'undefined') {
+    res.status(406).send('Dataset id required');
+  } else {
+    if(fs.existsSync('data/' + datasetId + '.json'))
+      res.send(JSON.parse(fs.readFileSync('data/' + datasetId + '.json')));
+    else res.status(404).send('Dataset not found');
+  }
+}
+
+function loadData(host, path) {
+  return new Promise(function(resolve, reject) {
+    var result = '';
+    var options = {
+      host: host,
+      path: path
+    };
+
+    http.get(options, function(resp) {
+      resp.on('data', function(chunk) {
+        result += chunk;
+      }).on('error', function(err) {
+        reject(err);
+      }).on('end', function() {
+        resolve(result);
+      });
+    });
+  })
+}
+
 module.exports = {
-  getDatasets: getDatasets,
-  getUnitedDataset: getUnitedDatasets
+  getAllDatasets,
+  getUnitedDatasets,
+  loadDataset,
+  getDatasetById
 };
