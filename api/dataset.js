@@ -47,16 +47,16 @@ function loadDataset(req, res) {
   var datasetId = req.params.id;
   loadData('data.ngorg.od.ua',
     '/api/action/datastore/search.json?resource_id=' + datasetId)
-    .then(function(resp) {
-      if(resp.match(/Caught exception.*does not exist/)) {
-        console.log('[Error] Dataset ' + datasetId + ' not found');
-        res.redirect('/');
-      } else {
-        if(!fs.existsSync('data/' + datasetId + '.json'))
-          fs.writeFile('data/' + datasetId + '.json', JSON.stringify(resp));
-        res.redirect('/?datasetId=' + datasetId);
-      }
-    }).catch(function(err) {
+  .then(function(resp) {
+    if(resp.match(/Caught exception.*does not exist/)) {
+      console.log('[Error] Dataset ' + datasetId + ' not found');
+      res.redirect('/');
+    } else {
+      if(!fs.existsSync('data/' + datasetId + '.json'))
+        fs.writeFile('data/' + datasetId + '.json', JSON.stringify(resp));
+      res.redirect('/?datasetId=' + datasetId);
+    }
+  }).catch(function(err) {
     res.json(err);
   });
 }

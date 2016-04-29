@@ -6,11 +6,17 @@ angular.module('main').controller('FilterController', function(DatasetFactory, F
     vm.filteredDataset.fields = [];
     vm.filteredDataset.records = [];
 
-    //DatasetFactory.getUnitedDataset(function(data) {
-    //    vm.dataset = data;
-    //    console.log(vm.dataset);
-    //    datasetsLoaded();
-    //});
+    DatasetFactory.getUnitedDataset(function(data) {
+        vm.dataset = data;
+        console.log(vm.dataset);
+        datasetsLoaded();
+    });
+
+    DatasetFactory.registerOnDatasetLoadedEvent(function(data) {
+        console.log('Dataset loaded: ', data.result);
+        vm.dataset = data.result;
+        datasetsLoaded();
+    });
 
     DatasetFactory.registerOnDatasetLoadedEvent(function(data) {
         console.log('Dataset loaded: ', data.result);

@@ -2,7 +2,7 @@
     "use strict";
     angular
         .module('main')
-        .controller('graphicController', graphicController);
+        .controller('GraphicController', graphicController);
 
     graphicController.$inject = ['DatasetFactory', 'FilterFactory'];
 

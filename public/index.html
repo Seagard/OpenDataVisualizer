@@ -7,13 +7,12 @@
 <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/main.css" rel="stylesheet" type="text/css" media="all" />
 <script src="js/libraries/jquery.min.js"></script>
 <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
 
 </head>
-
-
 <body ng-controller="mainController as main">
 <div style="margin-left: 10%; margin-right: 10%; height: 100%">
 	<div class="header_bg">
@@ -26,10 +25,9 @@
 				</div>
 				<div class="nav">
 					<ul>
-						<li id="dataButton" class="fakelink"><a ng-click="main.toData()" class="scroll">Дані</a></li>
-						<li id="graphicButton" class="fakelink"><a ng-click="main.toGraphic()" class="scroll">Інфографіка</a></li>
-						<li id="mapButton" class="fakelink"><a ng-click="main.toMap()" class="scroll">Карта</a></li>
-						<div class="clear"> </div>
+						<li id="dataButton" class="fakelink"><a ui-sref="data" class="scroll">Дані</a></li>
+						<li id="graphicButton" class="fakelink"><a ui-sref="graphic" class="scroll">Інфографіка</a></li>
+						<li id="mapButton" class="fakelink"><a ui-sref="map" class="scroll">Карта</a></li>
 					</ul>
 				</div>
 			</div>
@@ -39,7 +37,7 @@
 	</div>
 	<div class="container" style="height: 80%">
 		<div class="left" style="height: 100%">
-			<ng-view></ng-view>
+			<div ui-view></div>
 		</div>
 		<div class="right filter" ng-controller="FilterController as filter">
 			<div ng-repeat="field in filter.fields">
@@ -49,6 +47,7 @@
 					<option value="-1" selected="selected"></option>
 					<option ng-repeat="value in field.values" value="{{value.id}}">{{value.name}}</option>
 				</select>
+
 
 
 				<label ng-if="field.type == 'range'" for="{{field.id}}"><span ng-bind="field.id"></span></label>
@@ -64,12 +63,11 @@
 					   step="1">
 				<span ng-if="field.type == 'range'">{{field.selectedVal}}</span>
 			</div>
-
-
 		</div>
 	</div>
 </div>
 
+<!-- Angular modules -->
 <script src="/bower_components/angular/angular.min.js"></script>
 <script src="/bower_components/angular-aria/angular-aria.js"></script>
 <script src="/bower_components/angular-animate/angular-animate.js"></script>
@@ -83,15 +81,18 @@
 <script type="text/javascript" src="/js/libraries/highcharts-ng.js"></script>
 
 <script type="text/javascript" src="/js/main.js"></script>
-<script type="text/javascript" src="/js/routing.js"></script>
+<!--<script type="text/javascript" src="/js/routing.js"></script>-->
+
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<!-- Angular modules -->
 
 <script type="text/javascript" src="/js/factories/DatasetFactory.js"></script>
 <script type="text/javascript" src="/js/factories/FilterFactory.js"></script>
 <script type="text/javascript" src="/js/controllers/mainController.js"></script>
-<!--<script type="text/javascript" src="/js/controllers/dataController.js"></script>-->
+<script type="text/javascript" src="/js/controllers/dataController.js"></script>
 <script type="text/javascript" src="/js/controllers/graphicController.js"></script>
 <script type="text/javascript" src="/js/controllers/mapController.js"></script>
-<script type="text/javascript" src="/coffee/dataController.js"></script>
+<!--<script type="text/javascript" src="/coffee/dataController.js"></script>-->
 <script type="text/javascript" src="/js/controllers/filterController.js"></script>
 <script type="text/javascript" src="/js/controllers/editorController.js"></script>
 </body>
