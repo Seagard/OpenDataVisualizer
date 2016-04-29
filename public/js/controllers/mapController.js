@@ -9,7 +9,7 @@ angular.module('main').controller('MapController', function(DatasetFactory, Filt
     $http.get("/json").then(function (data) {
         districts = data.data;
         vm.initialize();
-    })
+    });
 
     vm.initialize = function () {
         return new Promise(function (resolve, reject) {

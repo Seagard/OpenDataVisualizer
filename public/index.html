@@ -6,8 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaL34OGHlD9TpvJGoPT1MT4bZ_wJAjGNQ"></script>
-	<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaL34OGHlD9TpvJGoPT1MT4bZ_wJAjGNQ"></script>
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 <link href="css/main.css" rel="stylesheet" type="text/css" media="all" />
 <script src="js/libraries/jquery.min.js"></script>
 <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
@@ -29,6 +29,7 @@
 						<li id="dataButton" class="fakelink"><a ui-sref="data" class="scroll">Дані</a></li>
 						<li id="graphicButton" class="fakelink"><a ui-sref="graphic" class="scroll">Інфографіка</a></li>
 						<li id="mapButton" class="fakelink"><a ui-sref="map" class="scroll">Карта</a></li>
+						<li id="editorButton" class="fakelink"><a ui-sref="editor" class="scroll">Завантаження</a></li>
 					</ul>
 				</div>
 			</div>
@@ -48,8 +49,6 @@
 					<option value="-1" selected="selected"></option>
 					<option ng-repeat="value in field.values" value="{{value.id}}">{{value.name}}</option>
 				</select>
-
-
 
 				<label ng-if="field.type == 'range'" for="{{field.id}}"><span ng-bind="field.id"></span></label>
 				<br>
@@ -73,6 +72,7 @@
 <script src="/bower_components/angular-aria/angular-aria.js"></script>
 <script src="/bower_components/angular-animate/angular-animate.js"></script>
 <script src="/bower_components/angular-material/angular-material.js"></script>
+<script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript" src="/js/libraries/jquery.min.js"></script>
 <script type="text/javascript" src="/js/libraries/bootstrap.min.js"></script>
@@ -81,9 +81,6 @@
 <script type="text/javascript" src="/js/libraries/highcharts-ng.js"></script>
 
 <script type="text/javascript" src="/js/main.js"></script>
-<!--<script type="text/javascript" src="/js/routing.js"></script>-->
-
-<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <!-- Angular modules -->
 
 <script type="text/javascript" src="/js/factories/DatasetFactory.js"></script>

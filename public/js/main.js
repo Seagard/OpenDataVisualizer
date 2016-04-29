@@ -31,5 +31,10 @@
           templateUrl: '../pages/map.html',
           controller: 'MapController'
         })
+        .state('editor', {
+          url: '/editor',
+          templateUrl: '../pages/editor.html',
+          controller: 'EditorController'
+        })
   })
 })();
