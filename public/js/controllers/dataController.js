@@ -2,8 +2,12 @@ angular.module('main').controller('DataController', function(DatasetFactory, Fil
     var vm = this;
 
     function activate() {
-        DatasetFactory.getUnitedDataset(function(data) {
-            vm.dataset = data;
+        //DatasetFactory.getUnitedDataset(function(data) {
+        //    vm.dataset = data;
+        //});
+        DatasetFactory.registerOnDatasetLoadedEvent(function(data) {
+            console.log('Dataset loaded: ', data.result);
+            vm.dataset = data.result;
         });
         DatasetFactory.registerOnDatasetLoadedEvent(function(data) {
             console.log('Dataset loaded: ', data.result);

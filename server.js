@@ -25,6 +25,9 @@ app.get('/open/:id', datasetApi.loadDataset);
 
 app.get('/json', function(req, res) {
   res.send(JSON.parse(contents));
+
+app.get('/json1', function(req, res) {
+  res.send(JSON.parse(data));
 });
 
 app.get('/*', function(req, res) {
