@@ -1,4 +1,4 @@
-angular.module('main').controller('mapController', function(DatasetFactory, FilterFactory, $http) {
+angular.module('main').controller('MapController', function(DatasetFactory, FilterFactory, $http) {
     var districts;
     var vm = this;
     var markers = [];
