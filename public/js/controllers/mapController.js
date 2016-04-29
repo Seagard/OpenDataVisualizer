@@ -1,4 +1,4 @@
-angular.module('main').controller('mapController', function(DatasetFactory, FilterFactory, $http) {
+angular.module('main').controller('mapController', function(DatasetFactory, FilterFactory, $http, $scope) {
     var districts;
     var vm = this;
     var markers = [];
@@ -13,11 +13,19 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
 
     vm.initialize = function () {
         return new Promise(function (resolve, reject) {
-            vm.map = new google.maps.Map(document.getElementById('map'), {
+            $scope.map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 46.748359, lng: 30.150735},
                 zoom: 7,
                 panControl: true, //enable pan Control
-                zoomControl: true //enable zoom control
+                zoomControl: true, //enable zoom control
+                events: {
+                    click: function() {
+                        var marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(46, 25),
+                            map: $scope.map
+                        });
+                    }
+                }
             });
 
             districts.forEach(function (data) {
@@ -30,7 +38,7 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
                     fillOpacity: 0.35
                 });
 
-                district.setMap(vm.map);
+                district.setMap($scope.map);
 
                 district.addListener('mouseover', function () {
                     this.setOptions({fillColor: 'green'});
@@ -40,7 +48,7 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
                     this.setOptions({fillColor: '#C3E1FF'});
                 });
             })
-            resolve(vm.map);
+            resolve($scope.map);
         })
         .then(function () {
             records = DatasetFactory.getExampleDatasets()[2].result.records;
@@ -62,11 +70,11 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
 
                 var marker = new google.maps.Marker({
                     position: new google.maps.LatLng(data.lat, data.lon),
-                    map: vm.map
+                    map: $scope.map
                 });
 
                 marker.addListener('mouseover', function () {
-                    infowindow.open(vm.map, marker);
+                    infowindow.open($scope.map, marker);
                 });
 
                 marker.addListener('mouseout', function () {
@@ -109,23 +117,26 @@ angular.module('main').controller('mapController', function(DatasetFactory, Filt
                     fillOpacity: 0.35
                 });
 
-                district.setMap(vm.map);
+                district.setMap($scope.map);
             })
         });
     };
 
-    vm.highlight = function () {
-        records = DatasetFactory.getExampleDatasets()[2].result.records;
+    $scope.highlight = function () {
+        $scope.$watch('map', function() {
+            if($scope.map) {
+                records = DatasetFactory.getExampleDatasets()[2].result.records;
 
-        console.log(vm.map);
+                console.log($scope.map);
 
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(46, 25),
-            map: vm.map
-        });
 
-        alert('highlight');
-        console.log(marker);
+
+                alert('highlight');
+                console.log(marker);
+            }
+
+        })
+
 
         //records.forEach(function (data) {
         //    districts.forEach(function (district) {
