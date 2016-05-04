@@ -67,8 +67,8 @@ function getDatasetById(req, res, next) {
   if(datasetId == 'undefined') {
     res.status(406).send('Dataset id required');
   } else {
-    if(fs.existsSync('data/' + datasetId + '.json'))
-      res.send(JSON.parse(fs.readFileSync('data/' + datasetId + '.json')));
+    if(fs.existsSync(__dirname + '/../datasets/' + datasetId + '.json'))
+      res.send(JSON.parse(fs.readFileSync(__dirname + '/../datasets/' + datasetId + '.json')));
     else res.status(404).send('Dataset not found');
   }
 }
