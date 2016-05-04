@@ -1,4 +1,4 @@
-angular.module('main').factory('DatasetFactory', function($http) {
+angular.module('main').factory('DatasetFactory', function($http, $q) {
 
     var allDatasets;
     var unitedDatasets;
@@ -52,6 +52,17 @@ angular.module('main').factory('DatasetFactory', function($http) {
         });
     }
 
+
+    function getDatasetList() {
+        return $q(function(resolve, reject) {
+            $http.get('/api/dataset/list').then(function(resp) {
+                resolve(resp.data);
+            }).catch(function(err) {
+                reject(err);
+            })
+        })
+    }
+
     function getDatasetById(datasetId) {
         console.log('Loading dataset: ', datasetId);
         $http.get('/api/dataset/' + datasetId).then(function(resp) {
@@ -77,6 +88,7 @@ angular.module('main').factory('DatasetFactory', function($http) {
         getAllDatasets: getAllDatasets,
         getUnitedDataset: getUnitedDataset,
         getExampleDatasets: getExampleDatasets,
-        getDatasetById: getDatasetById
+        getDatasetById: getDatasetById,
+        getDatasetList: getDatasetList
     }
 });

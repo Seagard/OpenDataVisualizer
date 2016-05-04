@@ -3,6 +3,7 @@
 var fs = require('fs');
 var http = require('http');
 var analyse = require('../analyse/analyse.js');
+var _ = require('underscore');
 
 function getAllDatasets(req, res) {
   var datasets = [];
@@ -52,8 +53,8 @@ function loadDataset(req, res) {
       console.log('[Error] Dataset ' + datasetId + ' not found');
       res.redirect('/');
     } else {
-      if(!fs.existsSync('data/' + datasetId + '.json'))
-        fs.writeFile('data/' + datasetId + '.json', JSON.stringify(resp));
+      if(!fs.existsSync('datasets/' + datasetId + '.json'))
+        fs.writeFile('datasets/' + datasetId + '.json', JSON.stringify(resp));
       res.redirect('/?datasetId=' + datasetId);
     }
   }).catch(function(err) {
@@ -66,10 +67,28 @@ function getDatasetById(req, res, next) {
   if(datasetId == 'undefined') {
     res.status(406).send('Dataset id required');
   } else {
-    if(fs.existsSync('data/' + datasetId + '.json'))
-      res.send(JSON.parse(fs.readFileSync('data/' + datasetId + '.json')));
+    if(fs.existsSync(__dirname + '/../datasets/' + datasetId + '.json'))
+      res.send(JSON.parse(fs.readFileSync(__dirname + '/../datasets/' + datasetId + '.json')));
     else res.status(404).send('Dataset not found');
   }
+}
+
+function getDatasetList(req, res) {
+  var datasets = [];
+  var files = fs.readdirSync(__dirname + '/../datasets');
+  var fileReaded = _.after(files.length, function() {
+    res.send(datasets);
+  });
+  files.forEach(function(fileName, index) {
+    fs.readFile(__dirname + '/../datasets/' + fileName, function(err, file) {
+      var json = file.toString();
+      datasets.push({
+        id: fileName.replace('.json', ''),
+        name: 'Dataset ' + (index + 1)
+      });
+      fileReaded();
+    });
+  })
 }
 
 function loadData(host, path) {
@@ -96,5 +115,6 @@ module.exports = {
   getAllDatasets,
   getUnitedDatasets,
   loadDataset,
-  getDatasetById
+  getDatasetById,
+  getDatasetList
 };

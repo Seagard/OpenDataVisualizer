@@ -32,6 +32,11 @@
           templateUrl: '../pages/map.html',
           controller: 'MapController'
         })
+        .state('editor', {
+          url: '/editor',
+          templateUrl: '../pages/editor.html',
+          controller: 'EditorController'
+        })
 
         uiGmapGoogleMapApiProvider.configure({
            key: 'AIzaSyCaL34OGHlD9TpvJGoPT1MT4bZ_wJAjGNQ',

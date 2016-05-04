@@ -13,6 +13,9 @@ angular.module('main').controller('DataController', function(DatasetFactory, Fil
             console.log('Filter changed: ', data);
             vm.dataset = data;
         });
+        DatasetFactory.getDatasetList().then(function(datasets) {
+            console.log('Datasets: ', datasets);
+        })
     }
 
     activate();
