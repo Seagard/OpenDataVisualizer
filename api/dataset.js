@@ -83,7 +83,7 @@ function getDatasetList(req, res) {
     fs.readFile(__dirname + '/../datasets/' + fileName, function(err, file) {
       var json = file.toString();
       datasets.push({
-        id: fileName.replace('json', ''),
+        id: fileName.replace('.json', ''),
         name: 'Dataset ' + (index + 1)
       });
       fileReaded();
