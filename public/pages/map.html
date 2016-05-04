@@ -1,4 +1,16 @@
-<div ng-controller="MapController as map" style="height: 100%">
-    <div id="map"></div>
-    <button class="action" ng-click="highlight()">Highlight</button>
+<div  style="height: 100%" ng-controller="MapController">
+    <div id="map_canvas" >
+        <ui-gmap-google-map center="map.center" zoom="map.zoom" options="options">
+            <ui-gmap-polygon static="true" ng-repeat="p in polygons" path="p.path" stroke="p.stroke"
+             visible="p.visible" geodesic="p.geodesic" fill="p.fill" fit="false" events="p.events"></ui-gmap-polygon>
+            <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id">
+                <ui-gmap-window options="windowOptions" closeClick="closeClick()">
+                    <div>{{m.data}}</div>
+                </ui-gmap-window>
+            </ui-gmap-marker>
+        </ui-gmap-google-map>
+        </div>
+    <button class="action" ng-click="highlight(map)">Highlight</button>
+    <button class="action" ng-click="highlightRegions(map)">Highlight regions</button>
+    <button class="action" ng-click="reset(map)">Reset</button>
 </div>

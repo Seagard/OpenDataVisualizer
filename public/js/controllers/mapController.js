@@ -1,102 +1,109 @@
 angular.module('main').controller('MapController', function(DatasetFactory, FilterFactory, $http, $scope) {
-    var districts;
     var vm = this;
     var markers = [];
-    var records = [];
+    var records = DatasetFactory.getExampleDatasets()[2].result.records;
+    ;
     vm.datasets = [];
-    vm.map = {};
+
+    $scope.options = {scrollwheel: false};
+    $scope.polygons = [];
+
+    $scope.events = {
+        mouseover: mouseOver,
+        mouseout: mouseOut
+    }
+
+    function mouseOver() {
+        this.fill.color = "green"
+    }
+
+    function mouseOut() {
+        this.fill.color = "#C3E1FF"
+    }
 
     $http.get("/json").then(function (data) {
-        districts = data.data;
-        vm.initialize();
-    })
-
-    vm.initialize = function () {
-        return new Promise(function (resolve, reject) {
-            $scope.map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: 46.748359, lng: 30.150735},
-                zoom: 7,
-                panControl: true, //enable pan Control
-                zoomControl: true, //enable zoom control
-                events: {
-                    click: function() {
-                        var marker = new google.maps.Marker({
-                            position: new google.maps.LatLng(46, 25),
-                            map: $scope.map
-                        });
-                    }
-                }
-            });
-
-            districts.forEach(function (data) {
-                var district = new google.maps.Polygon({
-                    paths: data.coords,
-                    strokeColor: 'black',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 1,
-                    fillColor: '#C3E1FF',
-                    fillOpacity: 0.35
-                });
-
-                district.setMap($scope.map);
-
-                district.addListener('mouseover', function () {
-                    this.setOptions({fillColor: 'green'});
-                });
-
-                district.addListener('mouseout', function () {
-                    this.setOptions({fillColor: '#C3E1FF'});
-                });
-            })
-            resolve($scope.map);
-        })
-        .then(function () {
-            records = DatasetFactory.getExampleDatasets()[2].result.records;
+        $scope.districts = data.data;
+        $scope.initialize();
+        return $scope.districts;
+    }).then(function(districts) {
+        districts.forEach(function (district) {
+            district.memorials = [];
 
             records.forEach(function (data) {
-                districts.forEach(function (district) {
-                    district.coords.forEach(function (coords) {
-                        if (coords.lng == data.lon && coords.lat == data.lat) {
-                            data.district = district.district;
-                        }
-                    });
-                });
-
-                var infowindow = new google.maps.InfoWindow({
-                    content: data.Naimenovanie + '<br>' +
-                    'Location: ' + data.Location + '<br>' + 'Coordinates: ' + data.lat + ' ' + data.lon + '<br>' +
-                    'District: ' + data.district
-                });
-
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(data.lat, data.lon),
-                    map: $scope.map
-                });
-
-                marker.addListener('mouseover', function () {
-                    infowindow.open($scope.map, marker);
-                });
-
-                marker.addListener('mouseout', function () {
-                    infowindow.close();
-                });
-
-            });
-        })
-        .then(function () {
-            districts.forEach(function (district) {
-                district.memorials = [];
-
-                records.forEach(function (data) {
-                    if (district.district == data.district)
-                        district.memorials.push(data);
+                district.coords.forEach(function (coords) {
+                    if (coords.longitude == data.longitude && coords.latitude == data.latitude) {
+                        data.district = district.district;
+                    }
                 });
             });
+        });
+    }).then(function() {
+        $scope.districts.forEach(function (data) {
+            data.memorials = [];
+            records.forEach(function (record) {
+                if (data.district == record.district)
+                    data.memorials.push(record);
+            })
         })
-        .then(function () {
-            districts.forEach(function (data) {
-                var length = data.memorials.length;
+    });
+
+    $scope.initialize = function () {
+        var promise = new Promise(function(resolve, reject) {
+            resolve($scope.districts);
+        })
+
+        $scope.map = {
+            center: {
+                latitude: 46.748359,
+                longitude: 30.150735
+            },
+            zoom: 7,
+            markers: []
+        };
+
+        $scope.districts.forEach(function (data) {
+            $scope.polygons.push({
+                path: data.coords,
+                stroke: {
+                    color: 'black',
+                    weight: 1
+                },
+                editable: true,
+                draggable: true,
+                geodesic: false,
+                visible: true,
+                fill: {
+                    color: '#C3E1FF',
+                    opacity: 0.35
+                },
+                events: $scope.events
+            });
+        })
+    }
+
+    $scope.highlight = function (map) {
+        records.forEach(function (data) {
+            var marker = {
+                id: Date.now(),
+                coords: {
+                    latitude: data.latitude,
+                    longitude: data.longitude
+                },
+                events: {
+                    mouseover: onMouseOver,
+                    mouseout: onMouseOut
+                },
+                data: data
+            };
+            map.markers.push(marker);
+        });
+    };
+
+    $scope.highlightRegions = function() {
+
+            $scope.districts.forEach(function(area) {
                 var fillColor;
+                var length = area.memorials.length;
 
                 if (length == 0) {
                     fillColor = "#ffffff";
@@ -104,64 +111,44 @@ angular.module('main').controller('MapController', function(DatasetFactory, Filt
                 if (length == 1) {
                     fillColor = "blue";
                 }
-                if (length == 2) {
+                if (length >= 2) {
                     fillColor = "red";
                 }
 
-                var district = new google.maps.Polygon({
-                    paths: data.coords,
-                    strokeColor: 'black',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 1,
-                    fillColor: fillColor,
-                    fillOpacity: 0.35
+                $scope.polygons.push({
+                    path: area.coords,
+                    stroke: {
+                        color: 'black',
+                        weight: 1
+                    },
+                    editable: true,
+                    draggable: true,
+                    geodesic: false,
+                    visible: true,
+                    fill: {
+                        color: fillColor,
+                        opacity: 0.35
+                    },
                 });
-
-                district.setMap($scope.map);
             })
-        });
+    }
+
+
+    $scope.reset = function(map) {
+        $scope.polygons = [];
+        $scope.initialize();
+    }
+
+    function onMouseOver() {
+        console.log('b');
+        $scope.windowOptions.visible = !$scope.windowOptions.visible;
     };
 
-    $scope.highlight = function () {
-        $scope.$watch('map', function() {
-            if($scope.map) {
-                records = DatasetFactory.getExampleDatasets()[2].result.records;
+    function onMouseOut() {
+        console.log('br');
+        $scope.windowOptions.visible = false;
+    };
 
-                console.log($scope.map);
-
-
-
-                alert('highlight');
-                console.log(marker);
-            }
-
-        })
-
-
-        //records.forEach(function (data) {
-        //    districts.forEach(function (district) {
-        //        district.coords.forEach(function (coords) {
-        //            if (coords.lng == data.lon && coords.lat == data.lat) {
-        //                data.district = district.district;
-        //            }
-        //        });
-        //    });
-
-            //var infowindow = new google.maps.InfoWindow({
-            //    content: data.Naimenovanie + '<br>' +
-            //    'Location: ' + data.Location + '<br>' + 'Coordinates: ' + data.lat + ' ' + data.lon + '<br>' +
-            //    'District: ' + data.district
-            //});
-            //
-            //
-            //marker.addListener('mouseover', function () {
-            //    infowindow.open($scope.map, marker);
-            //});
-            //
-            //marker.addListener('mouseout', function () {
-            //    infowindow.close();
-            //});
-
-    }
+    $scope.title = "Window Title!";
 });
 

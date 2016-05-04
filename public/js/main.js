@@ -2,9 +2,10 @@
   angular.module('main',
     [
       'highcharts-ng',
-      'ui.router'
+      'ui.router',
+      'uiGmapgoogle-maps'
     ])
-    .config(function($locationProvider, $stateProvider, $urlRouterProvider) {
+    .config(function($locationProvider, $stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
       $locationProvider.html5Mode({
         enabled: true,
         requireBase: false
@@ -31,5 +32,11 @@
           templateUrl: '../pages/map.html',
           controller: 'MapController'
         })
+
+        uiGmapGoogleMapApiProvider.configure({
+           key: 'AIzaSyCaL34OGHlD9TpvJGoPT1MT4bZ_wJAjGNQ',
+            v: '3.20',
+            libraries: 'weather,geometry,visualization'
+        });
   })
 })();
