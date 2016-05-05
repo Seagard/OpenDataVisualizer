@@ -20,7 +20,7 @@ angular.module('main').controller('EditorController', [
           $scope.isDatasetLoading = false;
           $scope.datasetOrIdentifier = '';
           $scope.isEditingActive = true;
-        }, 3000);
+        }, 500);
       });
 
       //TODO: make request for dataset loading

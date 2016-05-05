@@ -4,42 +4,40 @@
             <p>Вкажіть посилання або ідентифікатор набору даних (для порталу data.ngorg.od.ua)</p>
             <form ng-submit="loadDataset(datasetOrIdentifier)">
                 <div layout-gt-xs="row">
-                    <md-input-container class="md-block" flex-gt-xs>
-                        <label>Адреса або ідентифікатор</label>
-                        <input ng-model="datasetOrIdentifier">
-                    </md-input-container>
-                    <md-input-container>
-                        <md-button type="submit" class="md-raised md-primary">Відкрити</md-button>
-                    </md-input-container>
+                    <label for="datasetId">Адреса або ідентифікатор</label>
+                    <input id="datasetId" ng-model="datasetOrIdentifier">
+                    <button type="submit" class="md-raised md-primary">Відкрити</button>
                 </div>
             </form>
-            <md-progress-linear ng-show="isDatasetLoading" md-mode="indeterminate"></md-progress-linear>
+            <span ng-show="isDatasetLoading">Завантаження...</span>
         </div>
         <div ng-switch-when="true">
             <p>Відредагуйте та доповніть набір даних</p>
             <div>
-                <md-list>
-                    <md-list-item ng-repeat="field in dataset.fields">
-                        <div layout-gt-xs="row">
-                            <md-input-container class="md-block" flex-gt-xs>
-                                <label>Назва поля</label>
-                                <input ng-model="field.id">
-                            </md-input-container>
-                            <md-input-container class="md-block" flex-gt-xs>
-                                <label>Тип даних</label>
-                                <input ng-model="field.type">
-                            </md-input-container>
-                            <md-input-container class="md-block" flex-gt-xs>
-                                <label>Тип візуалізації</label>
-                                <input ng-model="field.visualization">
-                            </md-input-container>
-                        </div>
-                        <md-divider ></md-divider>
-                    </md-list-item>
-                </md-list>
-                <md-input-container style="float: right">
-                    <md-button type="submit" class="md-raised">Зберегти</md-button>
-                </md-input-container>
+                <label>Назва набору даних</label>
+                <input ng-model="dataset.name">
+                <ul>
+                    <li ng-repeat="field in dataset.fields">
+                        <label>Назва поля</label>
+                        <input type="text" ng-model="field.id">
+                        <label>Тип даних</label>
+                        <input type="text" ng-model="field.type">
+                        <label>Тип візуалізації</label>
+                        <select>
+                            <option value="line">Line chart</option>
+                            <option value="area">Area chart</option>
+                            <option value="bar">Bar chart</option>
+                        </select>
+                        <label>Геодані</label>
+                        <input type="checkbox" ng-model="hasGeoData">
+                        <select ng-show="hasGeoData">
+                            <option value="lat">Lat</option>
+                            <option value="lon">Lon</option>
+                        </select>
+                        <hr>
+                    </li>
+                </ul>
+                <button type="submit" class="md-raised">Зберегти</button>
             </div>
         </div>
     </div>
