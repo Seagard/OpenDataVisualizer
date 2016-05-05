@@ -1,4 +1,4 @@
-<div  style="height: 100%" ng-controller="MapController">
+<div  style="height: 100%;  margin-bottom: 10px" ng-controller="MapController">
     <div id="map_canvas" >
         <ui-gmap-google-map center="map.center" zoom="map.zoom" options="options">
             <ui-gmap-polygon static="true" ng-repeat="p in polygons" path="p.path" stroke="p.stroke"
@@ -10,7 +10,15 @@
             </ui-gmap-marker>
         </ui-gmap-google-map>
         </div>
-    <button class="action" ng-click="highlight(map)">Highlight</button>
-    <button class="action" ng-click="highlightRegions(map)">Highlight regions</button>
-    <button class="action" ng-click="reset(map)">Reset</button>
+    <select ng-options="dataset.name for dataset in datasets"
+            ng-model="selectedItem"
+            ng-change="choose()">
+    </select>
+    <br>
+    <div ng-show="showActions">
+        <button class="action" ng-click="highlight(map)">Показати об'екти</button>
+        <button class="action" ng-click="highlightRegions(map)">Статiстика за районами</button>
+        <button class="action" ng-click="reset(map)">Очистити</button>
+    </div>
+
 </div>

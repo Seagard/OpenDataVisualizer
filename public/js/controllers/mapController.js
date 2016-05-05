@@ -7,6 +7,8 @@ angular.module('main').controller('MapController', function(DatasetFactory, Filt
 
     $scope.options = {scrollwheel: false};
     $scope.polygons = [];
+    $scope.datasets = DatasetFactory.getExampleDatasets();
+    $scope.showActions = false;
 
     $scope.events = {
         mouseover: mouseOver,
@@ -101,42 +103,52 @@ angular.module('main').controller('MapController', function(DatasetFactory, Filt
 
     $scope.highlightRegions = function() {
 
-            $scope.districts.forEach(function(area) {
-                var fillColor;
-                var length = area.memorials.length;
+        $scope.districts.forEach(function(area) {
+            var fillColor;
+            var length = area.memorials.length;
 
-                if (length == 0) {
-                    fillColor = "#ffffff";
-                }
-                if (length == 1) {
-                    fillColor = "blue";
-                }
-                if (length >= 2) {
-                    fillColor = "red";
-                }
+            if (length == 0) {
+                fillColor = "#ffffff";
+            }
+            if (length == 1) {
+                fillColor = "blue";
+            }
+            if (length >= 2) {
+                fillColor = "red";
+            }
 
-                $scope.polygons.push({
-                    path: area.coords,
-                    stroke: {
-                        color: 'black',
-                        weight: 1
-                    },
-                    editable: true,
-                    draggable: true,
-                    geodesic: false,
-                    visible: true,
-                    fill: {
-                        color: fillColor,
-                        opacity: 0.35
-                    },
-                });
-            })
+            $scope.polygons.push({
+                path: area.coords,
+                stroke: {
+                    color: 'black',
+                    weight: 1
+                },
+                editable: true,
+                draggable: true,
+                geodesic: false,
+                visible: true,
+                fill: {
+                    color: fillColor,
+                    opacity: 0.35
+                },
+            });
+        })
     }
 
 
     $scope.reset = function(map) {
         $scope.polygons = [];
         $scope.initialize();
+    }
+
+    $scope.choose = function() {
+        console.log($scope.selectedItem);
+
+        if($scope.selectedItem.name === "Пам'ятники 1 та 2 свiтових вiйн") {
+            $scope.showActions = true;
+        } else {
+            $scope.showActions = false;
+        }
     }
 
     function onMouseOver() {
