@@ -2,6 +2,8 @@
 
 var fs = require('fs');
 var http = require('http');
+var URL = require('url');
+var queryString = require('querystring');
 var analyse = require('../analyse/analyse.js');
 var _ = require('underscore');
 
@@ -62,6 +64,18 @@ function loadDataset(req, res) {
   });
 }
 
+function loadDatasetFromUrl(req, res) {
+  var url = URL.parse(req.body.url);
+  loadData(url.host, url.path).then(function(resp) {
+    if(!fs.existsSync('datasets/' + queryString.parse(url.query).resource_id + '.json')) {
+      fs.writeFileSync('datasets/' + queryString.parse(url.query).resource_id + '.json', JSON.stringify(resp));
+    }
+    res.json(resp);
+  }).catch(function(err) {
+    res.status(500).json(err);
+  })
+}
+
 function getDatasetById(req, res, next) {
   var datasetId = req.params.id;
   if(datasetId == 'undefined') {
@@ -116,5 +130,6 @@ module.exports = {
   getUnitedDatasets,
   loadDataset,
   getDatasetById,
-  getDatasetList
+  getDatasetList,
+  loadDatasetFromUrl
 };

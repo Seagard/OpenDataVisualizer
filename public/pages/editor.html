@@ -22,8 +22,9 @@
                         <input type="text" ng-model="field.id">
                         <label>Тип даних</label>
                         <input type="text" ng-model="field.type">
-                        <label>Тип візуалізації</label>
-                        <select>
+                        <label>Графіка</label>
+                        <input type="checkbox" ng-model="hasGraphics">
+                        <select ng-show="hasGraphics">
                             <option value="line">Line chart</option>
                             <option value="area">Area chart</option>
                             <option value="bar">Bar chart</option>
