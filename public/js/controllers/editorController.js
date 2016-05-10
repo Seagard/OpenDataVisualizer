@@ -8,19 +8,13 @@ angular.module('main').controller('EditorController', [
     $scope.datasetOrIdentifier = '';
     $scope.isDatasetLoading = false;
     $scope.isEditingActive = false;
-    $scope.loadDataset = function (datasetOrIdentifier) {
+    $scope.loadDataset = function (url) {
       $scope.isDatasetLoading = true;
 
-      //Testing
-      DatasetFactory.getAllDatasets(function(datasets) {
-        $scope.dataset = datasets[0];
-
-        //Imitating loading
-        $timeout(function() {
-          $scope.isDatasetLoading = false;
-          $scope.datasetOrIdentifier = '';
-          $scope.isEditingActive = true;
-        }, 3000);
+      DatasetFactory.loadDatasetFromUrl(url).then(function(resp) {
+        $scope.isDatasetLoading = false;
+        $scope.isEditingActive = true;
+        $scope.dataset = JSON.parse(resp).result;
       });
 
       //TODO: make request for dataset loading

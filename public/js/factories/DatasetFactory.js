@@ -52,6 +52,15 @@ angular.module('main').factory('DatasetFactory', function($http, $q) {
         });
     }
 
+    function loadDatasetFromUrl(url) {
+        return $q(function(resolve, reject) {
+            $http.post('/api/dataset/loadfromurl', {url: url}).then(function(resp) {
+                resolve(resp.data);
+            }).catch(function(err) {
+                reject(err);
+            })
+        })
+    }
 
     function getDatasetList() {
         return $q(function(resolve, reject) {
@@ -89,6 +98,7 @@ angular.module('main').factory('DatasetFactory', function($http, $q) {
         getUnitedDataset: getUnitedDataset,
         getExampleDatasets: getExampleDatasets,
         getDatasetById: getDatasetById,
-        getDatasetList: getDatasetList
+        getDatasetList: getDatasetList,
+        loadDatasetFromUrl: loadDatasetFromUrl
     }
 });

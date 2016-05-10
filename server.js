@@ -2,6 +2,7 @@
 
 var express = require('express');
 var fs = require('fs');
+var bodyParser = require('body-parser');
 var app = express();
 
 var contents = fs.readFileSync('data/regions.json');
@@ -11,6 +12,7 @@ var apiUrl = '/api';
 
 app.use(express.static(__dirname + '/public'));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
+app.use(bodyParser());
 
 /**
  *  API
@@ -21,6 +23,7 @@ var datasetApi = require('./api/dataset');
 app.get(apiUrl + '/dataset/all', datasetApi.getAllDatasets);
 app.get(apiUrl + '/dataset/united', datasetApi.getUnitedDatasets);
 app.get(apiUrl + '/dataset/list', datasetApi.getDatasetList);
+app.post(apiUrl + '/dataset/loadfromurl', datasetApi.loadDatasetFromUrl);
 app.get(apiUrl + '/dataset/:id', datasetApi.getDatasetById);
 app.get('/open/:id', datasetApi.loadDataset);
 
