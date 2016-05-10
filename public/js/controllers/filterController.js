@@ -6,6 +6,8 @@ angular.module('main').controller('FilterController', function(DatasetFactory, F
     vm.filteredDataset.fields = [];
     vm.filteredDataset.records = [];
 
+    vm.datasets = DatasetFactory.getExampleDatasets();
+
     DatasetFactory.getUnitedDataset(function(data) {
         vm.dataset = data;
         console.log(vm.dataset);
