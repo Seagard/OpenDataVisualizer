@@ -1164,7 +1164,7 @@ body, html {
 }
 
 .container .left {
-	width: 80%;
+	width: 100%;
 	border: solid 1px #ff650f;
 }
 

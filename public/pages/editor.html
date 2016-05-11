@@ -1,46 +1,56 @@
 <div ng-controller="EditorController">
-    <div ng-switch="isEditingActive">
-        <div ng-switch-when="false">
-            <p>Вкажіть посилання або ідентифікатор набору даних (для порталу data.ngorg.od.ua)</p>
-            <form ng-submit="loadDataset(datasetOrIdentifier)">
-                <div layout-gt-xs="row">
-                    <label for="datasetId">Адреса або ідентифікатор</label>
-                    <input id="datasetId" ng-model="datasetOrIdentifier">
-                    <button type="submit" class="md-raised md-primary">Відкрити</button>
-                </div>
-            </form>
-            <span ng-show="isDatasetLoading">Завантаження...</span>
-        </div>
-        <div ng-switch-when="true">
-            <p>Відредагуйте та доповніть набір даних</p>
-            <div>
-                <label>Назва набору даних</label>
-                <input ng-model="dataset.name">
-                <ul>
-                    <li ng-repeat="field in dataset.fields">
-                        <label>Назва поля</label>
-                        <input type="text" ng-model="field.id">
-                        <label>Тип даних</label>
-                        <input type="text" ng-model="field.type">
-                        <label>Графіка</label>
-                        <input type="checkbox" ng-model="hasGraphics">
-                        <select ng-show="field.graphics || hasGraphics" ng-model="field.graphics">
-                            <option ng-repeat="option in graphicTypes" value="{{option.value}}">
-                                {{option.name}}
-                            </option>
-                        </select>
-                        <label>Геодані</label>
-                        <input type="checkbox" ng-model="hasGeoData">
-                        <select ng-show="field.geoData || hasGeoData" ng-model="field.geoData">
-                            <option ng-repeat="option in geoTypes" value="{{option.value}}">
-                                {{option.name}}
-                            </option>
-                        </select>
-                        <hr>
-                    </li>
-                </ul>
-                <button type="submit" class="md-raised" ng-click="save()">Зберегти</button>
+    <div ng-switch="isEditingActive" class="container">
+        <div class="left">
+            <div ng-switch-when="false">
+                <p>Вкажіть посилання або ідентифікатор набору даних (для порталу data.ngorg.od.ua)</p>
+                <form ng-submit="loadDataset(datasetOrIdentifier)">
+                    <div layout-gt-xs="row">
+                        <label for="datasetId">Адреса або ідентифікатор</label>
+                        <input id="datasetId" ng-model="datasetOrIdentifier">
+                        <button type="submit" class="md-raised md-primary">Відкрити</button>
+                    </div>
+                </form>
+                <span ng-show="isDatasetLoading">Завантаження...</span>
             </div>
+            <div ng-switch-when="true">
+                <p>Відредагуйте та доповніть набір даних</p>
+                <div>
+                    <label>Назва набору даних</label>
+                    <input ng-model="dataset.name">
+                    <ul>
+                        <li ng-repeat="field in dataset.fields">
+                            <label>Назва поля</label>
+                            <input type="text" ng-model="field.id">
+                            <label>Тип даних</label>
+                            <input type="text" ng-model="field.type">
+                            <label>Графіка</label>
+                            <input type="checkbox" ng-model="hasGraphics">
+                            <select ng-show="field.graphics || hasGraphics" ng-model="field.graphics">
+                                <option ng-repeat="option in graphicTypes" value="{{option.value}}">
+                                    {{option.name}}
+                                </option>
+                            </select>
+                            <label>Геодані</label>
+                            <input type="checkbox" ng-model="hasGeoData">
+                            <select ng-show="field.geoData || hasGeoData" ng-model="field.geoData">
+                                <option ng-repeat="option in geoTypes" value="{{option.value}}">
+                                    {{option.name}}
+                                </option>
+                            </select>
+                            <hr>
+                        </li>
+                    </ul>
+                    <button type="submit" class="md-raised" ng-click="save()">Зберегти</button>
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <ul>
+                <li ng-repeat="dataset in datasetsList">
+                    <a href ng-bind="dataset.name" ng-click="openDataset(dataset.id)"></a>
+                    <hr>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

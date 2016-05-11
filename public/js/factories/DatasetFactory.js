@@ -73,10 +73,14 @@ angular.module('main').factory('DatasetFactory', function($http, $q) {
     }
 
     function getDatasetById(datasetId) {
-        $http.get('/api/dataset/' + datasetId).then(function(resp) {
-            notifyDatasetLoaded(resp.data);
-        }).catch(function(err) {
-            console.log(err);
+        return $q(function(resolve, reject) {
+            $http.get('/api/dataset/' + datasetId).then(function(resp) {
+                notifyDatasetLoaded(resp.data);
+                resolve(resp.data);
+            }).catch(function(err) {
+                console.log(err);
+                reject(err);
+            })
         })
     }
 
