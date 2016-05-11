@@ -4,6 +4,17 @@ angular.module('main').controller('EditorController', [
   '$timeout',
   'DatasetFactory',
   function($scope, $http, $timeout, DatasetFactory) {
+    $scope.graphicTypes = [
+      {value: 'line', name: 'Line chart'},
+      {value: 'area', name: 'Area chart'},
+      {value: 'bar', name: 'Bar chart'}
+    ];
+    $scope.geoTypes = [
+      {value: 'lat', name: 'Latitude'},
+      {value: 'lon', name: 'Longitude'},
+      {value: 'region', name: 'Region'}
+    ];
+
     $scope.dataset = {};
     $scope.datasetOrIdentifier = '';
     $scope.isDatasetLoading = false;
