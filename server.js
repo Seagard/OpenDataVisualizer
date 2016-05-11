@@ -25,6 +25,8 @@ app.get(apiUrl + '/dataset/united', datasetApi.getUnitedDatasets);
 app.get(apiUrl + '/dataset/list', datasetApi.getDatasetList);
 app.post(apiUrl + '/dataset/loadfromurl', datasetApi.loadDatasetFromUrl);
 app.get(apiUrl + '/dataset/:id', datasetApi.getDatasetById);
+app.post(apiUrl + '/dataset/update/:id', datasetApi.updateDataset);
+
 app.get('/open/:id', datasetApi.loadDataset);
 
 app.get('/json', function(req, res) {

@@ -73,11 +73,20 @@ angular.module('main').factory('DatasetFactory', function($http, $q) {
     }
 
     function getDatasetById(datasetId) {
-        console.log('Loading dataset: ', datasetId);
         $http.get('/api/dataset/' + datasetId).then(function(resp) {
             notifyDatasetLoaded(resp.data);
         }).catch(function(err) {
             console.log(err);
+        })
+    }
+
+    function updateDataset(dataset) {
+        return $q(function(resolve, reject) {
+            $http.post('/api/dataset/update/' + dataset.resource_id[0],{
+                dataset: dataset
+            }).then(function(resp) {
+                resolve(resp);
+            }).catch(function(err){ reject(err) })
         })
     }
 
@@ -99,6 +108,7 @@ angular.module('main').factory('DatasetFactory', function($http, $q) {
         getExampleDatasets: getExampleDatasets,
         getDatasetById: getDatasetById,
         getDatasetList: getDatasetList,
-        loadDatasetFromUrl: loadDatasetFromUrl
+        loadDatasetFromUrl: loadDatasetFromUrl,
+        updateDataset: updateDataset
     }
 });

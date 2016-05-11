@@ -24,21 +24,21 @@
                         <input type="text" ng-model="field.type">
                         <label>Графіка</label>
                         <input type="checkbox" ng-model="hasGraphics">
-                        <select ng-show="hasGraphics">
-                            <option value="line">Line chart</option>
+                        <select ng-show="hasGraphics" ng-model="field.graphics">
+                            <option value="line" selected>Line chart</option>
                             <option value="area">Area chart</option>
                             <option value="bar">Bar chart</option>
                         </select>
                         <label>Геодані</label>
                         <input type="checkbox" ng-model="hasGeoData">
-                        <select ng-show="hasGeoData">
-                            <option value="lat">Lat</option>
+                        <select ng-show="hasGeoData" ng-model="field.geoData">
+                            <option value="lat" selected>Lat</option>
                             <option value="lon">Lon</option>
                         </select>
                         <hr>
                     </li>
                 </ul>
-                <button type="submit" class="md-raised">Зберегти</button>
+                <button type="submit" class="md-raised" ng-click="save()">Зберегти</button>
             </div>
         </div>
     </div>

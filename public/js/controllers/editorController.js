@@ -14,10 +14,15 @@ angular.module('main').controller('EditorController', [
       DatasetFactory.loadDatasetFromUrl(url).then(function(resp) {
         $scope.isDatasetLoading = false;
         $scope.isEditingActive = true;
-        $scope.dataset = JSON.parse(resp).result;
+        $scope.dataset = resp.result;
       });
+    };
 
-      //TODO: make request for dataset loading
+    $scope.save = function() {
+      DatasetFactory.updateDataset($scope.dataset).then(function() {
+        $scope.isDatasetLoading = false;
+        $scope.isEditingActive = false;
+      })
     }
   }
 ]);
