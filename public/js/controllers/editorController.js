@@ -15,9 +15,13 @@ angular.module('main').controller('EditorController', [
       {value: 'region', name: 'Region'}
     ];
 
-    DatasetFactory.getDatasetList().then(function(resp) {
-      $scope.datasetsList = resp;
-    });
+    function loadDatasetList() {
+      DatasetFactory.getDatasetList().then(function(resp) {
+        $scope.datasetsList = resp;
+      });
+    }
+
+    loadDatasetList();
 
     $scope.dataset = {};
     $scope.datasetOrIdentifier = '';
@@ -37,7 +41,14 @@ angular.module('main').controller('EditorController', [
       DatasetFactory.updateDataset($scope.dataset).then(function() {
         $scope.isDatasetLoading = false;
         $scope.isEditingActive = false;
+        loadDatasetList();
       })
+    };
+
+    $scope.cancelEdit = function() {
+      $scope.isDatasetLoading = false;
+      $scope.isEditingActive = false;
+      $scope.dataset = {};
     };
 
     $scope.openDataset = function(datasetId) {
