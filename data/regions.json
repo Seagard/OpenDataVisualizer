@@ -1,6 +1,6 @@
  [
     {
-      "district": "Saratskiy",
+      "district": "Саратський",
       "coords": [
 	 	{"longitude": 29.4735244,   "latitude": 46.1591784},
 	 {"longitude": 29.479072,     "latitude": 46.1600454},
@@ -815,7 +815,7 @@
 	]},
 
 	 {
-    "district": "Baltskiy",
+    "district": "Балтський",
     "coords": [
   {"longitude": 29.3633645  , "latitude": 48.0929874
   }, {"longitude": 29.3688823  , "latitude": 48.0945809
@@ -2207,7 +2207,7 @@
 },
 
 	   {
-    "district": "Kodymskiy",
+    "district": "Кодимський",
     "coords": [
   {"longitude": 28.8508356  , "latitude": 48.0786575
   }, {"longitude": 28.8492761  , "latitude": 48.0787504
@@ -3364,7 +3364,7 @@
 	
 	
 	{
-  "district": "Ananievskiy",
+  "district": "Ананiiвський",
   "coords": [
   {"longitude": 29.6310017  , "latitude": 47.8002606
   }, {"longitude": 29.6314467  , "latitude": 47.8000729
@@ -4542,9 +4542,8 @@
     }
   ]
 },
-	
 	{
-  "district": "Liubashevskiy",
+  "district": "Любашевський",
   "coords": [
   { "longitude": 29.8615867  , "latitude": 47.8715002
   }, { "longitude": 29.8612394  , "latitude": 47.870415
@@ -5438,7 +5437,7 @@
 },
 
 	  {
-  "district": "Shiryaevskiy",
+  "district": "Ширяевський",
   "coords": [
   {"longitude": 29.9765642  , "latitude": 47.4360562
   }, {"longitude": 29.9790072  , "latitude": 47.4363761
@@ -6161,7 +6160,7 @@
 },
 
 	    {
-  "district": "Frunzevskiy",
+  "district": "Фрунзевський",
   "coords": [
   {"longitude": 29.5674546  , "latitude": 47.1868594
   }, {"longitude": 29.5698352  , "latitude": 47.1870594
@@ -6873,7 +6872,7 @@
 },
 
 	 {
-  "district": "Ivanovskiy",
+  "district": "Iвановський",
   "coords": [
   {"longitude": 30.1376304  , "latitude": 46.9797128
   }, {"longitude": 30.1367807  , "latitude": 46.9847251
@@ -7453,7 +7452,7 @@
 	
 	 
 	{
-  "district": "Krasnooknenskiy",
+  "district": "Красноокненський",
   "coords": [
    {"longitude": 29.1774913  , "latitude": 47.4699506
   }, {"longitude": 29.1709172  , "latitude": 47.4664264
@@ -8270,7 +8269,7 @@
 },
 
 	{
-      "district": "Tatarbunarskiy",
+      "district": "Татарбунарський",
       "coords": [
    {"longitude": 29.3155211  , "latitude": 45.7312461
   }, {"longitude": 29.3156129  , "latitude": 45.7305876
@@ -9490,7 +9489,7 @@
 },
 	
 	  {
-      "district": "Rozdilna",
+      "district": "Роздiльнянський",
       "coords": [
   {"longitude": 29.8467853  , "latitude": 46.8820365
   }, {"longitude": 29.8494406  , "latitude": 46.8821062
@@ -10951,7 +10950,7 @@
 },
 
 	{
-  "district": "Berezovka",
+  "district": "Березовський",
   "coords": [
   {"longitude": 30.4627311  , "latitude": 47.2781018
   }, {"longitude": 30.466826 , "latitude": 47.2787466
@@ -11705,7 +11704,7 @@
 },
 
 	{
-  "district": "Tarutinskiy",
+  "district": "Тарутинський",
   "coords": [
   {"longitude": 28.9523067  , "latitude": 46.2594674
   }, {"longitude": 28.9561799  , "latitude": 46.2570229
@@ -12579,7 +12578,7 @@
 },
 
 	{
-  "district": "Savran",
+  "district": "Савранський",
   "coords": [
    {"longitude": 29.8755123  , "latitude": 48.189131
   }, {"longitude": 29.8764252  , "latitude": 48.1882752
@@ -13459,7 +13458,7 @@
 },
 
 	  {
-  "district": "Mykolaivka",
+  "district": "Миколаiвський",
   "coords": [
   {"longitude": 30.2969486  , "latitude": 47.5567674
   }, {"longitude": 30.3049246  , "latitude": 47.5577991
@@ -14081,7 +14080,7 @@
 },
 
 	{
-  "district": "Bolgrad",
+  "district": "Болградський",
   "coords": [
   {"longitude": 28.4861378  , "latitude": 45.6604738
   }, {"longitude": 28.5002643  , "latitude": 45.6631973
@@ -14943,7 +14942,7 @@
 },
 
  {
-  "district": "Izmail",
+  "district": "Iзмаiльський",
   "coords": [
  {"longitude": 28.6319126  , "latitude": 45.2443522
   }, {"longitude": 28.6359619  , "latitude": 45.24402
@@ -16818,7 +16817,7 @@
 },
 
 	  {
-  "district": "Reni",
+  "district": "Ренiйскьий",
   "coords": [
   {"longitude": 28.2117365  , "latitude": 45.4667022
   }, {"longitude": 28.2143425  , "latitude": 45.4663901
@@ -17529,7 +17528,7 @@
 },
 
 	 {
-  "district": "Artsyz",
+  "district": "Арцизський",
   "coords": [
      {"longitude": 29.036646 , "latitude": 45.8717124
   }, {"longitude": 29.0320862  , "latitude": 45.871035
@@ -18721,7 +18720,7 @@
 },
 
 	 {
-  "district": "Odesa",
+  "district": "м. Одеса",
   "coords": [
 	 {"longitude": 30.6144813	, "latitude": 46.4861549
 	}, {"longitude": 30.6146024	, "latitude": 46.4862647
@@ -20180,7 +20179,7 @@
 	},
 
 	{
-  "district": "Kiliya",
+  "district": "Кiлiйський",
   "coords": [
 	{"longitude": 29.1046643	, "latitude": 45.7218671
 	}, {"longitude": 29.1055351	, "latitude": 45.7193906
@@ -22473,7 +22472,7 @@
 	},
 
 	{
-  "district": "Komint",
+  "district": "Комiнтернiвський",
   "coords": [
 		{"longitude": 30.5945341	, "latitude": 46.7813252
 	}, {"longitude": 30.5941596	, "latitude": 46.7819464
@@ -23478,7 +23477,7 @@
 	},
 
 	{
-      "district": "Belyaevskiy",
+      "district": "Бiляевський",
       "coords": [
 	{"longitude": 29.8759237	, "latitude": 46.5466938
 	}, {"longitude": 29.8775515	, "latitude": 46.5441138
@@ -25228,7 +25227,7 @@
 
 
 	{
-      "district": "Ovidiopol",
+      "district": "Овiдiопольский",
       "coords": [
 	{"longitude": 30.2718793	, "latitude": 46.3750859
 	}, {"longitude": 30.2717111	, "latitude": 46.3745389
@@ -25990,7 +25989,7 @@
 },
 
 	{
-      "district": "Bilhorod",
+      "district": "Бiлгород-Днiстровський",
       "coords": [
 	 {"longitude": 29.6602079	, "latitude": 46.435844
 	}, {"longitude": 29.6786872	, "latitude": 46.4415723
@@ -27034,7 +27033,7 @@
 },
 
 	{
-      "district": "Kotovskiy",
+      "district": "Котовський",
       "coords": [
 	{"longitude": 29.209449	, "latitude": 47.8081109
 	}, {"longitude": 29.2102244	, "latitude": 47.8072986

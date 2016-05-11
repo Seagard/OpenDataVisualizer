@@ -5,7 +5,13 @@
              visible="p.visible" geodesic="p.geodesic" fill="p.fill" fit="false" events="p.events"></ui-gmap-polygon>
             <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id">
                 <ui-gmap-window options="windowOptions" closeClick="closeClick()">
-                    <div>{{m.data}}</div>
+                    <div>
+                        <div>{{m.data.Naimenovanie}}</div>
+                        <div>{{m.data.Location}}</div>
+                        <div>{{m.data.Mesce}}</div>
+                        <div>Район: {{m.data.district}}</div>
+                        <div>{{m.data.latitude}} {{m.data.longitude}}</div>
+                    </div>
                 </ui-gmap-window>
             </ui-gmap-marker>
         </ui-gmap-google-map>
