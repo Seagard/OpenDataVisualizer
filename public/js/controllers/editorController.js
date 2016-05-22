@@ -3,7 +3,8 @@ angular.module('main').controller('EditorController', [
   '$http',
   '$timeout',
   'DatasetFactory',
-  function($scope, $http, $timeout, DatasetFactory) {
+  '$mdToast',
+  function($scope, $http, $timeout, DatasetFactory, $mdToast) {
     $scope.graphicTypes = [
       {value: 'line', name: 'Line chart'},
       {value: 'area', name: 'Area chart'},
@@ -14,6 +15,15 @@ angular.module('main').controller('EditorController', [
       {value: 'lon', name: 'Longitude'},
       {value: 'region', name: 'Region'}
     ];
+    $scope.dataset = {};
+    $scope.datasetOrIdentifier = '';
+    $scope.isDatasetLoading = false;
+    $scope.isEditingActive = false;
+    $scope.selectedDownloadedDataset = null;
+
+    function activate() {
+      loadDatasetList();
+    }
 
     function loadDatasetList() {
       DatasetFactory.getDatasetList().then(function(resp) {
@@ -21,12 +31,6 @@ angular.module('main').controller('EditorController', [
       });
     }
 
-    loadDatasetList();
-
-    $scope.dataset = {};
-    $scope.datasetOrIdentifier = '';
-    $scope.isDatasetLoading = false;
-    $scope.isEditingActive = false;
     $scope.loadDataset = function (url) {
       $scope.isDatasetLoading = true;
 
@@ -39,6 +43,8 @@ angular.module('main').controller('EditorController', [
 
     $scope.save = function() {
       DatasetFactory.updateDataset($scope.dataset).then(function() {
+        $scope.selectedDownloadedDataset = null;
+        $scope.showActionToast();
         $scope.isDatasetLoading = false;
         $scope.isEditingActive = false;
         loadDatasetList();
@@ -49,14 +55,30 @@ angular.module('main').controller('EditorController', [
       $scope.isDatasetLoading = false;
       $scope.isEditingActive = false;
       $scope.dataset = {};
+      $scope.selectedDownloadedDataset = null;
     };
 
-    $scope.openDataset = function(datasetId) {
-      DatasetFactory.getDatasetById(datasetId).then(function(dataset) {
+    $scope.openDataset = function() {
+      DatasetFactory.getDatasetById($scope.selectedDownloadedDataset)
+        .then(function(dataset) {
         $scope.dataset = dataset.result;
         $scope.isDatasetLoading = false;
         $scope.isEditingActive = true;
       })
-    }
+    };
+
+    $scope.showActionToast = function() {
+      var toast = $mdToast.simple()
+        .textContent('Набір даних збережено')
+        .action('OK')
+        .highlightAction(false);
+      $mdToast.show(toast).then(function(response) {
+        if(response == 'ok') {
+          //'OK' clicked action
+        }
+      });
+    };
+
+    activate();
   }
 ]);
