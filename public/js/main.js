@@ -3,7 +3,8 @@
     [
       'highcharts-ng',
       'ui.router',
-      'uiGmapgoogle-maps'
+      'uiGmapgoogle-maps',
+      'ngMaterial'
     ])
     .config(function($locationProvider, $stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
       $locationProvider.html5Mode({
