@@ -16,14 +16,12 @@
     "tests"
   ],
   "dependencies": {
-    "angular-chart.js": "~0.8.8",
-    "Chart.js": "chartjs#~1.0.2",
-    "angular-chart": "~0.3.2",
     "jquery": ">=1.11.0",
     "angular-material": "^1.0.6",
     "angular-animate": "^1.5.2",
     "angular": "^1.5.2",
     "angular-simple-logger": "^0.1.7",
-    "angular-google-maps": "^2.3.2"
+    "angular-google-maps": "^2.3.2",
+    "angular-ui-router": "^0.3.0"
   }
 }
