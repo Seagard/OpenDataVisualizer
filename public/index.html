@@ -14,52 +14,33 @@
 </head>
 <body ng-controller="mainController as main">
 
-<md-toolbar>
+<md-toolbar fix-top ng-cloack>
 	<div class="md-toolbar-tools">
 		<h2>
 			<span>Візуалізація відкритих даних</span>
 		</h2>
 		<span flex></span>
-		<md-button class="md-raised" aria-label="Learn More" ui-sref="data">
-			Дані
-		</md-button>
-		<md-button class="md-raised" aria-label="Learn More" ui-sref="graphic">
-			Інфографіка
-		</md-button>
-		<md-button class="md-raised" aria-label="Learn More" ui-sref="map">
-			Карта
-		</md-button>
-		<md-button class="md-raised" aria-label="Learn More" ui-sref="editor">
-			Завантаження
+		<md-button ng-repeat="button in main.buttons" ui-sref="{{button.sref}}" class="md-raised">
+			{{button.name}}
 		</md-button>
 	</div>
 </md-toolbar>
-<div class="container">
-	<div class="left">
+<div layout="row" class="all-view">
+	<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+		<md-toolbar class="md-theme-indigo">
+			<h1 class="md-toolbar-tools">Набори даних</h1>
+		</md-toolbar>
+		<md-content layout-padding>
+			<md-list>
+				<md-list-item ng-repeat="dataset in main.datasetList" ng-click="main.openDataset(dataset)">
+					<span ng-bind="dataset.name"></span>
+					<md-divider></md-divider>
+				</md-list-item>
+			</md-list>
+		</md-content>
+	</md-sidenav>
+	<div class="view-container">
 		<div ui-view class="main"></div>
-	</div>
-	<div class="right filter" ng-controller="FilterController as filter" ng-show="main.isDataStateActive">
-		<div ng-repeat="field in filter.fields">
-			<label ng-if="field.type == 'select'" for="{{field.id}}"><span ng-bind="field.id"></span></label>
-			<br>
-			<select class="dropdown" ng-change="filter.applyFilter(field.id, field.selectedVal)"  ng-if="field.type == 'select'" id="{{field.id}}" ng-model="field.selectedVal">
-				<option value="-1" selected="selected"></option>
-				<option ng-repeat="value in field.values" value="{{value.id}}">{{value.name}}</option>
-			</select>
-
-			<label ng-if="field.type == 'range'" for="{{field.id}}"><span ng-bind="field.id"></span></label>
-			<br>
-			<input ng-if="field.type == 'range'"
-				   id="{{field.id}}"
-				   type="range"
-				   min="{{field.minVal}}"
-				   max="{{field.maxVal}}"
-				   value="field.selectedVal"
-				   ng-model="field.selectedVal"
-				   ng-change="filter.applyFilter(field.id, field.selectedVal)"
-				   step="1">
-			<span ng-if="field.type == 'range'">{{field.selectedVal}}</span>
-		</div>
 	</div>
 </div>
 <script type="text/javascript" src="/js/libraries/jquery.min.js"></script>
