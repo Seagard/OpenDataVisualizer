@@ -25,8 +25,7 @@
         })
         .state('graphic', {
           url: '/graphic',
-          templateUrl: '../pages/graphic.html',
-          controller: 'GraphicController'
+          templateUrl: '../pages/graphic.html'
         })
         .state('map', {
           url: '/map',

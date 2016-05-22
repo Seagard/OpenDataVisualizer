@@ -7,7 +7,26 @@
     graphicController.$inject = ['DatasetFactory', 'FilterFactory'];
 
     function graphicController(DatasetFactory, FilterFactory) {
+        console.log('hue');
         var vm = this;
+        vm.showGraph = false;
+        vm.showDatasets = false;
+
+        vm.selectDatasets = function selectDatasets () {
+            vm.showDatasets = true;
+        }
+
+        vm.selectedthings = function selectedthings () {
+            console.log(vm.selected);
+        }
+
+        DatasetFactory.registerDatasetSelectedCb(function (data) {
+            console.log(data)
+        })
+
+        // vm.clearSearchTerm = function clearSearchTerm () {
+        //     console.log('clear search term')
+        // }
 
         var hardcore = {
             type: 'compare',
@@ -154,42 +173,3 @@
         };
     }
 })();
-
-
-
-
-//
-//    FilterFactory.registerOnFilterChangedEvent(function(dataset) {
-//        console.log(dataset);
-//        if(dataset.records) {
-//            vm.chartConfig = {
-//                options: {
-//                    type: 'Bar'
-//                },/*
-//                 plotOptions: {
-//                 series: {
-//                 stacking: ""
-//                 }
-//                 },*/
-//                series: [
-//                    {
-//                        name: 'Fact',
-//                        data: [parseInt(dataset.records[0].Fact)],
-//                        type: 'bar'
-//                    }, {
-//                        name: 'Plan',
-//                        data: [parseInt(dataset.records[0].Plan)],
-//                        type: 'bar'
-//                    }
-//                ],
-//                title: {
-//                    text: dataset.records[0].Code
-//                },
-//                size: {
-//                    width: 600,
-//                    height: 450
-//                }
-//            };
-//        }
-//    });
-//}]);

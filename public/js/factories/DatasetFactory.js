@@ -105,6 +105,17 @@ angular.module('main').factory('DatasetFactory', function($http, $q) {
     var exampleDatasets = [exampleDataset1, exampleDataset2, exampleDataset3];
     console.log('Datasets: ', exampleDatasets);
 
+
+    var datasetSeelctedCallbacks = [];
+
+    function registerDatasetSelectedCb (cb) {
+        datasetSeelctedCallbacks.push(cb)
+    }
+
+    function notifyDatasetSelected (data) {
+        _.each(datasetSeelctedCallbacks, function (cb) { cb(data) });
+    }
+
     return {
         registerOnDatasetLoadedEvent: registerOnDatasetLoadedEvent,
         getAllDatasets: getAllDatasets,
@@ -113,6 +124,8 @@ angular.module('main').factory('DatasetFactory', function($http, $q) {
         getDatasetById: getDatasetById,
         getDatasetList: getDatasetList,
         loadDatasetFromUrl: loadDatasetFromUrl,
-        updateDataset: updateDataset
+        updateDataset: updateDataset,
+        registerDatasetSelectedCb: registerDatasetSelectedCb,
+        notifyDatasetSelected: notifyDatasetSelected
     }
 });

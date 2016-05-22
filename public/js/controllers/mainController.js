@@ -26,6 +26,7 @@ angular.module('main').controller('mainController', [
   }
 
   vm.openDataset = function(dataset) {
+    DatasetFactory.notifyDatasetSelected(dataset)
     //TODO: open dataset
   };
 
