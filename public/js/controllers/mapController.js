@@ -1,139 +1,166 @@
-angular.module('main').controller('mapController', function(DatasetFactory, FilterFactory) {
+angular.module('main').controller('MapController', function(DatasetFactory, FilterFactory, $http, $scope) {
     var vm = this;
-    var districts, coords, firstSet;
     var markers = [];
+    var records = DatasetFactory.getExampleDatasets()[2].result.records;
+    ;
+    vm.datasets = [];
 
-    DatasetFactory.getUnitedDataset(function(data) {
-        vm.datasets = data;
-        dataLoaded();
-    });
+    $scope.options = {scrollwheel: false};
+    $scope.polygons = [];
+    $scope.datasets = DatasetFactory.getExampleDatasets();
+    $scope.showActions = false;
 
-    function dataLoaded() {
-        FilterFactory.registerOnFilterChangedEvent(function(filtered) {
-            console.log(filtered);
-            if(filtered.fields) {
-                var fields = filtered.fields;
-                for(var i = 0; i < fields.length; i++) {
-                    if(fields[i].id == 'district' && fields[i].selectedVal != -1) {
-                        highlightArea();
+    $scope.events = {
+        mouseover: mouseOver,
+        mouseout: mouseOut
+    }
+
+    function mouseOver() {
+        this.fill.color = "green"
+    }
+
+    function mouseOut() {
+        this.fill.color = "#C3E1FF"
+    }
+
+    $http.get("/json").then(function (data) {
+        $scope.districts = data.data;
+        $scope.initialize();
+        return $scope.districts;
+    }).then(function(districts) {
+        districts.forEach(function (district) {
+            district.memorials = [];
+
+            records.forEach(function (data) {
+                district.coords.forEach(function (coords) {
+                    if (coords.longitude == data.longitude && coords.latitude == data.latitude) {
+                        data.district = district.district;
                     }
-
-                    if(fields[i].id == 'type' && fields[i].selectedVal != -1) {
-                       showPlaces();
-                    }
-                }
-            }
+                });
+            });
         });
-    }
-
-    $.getJSON("/json1", function( data ) {
-        firstSet = data;
+    }).then(function() {
+        $scope.districts.forEach(function (data) {
+            data.memorials = [];
+            records.forEach(function (record) {
+                if (data.district == record.district)
+                    data.memorials.push(record);
+            })
+        })
     });
 
-    $.getJSON("/json", function( data ) {
-        districts = data;
-        activate();
-    });
+    $scope.initialize = function () {
+        var promise = new Promise(function(resolve, reject) {
+            resolve($scope.districts);
+        })
 
+        $scope.map = {
+            center: {
+                latitude: 46.748359,
+                longitude: 30.150735
+            },
+            zoom: 7,
+            markers: []
+        };
 
-
-    function activate() {
-
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 46.748359, lng: 30.150735},
-            zoom: 7
-        });
-
-
-        for (var i = 0; i < districts.length; i++) {
-            var district = new google.maps.Polygon({
-                paths: districts[i].coords,
-                strokeColor: 'black',
-                strokeOpacity: 0.8,
-                strokeWeight: 1,
-                fillColor: '#C3E1FF',
-                fillOpacity: 0.35
+        $scope.districts.forEach(function (data) {
+            $scope.polygons.push({
+                path: data.coords,
+                stroke: {
+                    color: 'black',
+                    weight: 1
+                },
+                editable: true,
+                draggable: true,
+                geodesic: false,
+                visible: true,
+                fill: {
+                    color: '#C3E1FF',
+                    opacity: 0.35
+                },
+                events: $scope.events
             });
-
-            district.setMap(map);
-
-            google.maps.event.addListener(district, 'mouseover', function() {
-                this.setOptions({fillColor: 'green'});
-            });
-
-            google.maps.event.addListener(district, 'mouseout', function() {
-                this.setOptions({fillColor: '#C3E1FF'});
-            });
-
-        }
-
-
+        })
     }
 
-    function highlightArea() {
-
-        moveMap(46.60680405,30.3363759975028);
-
-        for (var i = 0; i < districts.length; i++) {
-            if(districts[i].district == 'Belyaevskiy')
-                coords = districts[i].coords;
-        }
-
-
-
-        var district = new google.maps.Polygon({
-            paths: coords,
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35
+    $scope.highlight = function (map) {
+        records.forEach(function (data) {
+            var marker = {
+                id: Date.now(),
+                coords: {
+                    latitude: data.latitude,
+                    longitude: data.longitude
+                },
+                events: {
+                    mouseover: onMouseOver,
+                    mouseout: onMouseOut
+                },
+                data: data
+            };
+            map.markers.push(marker);
         });
+    };
 
-        district.setMap(map);
+    $scope.highlightRegions = function() {
 
-        google.maps.event.addListener(district, 'click', function() {
-            this.setMap(null);
-        });
+        $scope.districts.forEach(function(area) {
+            var fillColor;
+            var length = area.memorials.length;
 
-    }
-
-    function showPlaces() {
-         
-        var places = firstSet.result.records;
-       for (var i = 0; i < places.length; i++) {
-            var content= "Район: " + places[i].Nazva +  "<br>" + "Координати: " + places[i].lat + ", " + places[i].lon;
-            var marker = new google.maps.Marker ({
-                position: new google.maps.LatLng(places[i].lat, places[i].lon),
-                map: map,
-                info: content
-            });
-
-         markers.push(marker);
-            
-            var infowindow = new google.maps.InfoWindow({
-            content: "gjhg"
-            });
-
-            google.maps.event.addListener(marker, 'mouseover', function() {
-                infowindow.setContent(this.info);
-                infowindow.open(map, this);
-            });
-
-         google.maps.event.addListener(marker, 'click', function() {
-            for (var i = 0; i < markers.length; i++) {
-                markers[i].setMap(null);
+            if (length == 0) {
+                fillColor = "#ffffff";
             }
+            if (length == 1) {
+                fillColor = "blue";
+            }
+            if (length >= 2) {
+                fillColor = "red";
+            }
+
+            $scope.polygons.push({
+                path: area.coords,
+                stroke: {
+                    color: 'black',
+                    weight: 1
+                },
+                editable: true,
+                draggable: true,
+                geodesic: false,
+                visible: true,
+                fill: {
+                    color: fillColor,
+                    opacity: 0.35
+                },
             });
+        })
+    }
 
+
+    $scope.reset = function(map) {
+        $scope.polygons = [];
+        $scope.initialize();
+    }
+
+    $scope.choose = function() {
+        console.log($scope.selectedItem);
+
+        if($scope.selectedItem.name === "Пам'ятники 1 та 2 свiтових вiйн") {
+            $scope.showActions = true;
+        } else {
+            $scope.showActions = false;
         }
-
     }
 
-    function moveMap(lat, lng) {
-        var center = new google.maps.LatLng(lat, lng);
-        map.panTo(center);
-        map.setZoom(10);
-    }
+    function onMouseOver() {
+        console.log('b');
+        $scope.windowOptions.visible = !$scope.windowOptions.visible;
+    };
+
+    function onMouseOut() {
+        console.log('br');
+        $scope.windowOptions.visible = false;
+    };
+
+    $scope.title = "Window Title!";
 });
 

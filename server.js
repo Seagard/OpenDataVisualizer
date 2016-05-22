@@ -1,20 +1,18 @@
 'use strict';
 
-var SwaggerExpress = require('swagger-express-mw');
 var express = require('express');
 var fs = require('fs');
+var bodyParser = require('body-parser');
 var app = express();
-module.exports = app; // for testing
 
 var contents = fs.readFileSync('data/regions.json');
 var data = fs.readFileSync('data/data1.json');
-var config = {
-  appRoot: __dirname // required config
-};
 
-var port = process.env.PORT || 3000;
+var apiUrl = '/api';
 
 app.use(express.static(__dirname + '/public'));
+app.use('/bower_components',  express.static(__dirname + '/bower_components'));
+app.use(bodyParser());
 
 /**
  *  API
@@ -24,54 +22,33 @@ var datasetApi = require('./api/dataset');
 
 app.get(apiUrl + '/dataset/all', datasetApi.getAllDatasets);
 app.get(apiUrl + '/dataset/united', datasetApi.getUnitedDatasets);
+app.get(apiUrl + '/dataset/list', datasetApi.getDatasetList);
+app.post(apiUrl + '/dataset/loadfromurl', datasetApi.loadDatasetFromUrl);
 app.get(apiUrl + '/dataset/:id', datasetApi.getDatasetById);
+app.post(apiUrl + '/dataset/update/:id', datasetApi.updateDataset);
+
 app.get('/open/:id', datasetApi.loadDataset);
 
-app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/views/index.html');
-});
-
 app.get('/json', function(req, res) {
-    res.send(JSON.parse(contents));
+  res.send(JSON.parse(contents));
 });
-
 app.get('/json1', function(req, res) {
-    res.send(JSON.parse(data));
+  res.send(JSON.parse(data));
 });
 
-app.listen(port);
-console.log('Server is listening on port 3000');
+app.get('/*', function(req, res) {
+  res.sendFile(__dirname + '/public/index.html');
+});
 
-//test
-//var analyse = require('./analyse/analyse.js');
-//var datasetsUrls = [
-//    {
-//        host: 'data.ngorg.od.ua',
-//        path: '/api/action/datastore/search.json?resource_id=437b67c2-269f-41ee-973e-dd91a741c1fd'
-//    },
-//    {
-//        host: 'data.ngorg.od.ua',
-//        path: '/api/action/datastore/search.json?resource_id=8d316559-72a9-477d-bb06-197047607c1f'
-//    },
-//    {
-//        host: 'data.ngorg.od.ua',
-//        path: '/api/action/datastore/search.json?resource_id=5f25e8b1-6a8d-47ce-9fee-6d39a13d9db8'
-//    }
-//]
-//
-//datasetsUrls.forEach(function(url, i) {
-//    analyse.loadData(url.host, url.path)
-//        .then(function(data) {
-//            console.log('Got data:');
-//            console.log(data);
-//            var obj = JSON.parse(data).result;
-//            obj.type = 'expence';
-//            fs.writeFile('data/dataset' + i +'.json', JSON.stringify(obj));
-//        }, function(err) {
-//            console.log('Error loading datasets');
-//            console.log(err);
-//        })
-//        .catch(function(err) {
-//            console.log(err);
-//        })
-//});
+fs.readdir(__dirname + '/datasets', function ( err, files ) {
+  if (err) fs.mkdir(__dirname + '/datasets');
+} );
+
+var port = 3000;
+if (process.env.NODE_ENV === "production") {
+  port = 80;
+}
+
+app.listen(port, function() {
+  console.log('Server is listening on port ' + port + '...');
+});

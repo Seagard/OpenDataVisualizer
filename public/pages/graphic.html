@@ -1,3 +1,35 @@
-<div ng-controller="graphicController as graphic">
-    <highchart id="chart" config="graphic.chartConfig" style=" height:100%;"></highchart>
+<div ng-controller="GraphicController as graphic">
+    <div ng-hide="graphic.showDatasets"
+         layout="row"
+         layout-align="center center">
+        <md-button md-no-ink
+                   class="md-primary"
+                   ng-click="graphic.selectDatasets()">Порівняти набори даних
+        </md-button>
+    </div>
+    <div ng-show="graphic.showDatasets"
+         layout="row"
+         layout-align="center center">
+
+        <h3>Dataset 1</h3>
+
+        <md-input-container>
+            <label>Колонки для порівняння</label>
+            <md-select ng-model="graphic.selected"
+                       data-md-container-class="selectdemoSelectHeader"
+                       ng-change="graphic.selectedthings()"
+                       multiple>
+                <md-optgroup label="Колонки">
+                    <md-option ng-value="option.text"
+                               ng-repeat="option in graphic.options">{{option.text}}
+                    </md-option>
+                </md-optgroup>
+            </md-select>
+        </md-input-container>
+    </div>
+
+    <div ng-show="graphic.showGraph">
+        <highchart id="chart" config="graphic.chartConfig" style=" height:100%;"></highchart>
+        <select ng-model="graphic.selected" ng-options="option.text for option in graphic.options" ng-change="graphic.changeChartSettings()"></select>
+    </div>
 </div>

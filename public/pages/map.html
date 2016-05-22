@@ -1,3 +1,30 @@
-<div ng-controller="mapController as map" style="height: 100%">
-    <div id="map"></div>
+<div  style="height: 100%;  margin-bottom: 10px" ng-controller="MapController">
+    <div id="map_canvas" >
+        <ui-gmap-google-map center="map.center" zoom="map.zoom" options="options">
+            <ui-gmap-polygon static="true" ng-repeat="p in polygons" path="p.path" stroke="p.stroke"
+             visible="p.visible" geodesic="p.geodesic" fill="p.fill" fit="false" events="p.events"></ui-gmap-polygon>
+            <ui-gmap-marker ng-repeat="m in map.markers" coords="m.coords" icon="m.icon" idkey="m.id">
+                <ui-gmap-window options="windowOptions" closeClick="closeClick()">
+                    <div>
+                        <div>{{m.data.Naimenovanie}}</div>
+                        <div>{{m.data.Location}}</div>
+                        <div>{{m.data.Mesce}}</div>
+                        <div>Район: {{m.data.district}}</div>
+                        <div>{{m.data.latitude}} {{m.data.longitude}}</div>
+                    </div>
+                </ui-gmap-window>
+            </ui-gmap-marker>
+        </ui-gmap-google-map>
+        </div>
+    <select ng-options="dataset.name for dataset in datasets"
+            ng-model="selectedItem"
+            ng-change="choose()">
+    </select>
+    <br>
+    <div ng-show="showActions">
+        <button class="action" ng-click="highlight(map)">Показати об'екти</button>
+        <button class="action" ng-click="highlightRegions(map)">Статiстика за районами</button>
+        <button class="action" ng-click="reset(map)">Очистити</button>
+    </div>
+
 </div>

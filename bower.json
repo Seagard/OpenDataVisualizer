@@ -1,0 +1,27 @@
+{
+  "name": "OpenDataVisualizer",
+  "description": "Data visualization for open data",
+  "main": "server.js",
+  "authors": [
+    "max <maxivanov95@ukr.net>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Max95474/OpenDataVisualizer",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": ">=1.11.0",
+    "angular-material": "^1.0.6",
+    "angular-animate": "^1.5.2",
+    "angular": "^1.5.2",
+    "angular-simple-logger": "^0.1.7",
+    "angular-google-maps": "^2.3.2",
+    "angular-ui-router": "^0.3.0"
+  }
+}

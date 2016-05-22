@@ -1,40 +1,34 @@
-angular.module('main').controller('mainController', function($location) {
-    var vm = this;
-    //todo do this with Angular.js
-    vm.buttons = ['Дані', 'Інфографіка', 'Карта'];
-    vm.selectedIndex = 0;
-    switch ($location.$$path) {
-        case '/data':
-            $('#dataButton').addClass('active');
-            break;
-        case '/graphic':
-            $('#graphicButton').addClass('active');
-            break;
-        case '/map':
-            $('#mapButton').addClass('active');
-    }
-    console.log($location.$$path);
-    vm.buttonClicked = function($index) {
-        vm.selectedIndex = $index;
-    }
-    vm.toData = function() {
-        removeActive();
-        $('#dataButton').addClass('active');
-        $location.path('/data');
-    }
-    vm.toGraphic = function() {
-        removeActive();
-        $('#graphicButton').addClass('active');
-        $location.path('/graphic');
-    }
-    vm.toMap = function() {
-        removeActive();
-        $('#mapButton').addClass('active');
-        $location.path('/map');
-    }
-    function removeActive() {
-        $('.fakelink').removeClass('active');
-    }
+angular.module('main').controller('mainController', [
+  '$rootScope', 'DatasetFactory',
+  function($rootScope, DatasetFactory) {
+  var vm = this;
+  //vm.buttons = ['Дані', 'Інфографіка', 'Карта'];
+  vm.buttons = [
+    {name: 'Дані', sref: 'data'},
+    {name: 'Інфографіка', sref: 'graphic'},
+    {name: 'Карта', sref: 'map'},
+    {name: 'Завантаження', sref: 'editor'}
+  ];
+  vm.selectedIndex = 0;
+  vm.isDataStateActive = false;
+  vm.buttonClicked = function($index) {
+      vm.selectedIndex = $index;
+  };
 
+  function activate() {
+    $rootScope.$on('$stateChangeStart', function(event, toState){
+        vm.isDataStateActive = toState.name == 'data';
+    });
 
-});
+    DatasetFactory.getDatasetList().then(function(datasets) {
+      vm.datasetList = datasets;
+    })
+  }
+
+  vm.openDataset = function(dataset) {
+    DatasetFactory.notifyDatasetSelected(dataset)
+    //TODO: open dataset
+  };
+
+  activate();
+}]);

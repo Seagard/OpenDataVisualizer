@@ -8,14 +8,9 @@
   "license": "",
   "main": "server.js",
   "dependencies": {
+    "body-parser": "^1.15.1",
     "express": "^4.12.3",
-    "promise": "^7.0.4",
-    "swagger-express-mw": "0.0.x",
     "underscore": "^1.8.3"
-  },
-  "devDependencies": {
-    "should": "^5.2.0",
-    "supertest": "^0.15.0"
   },
   "repository": {
     "type": "git",

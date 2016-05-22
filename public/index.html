@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html ng-app="main">
+<head>
+	<title>Візуалізація відкритих даних</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
+
+	<link href="css/main.css" rel="stylesheet" type="text/css" media="all" />
+	<link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaL34OGHlD9TpvJGoPT1MT4bZ_wJAjGNQ"></script>
+</head>
+<body ng-controller="mainController as main">
+
+<md-toolbar fix-top ng-cloack>
+	<div class="md-toolbar-tools">
+		<h2>
+			<span>Візуалізація відкритих даних</span>
+		</h2>
+		<span flex></span>
+		<md-button ng-repeat="button in main.buttons" ui-sref="{{button.sref}}" class="md-raised">
+			{{button.name}}
+		</md-button>
+	</div>
+</md-toolbar>
+<div layout="row" class="all-view">
+	<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+		<md-toolbar class="md-theme-indigo">
+			<h1 class="md-toolbar-tools">Набори даних</h1>
+		</md-toolbar>
+		<md-content layout-padding>
+			<md-list>
+				<md-list-item ng-repeat="dataset in main.datasetList"
+							  ng-click="main.openDataset(dataset)">
+					<span ng-bind="dataset.name"></span>
+					<md-divider></md-divider>
+				</md-list-item>
+			</md-list>
+		</md-content>
+	</md-sidenav>
+	<div class="view-container">
+		<div ui-view class="main"></div>
+	</div>
+</div>
+<script type="text/javascript" src="/js/libraries/jquery.min.js"></script>
+<script src="/bower_components/angular/angular.min.js"></script>
+<!-- Angular modules -->
+<script src="/bower_components/angular-aria/angular-aria.js"></script>
+<script src="/bower_components/angular-animate/angular-animate.js"></script>
+<script src="/bower_components/angular-material/angular-material.js"></script>
+<script type="text/javascript" src="/js/libraries/highcharts.js"></script>
+<script type="text/javascript" src="/js/libraries/underscore-min.js"></script>
+
+<script type="text/javascript" src="/js/libraries/highcharts-ng.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
+<script src="bower_components/angular-google-maps/dist/angular-google-maps.min.js"></script>
+<!--<script src="bower_components/lodash/lodash.js"></script>-->
+<script src="js/main.js"></script>
+<!-- Angular modules -->
+
+<script type="text/javascript" src="/js/factories/DatasetFactory.js"></script>
+<script type="text/javascript" src="/js/factories/FilterFactory.js"></script>
+<script type="text/javascript" src="/js/controllers/mainController.js"></script>
+<script type="text/javascript" src="/js/controllers/dataController.js"></script>
+<script type="text/javascript" src="/js/controllers/graphicController.js"></script>
+<script type="text/javascript" src="/js/controllers/mapController.js"></script>
+<script type="text/javascript" src="/js/controllers/filterController.js"></script>
+<script type="text/javascript" src="/js/controllers/editorController.js"></script>
+</body>
+</html>
