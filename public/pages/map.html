@@ -1,4 +1,4 @@
-<div  style="height: 100%;  margin-bottom: 10px" ng-controller="MapController">
+<div  id="map_wrapper" ng-controller="MapController">
     <div id="map_canvas" >
         <ui-gmap-google-map center="map.center" zoom="map.zoom" options="options">
             <ui-gmap-polygon static="true" ng-repeat="p in polygons" path="p.path" stroke="p.stroke"
