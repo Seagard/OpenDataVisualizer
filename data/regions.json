@@ -1,6 +1,6 @@
  [
     {
-      "district": "Саратський",
+      "district": "Саратський  район",
       "coords": [
 	 	{"longitude": 29.4735244,   "latitude": 46.1591784},
 	 {"longitude": 29.479072,     "latitude": 46.1600454},
@@ -8269,7 +8269,7 @@
 },
 
 	{
-      "district": "Татарбунарський",
+      "district": "Татарбунарський район",
       "coords": [
    {"longitude": 29.3155211  , "latitude": 45.7312461
   }, {"longitude": 29.3156129  , "latitude": 45.7305876
@@ -11704,7 +11704,7 @@
 },
 
 	{
-  "district": "Тарутинський",
+  "district": "Тарутинський  район",
   "coords": [
   {"longitude": 28.9523067  , "latitude": 46.2594674
   }, {"longitude": 28.9561799  , "latitude": 46.2570229

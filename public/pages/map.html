@@ -9,22 +9,44 @@
                         <div>{{m.data.Naimenovanie}}</div>
                         <div>{{m.data.Location}}</div>
                         <div>{{m.data.Mesce}}</div>
-                        <div>Район: {{m.data.district}}</div>
-                        <div>{{m.data.latitude}} {{m.data.longitude}}</div>
+                        <div>Район: {{m.data.Rajon}}</div>
+                        <div>{{m.data.lat}} {{m.data.lon}}</div>
                     </div>
                 </ui-gmap-window>
             </ui-gmap-marker>
         </ui-gmap-google-map>
+        <div class="rainbow">
+            <div class="box-wrap">
+                <div class="box"></div><div>0</div>
+            </div>
+            <div class="box-wrap">
+                <div class="box" style="background:blue;"></div><div>1-10</div>
+            </div>
+            <div class="box-wrap">
+                <div class="box" style="background:green;"></div><div>11-25</div>
+            </div>
+            <div class="box-wrap">
+                <div class="box" style="background:yellow;"></div><div>26-50</div>
+            </div>
+            <div class="box-wrap">
+                <div class="box" style="background:orange;"></div><div>51-79</div>
+            </div>
+            <div class="box-wrap">
+                <div class="box" style="background:red;"></div><div>80-100</div>
+            </div>
+        </div>
         </div>
     <select ng-options="dataset.name for dataset in datasets"
             ng-model="selectedItem"
-            ng-change="choose()">
+            ng-change="getDataset()">
     </select>
+
     <br>
-    <div ng-show="showActions">
+    <div class="actions">
         <button class="action" ng-click="highlight(map)">Показати об'екти</button>
         <button class="action" ng-click="highlightRegions(map)">Статiстика за районами</button>
         <button class="action" ng-click="reset(map)">Очистити</button>
     </div>
+
 
 </div>

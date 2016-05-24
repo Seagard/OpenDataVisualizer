@@ -14,7 +14,7 @@
 </head>
 <body ng-controller="mainController as main">
 
-<md-toolbar fix-top ng-cloack>
+<md-toolbar fix-top ng-cloak>
 	<div class="md-toolbar-tools">
 		<h2>
 			<span>Візуалізація відкритих даних</span>
@@ -25,6 +25,7 @@
 		</md-button>
 	</div>
 </md-toolbar>
+<!--<div class="wrap">-->
 <div layout="row" class="all-view">
 	<md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
 		<md-toolbar class="md-theme-indigo">
@@ -44,6 +45,7 @@
 		<div ui-view class="main"></div>
 	</div>
 </div>
+<!--</div>-->
 <script type="text/javascript" src="/js/libraries/jquery.min.js"></script>
 <script src="/bower_components/angular/angular.min.js"></script>
 <!-- Angular modules -->

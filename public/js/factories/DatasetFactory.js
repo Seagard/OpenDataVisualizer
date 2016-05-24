@@ -4,6 +4,7 @@ angular.module('main').factory('DatasetFactory', function($http, $q) {
     var unitedDatasets;
 
     var datasetLoadedCallbacks = [];
+    var currentDataset;
 
     function registerOnDatasetLoadedEvent(callback) {
         if(datasetLoadedCallbacks.indexOf(callback) == -1) {
@@ -76,6 +77,7 @@ angular.module('main').factory('DatasetFactory', function($http, $q) {
         return $q(function(resolve, reject) {
             $http.get('/api/dataset/' + datasetId).then(function(resp) {
                 notifyDatasetLoaded(resp.data);
+                currentDataset = resp.data;
                 resolve(resp.data);
             }).catch(function(err) {
                 console.log(err);
@@ -92,6 +94,10 @@ angular.module('main').factory('DatasetFactory', function($http, $q) {
                 resolve(resp);
             }).catch(function(err){ reject(err) })
         })
+    }
+
+    function getCurrentDataset() {
+        return dataset;
     }
 
     function getExampleDatasets() {

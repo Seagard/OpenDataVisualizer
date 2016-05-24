@@ -20,12 +20,6 @@ angular.module('main').controller('FilterController', function(DatasetFactory, F
         datasetsLoaded();
     });
 
-    DatasetFactory.registerOnDatasetLoadedEvent(function(data) {
-        console.log('Dataset loaded: ', data.result);
-        vm.dataset = data.result;
-        datasetsLoaded();
-    });
-
     function datasetsLoaded() {
         vm.dataset.fields.forEach(function(dataSetField) {
             var filterField = {};

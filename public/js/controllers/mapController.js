@@ -1,9 +1,51 @@
 angular.module('main').controller('MapController', function(DatasetFactory, FilterFactory, $http, $scope) {
     var vm = this;
     var markers = [];
-    var records = DatasetFactory.getExampleDatasets()[2].result.records;
-    ;
+    //var records = DatasetFactory.getExampleDatasets()[2].result.records;
     vm.datasets = [];
+
+    vm.isDataLoaded = false;
+
+    function activate() {
+        DatasetFactory.registerOnDatasetLoadedEvent(function(data) {
+            vm.dataset = data.result;
+            vm.isDataLoaded = true;
+        });
+    }
+
+    DatasetFactory.getDatasetList().then(function(result) {
+        $scope.datasets = result;
+    })
+    activate();
+
+    $scope.getDataset = function() {
+        DatasetFactory.getDatasetById($scope.selectedItem.name)
+            .then(function(dataset) {
+                console.log("go");
+                console.log(dataset);
+                return dataset.result.records;
+            })
+            .then(function(dataset) {
+                $scope.dataset = dataset;
+                //$scope.districts.forEach(function (district) {
+                //    district.memorials = [];
+                //
+                //$scope.dataset.forEach(function (data) {
+                    $scope.districts.forEach(function (data) {
+                        //console.log(data);
+                        data.memorials = [];
+                        $scope.dataset.forEach(function (record) {
+                            console.log(record);
+                            if (data.district == record.Rajon)
+                                data.memorials.push(record);
+                        })
+                    })
+                //});
+            })
+            .then(function() {
+                console.log($scope.districts);
+            })
+    }
 
     $scope.options = {scrollwheel: false};
     $scope.polygons = [];
@@ -28,25 +70,30 @@ angular.module('main').controller('MapController', function(DatasetFactory, Filt
         $scope.initialize();
         return $scope.districts;
     }).then(function(districts) {
-        districts.forEach(function (district) {
-            district.memorials = [];
+        console.log($scope.dataset);
 
-            records.forEach(function (data) {
-                district.coords.forEach(function (coords) {
-                    if (coords.longitude == data.longitude && coords.latitude == data.latitude) {
-                        data.district = district.district;
-                    }
-                });
-            });
-        });
+
     }).then(function() {
-        $scope.districts.forEach(function (data) {
-            data.memorials = [];
-            records.forEach(function (record) {
-                if (data.district == record.district)
-                    data.memorials.push(record);
-            })
-        })
+        //$scope.districts.forEach(function (district) {
+        //    district.memorials = [];
+        //
+        //    $scope.dataset.forEach(function (data) {
+        //        district.coords.forEach(function (coords) {
+        //            if (coords.longitude.toFixed(4) == data.longitude && coords.latitude == data.latitude) {
+        //                data.district = district.district;
+        //            }
+        //        });
+        //    });
+        //});
+        //$scope.districts.forEach(function (data) {
+        //    //console.log(data);
+        //    data.memorials = [];
+        //    $scope.dataset.forEach(function (record) {
+        //        console.log(record);
+        //        if (data.district == record.district)
+        //            data.memorials.push(record);
+        //    })
+        //})
     });
 
     $scope.initialize = function () {
@@ -81,15 +128,17 @@ angular.module('main').controller('MapController', function(DatasetFactory, Filt
                 events: $scope.events
             });
         })
+
+
     }
 
     $scope.highlight = function (map) {
-        records.forEach(function (data) {
+        $scope.dataset.forEach(function (data) {
             var marker = {
                 id: Date.now(),
                 coords: {
-                    latitude: data.latitude,
-                    longitude: data.longitude
+                    latitude: data.lat,
+                    longitude: data.lon
                 },
                 events: {
                     mouseover: onMouseOver,
@@ -99,6 +148,17 @@ angular.module('main').controller('MapController', function(DatasetFactory, Filt
             };
             map.markers.push(marker);
         });
+
+        var marker1 = {
+            id: Date.now(),
+            coords: {
+                latitude: 45.847,
+                longitude: 29.6111
+            }
+        };
+        map.markers.push(marker1);
+
+        console.log(map.markers);
     };
 
     $scope.highlightRegions = function() {
@@ -110,10 +170,10 @@ angular.module('main').controller('MapController', function(DatasetFactory, Filt
             if (length == 0) {
                 fillColor = "#ffffff";
             }
-            if (length == 1) {
+            else if (defineRange(length, 1, 10)) {
                 fillColor = "blue";
             }
-            if (length >= 2) {
+            else  {
                 fillColor = "red";
             }
 
@@ -135,10 +195,13 @@ angular.module('main').controller('MapController', function(DatasetFactory, Filt
         })
     }
 
-
     $scope.reset = function(map) {
         $scope.polygons = [];
         $scope.initialize();
+    }
+
+    function defineRange(value, min, max) {
+        return value > min && value <= max;
     }
 
     $scope.choose = function() {
