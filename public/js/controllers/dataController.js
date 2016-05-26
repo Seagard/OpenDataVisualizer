@@ -17,6 +17,10 @@ angular.module('main').controller('DataController', function(DatasetFactory, Fil
             console.log('Filter changed: ', data);
             vm.dataset = data;
         });
+        DatasetFactory.registerDatasetSelectedCb(function(dataset) {
+            vm.isDataLoaded = false;
+            DatasetFactory.getDatasetById(dataset.id);
+        });
     }
 
     activate();

@@ -25,8 +25,8 @@ angular.module('main').controller('mainController', [
     })
   }
   vm.openDataset = function(dataset) {
-    DatasetFactory.getDatasetById(dataset.name);
-    DatasetFactory.notifyDatasetSelected(dataset)
+    // DatasetFactory.getDatasetById(dataset.name); This will not work!
+    DatasetFactory.notifyDatasetSelected(dataset);
     //TODO: open dataset
   };
 
