@@ -8,11 +8,11 @@ angular.module('main').controller('EditorController', [
     $scope.graphicTypes = [
       {value: 'line', name: 'Line chart'},
       {value: 'area', name: 'Area chart'},
-      {value: 'bar', name: 'Bar chart'}
+      {value: 'bar',  name: 'Bar chart'}
     ];
     $scope.geoTypes = [
-      {value: 'lat', name: 'Latitude'},
-      {value: 'lon', name: 'Longitude'},
+      {value: 'lat',    name: 'Latitude'},
+      {value: 'lon',    name: 'Longitude'},
       {value: 'region', name: 'Region'}
     ];
     $scope.dataset = {};
@@ -35,9 +35,12 @@ angular.module('main').controller('EditorController', [
       $scope.isDatasetLoading = true;
 
       DatasetFactory.loadDatasetFromUrl(url).then(function(resp) {
-        $scope.isDatasetLoading = false;
-        $scope.isEditingActive = true;
-        $scope.dataset = resp.result;
+        DatasetFactory.getDatasetList().then(function(datasetList) {
+          $scope.datasetsList = datasetList;
+          $scope.isDatasetLoading = false;
+          $scope.isEditingActive = true;
+          $scope.dataset = resp.result;
+        });
       });
     };
 
