@@ -82,7 +82,6 @@
               .then(function (dataset) {
 
                   console.log(dataset);
-                  // dataset.fields = []
                   vm.datasets.push(angular.extend({}, data, dataset));
 
 
