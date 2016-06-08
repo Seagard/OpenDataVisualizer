@@ -4,6 +4,7 @@ angular.module('main').factory('DatasetFactory', function($http, $q) {
     var unitedDatasets;
 
     var datasetLoadedCallbacks = [];
+    var datasetUploadedCallbacks = [];
     var currentDataset;
 
     function registerOnDatasetLoadedEvent(callback) {
@@ -14,6 +15,18 @@ angular.module('main').factory('DatasetFactory', function($http, $q) {
 
     function notifyDatasetLoaded(dataset) {
         datasetLoadedCallbacks.forEach(function(callback) {
+            callback(dataset);
+        })
+    }
+
+    function registerOnDatasetUploadedEvent(callback) {
+        if(datasetUploadedCallbacks.indexOf(callback) == -1) {
+            datasetUploadedCallbacks.push(callback);
+        }
+    }
+
+    function notifyDatasetUploadedCallback(dataset) {
+        datasetUploadedCallbacks.forEach(function(callback) {
             callback(dataset);
         })
     }
@@ -56,6 +69,7 @@ angular.module('main').factory('DatasetFactory', function($http, $q) {
     function loadDatasetFromUrl(url) {
         return $q(function(resolve, reject) {
             $http.post('/api/dataset/loadfromurl', {url: url}).then(function(resp) {
+                notifyDatasetUploadedCallback(resp.data);
                 resolve(resp.data);
             }).catch(function(err) {
                 reject(err);
@@ -91,6 +105,7 @@ angular.module('main').factory('DatasetFactory', function($http, $q) {
             $http.post('/api/dataset/update/' + dataset.resource_id[0],{
                 dataset: dataset
             }).then(function(resp) {
+                notifyDatasetUploadedCallback(resp.data);
                 resolve(resp);
             }).catch(function(err){ reject(err) })
         })
@@ -132,6 +147,8 @@ angular.module('main').factory('DatasetFactory', function($http, $q) {
         loadDatasetFromUrl: loadDatasetFromUrl,
         updateDataset: updateDataset,
         registerDatasetSelectedCb: registerDatasetSelectedCb,
-        notifyDatasetSelected: notifyDatasetSelected
+        notifyDatasetSelected: notifyDatasetSelected,
+        registerOnDatasetUploadedEvent: registerOnDatasetUploadedEvent,
+        notifyDatasetUploadedCallback: notifyDatasetUploadedCallback
     }
 });
