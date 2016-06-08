@@ -20,6 +20,12 @@ angular.module('main').controller('mainController', [
         vm.isDataStateActive = toState.name == 'data';
     });
 
+    DatasetFactory.registerOnDatasetUploadedEvent(function() {
+      DatasetFactory.getDatasetList().then(function(datasets) {
+        vm.datasetList = datasets;
+      })
+    });
+
     DatasetFactory.getDatasetList().then(function(datasets) {
       vm.datasetList = datasets;
     })
