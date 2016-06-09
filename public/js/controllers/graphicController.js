@@ -13,6 +13,30 @@
             showGraph: false,
             datasets: []
         })
+        vm.showGallery = true;
+        vm.gallery = [{
+            type: 'compare-line',
+            description: 'Порівняти дані',
+            thumbnail: 'http://www.highcharts.com/media/com_demo/images/highcharts/line-basic-default.svg'
+        }, {
+            type: 'compare-timeline',
+            description: 'Порівняння на відрізку часу',
+            thumbnail: 'http://www.highcharts.com/media/com_demo/images/highcharts/area-stacked-default.svg'
+        }, {
+            type: 'compare-complex',
+            description: 'Cкладні порівняння',
+            thumbnail: 'http://www.highcharts.com/media/com_demo/images/highcharts/bar-negative-stack-default.svg'
+        }, {
+            type: 'pie-chart',
+            description: 'Кругова діаграма',
+            thumbnail: 'http://www.highcharts.com/media/com_demo/images/highcharts/pie-donut-default.svg'
+        }];
+
+        vm.selectGraphType = function selectGraphType (type) {
+            console.log(type, ' selected')
+            vm.showGallery = false
+            vm.showDatasets = true
+        }
 
         vm.selectDatasets = function selectDatasets () {
             vm.showDatasets = true;
@@ -68,7 +92,7 @@
         }
 
         DatasetFactory.registerDatasetSelectedCb(function (data) {
-            data.fields = [{id: 'code'}, {id: 'Plan'}, {id: 'Fact'}, {id: 'Fond'}]
+            // data.fields = [{id: 'code'}, {id: 'Plan'}, {id: 'Fact'}, {id: 'Fond'}]
             if (!_.has(data, 'id')) {
                 console.warn('This dataset has no id');
                 return;
@@ -103,46 +127,11 @@
 
         vm.selected = vm.options[0];
 
-        DatasetFactory.getUnitedDataset(function(dataset) {
-            var DEFAULT_TYPE = 'line';
-            vm.dataset = dataset;
-            setConfig(dataset);
-            // vm.chartConfig = {
-            //     options: {
-            //         chart: {
-            //             type: vm.selected.type
-            //         },
-            //         title: {
-            //             text: 'title1'
-            //         },
-            //         colors: ['#90ed7d','#f45b5b']
-            //     },
-            //     yAxis: {
-            //         title: ''
-            //     },
-            //     xAxis: {
-            //         categories: _.map(vm.datasets[0].result.fields, function (field) {
-            //             return field.id;
-            //         }),
-            //         title: 'test2'
-            //     },
-            //     series: [{
-            //         name: 'name1',
-            //         data: _.map(vm.datasets[0].result.records, function (d) {
-            //             return d[vm.datasets[0].selectedY[0]]
-            //         })
-            //     }, {
-            //         name: 'name2',
-            //         data: _.map(vm.datasets[0].result.records, function (d) {
-            //             return d[vm.datasets[0].selectedY[1]]
-            //         })
-            //     }],
-            //     size: {
-            //         width: 600,
-            //         height: 500
-            //     }
-            // };
-        });
+        // DatasetFactory.getUnitedDataset(function(dataset) {
+        //     var DEFAULT_TYPE = 'line';
+        //     vm.dataset = dataset;
+        //     setConfig(dataset);
+        // });
 
         function setConfig(data) {
             console.log('setconfig(data);');
