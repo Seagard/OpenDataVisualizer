@@ -75,9 +75,6 @@ function loadDatasetFromUrl(req, res) {
       if(!fs.existsSync('datasets/' + datasetId + '.json')) {
         var data = JSON.parse(resp);
         data.result.name = datasetId;
-        data.result.fields.forEach(function(field) {
-          field.id = field.id.toLowerCase();
-        });
         fs.writeFileSync('datasets/' + datasetId + '.json', JSON.stringify(data));
       }
       res.send(data);

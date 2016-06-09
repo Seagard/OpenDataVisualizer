@@ -112,7 +112,7 @@ angular.module('main').factory('DatasetFactory', function($http, $q) {
     }
 
     function getCurrentDataset() {
-        return dataset;
+        return currentDataset;
     }
 
     function getExampleDatasets() {
@@ -149,6 +149,7 @@ angular.module('main').factory('DatasetFactory', function($http, $q) {
         registerDatasetSelectedCb: registerDatasetSelectedCb,
         notifyDatasetSelected: notifyDatasetSelected,
         registerOnDatasetUploadedEvent: registerOnDatasetUploadedEvent,
-        notifyDatasetUploadedCallback: notifyDatasetUploadedCallback
+        notifyDatasetUploadedCallback: notifyDatasetUploadedCallback,
+        getCurrentDataset: getCurrentDataset
     }
 });
