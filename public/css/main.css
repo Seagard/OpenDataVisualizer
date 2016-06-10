@@ -46,6 +46,11 @@ html, body, #map_canvas {
     left: 0;
 }
 
+.angular-google-map-container .cluster > img {
+    width:80px;
+    height:80px;
+}
+
 .rainbow {
     display: inline-block;
     width:230px;
