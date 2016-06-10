@@ -7,10 +7,36 @@
     graphicController.$inject = ['DatasetFactory', 'FilterFactory'];
 
     function graphicController(DatasetFactory, FilterFactory) {
-        console.log('hue');
         var vm = this;
-        vm.showGraph = false;
-        vm.showDatasets = false;
+        angular.extend(vm, {
+            showDatasets: false,
+            showGraph: false,
+            datasets: []
+        })
+        vm.showGallery = true;
+        vm.gallery = [{
+            type: 'compare-line',
+            description: 'Порівняти дані',
+            thumbnail: 'http://www.highcharts.com/media/com_demo/images/highcharts/line-basic-default.svg'
+        }, {
+            type: 'compare-timeline',
+            description: 'Порівняння на відрізку часу',
+            thumbnail: 'http://www.highcharts.com/media/com_demo/images/highcharts/area-stacked-default.svg'
+        }, {
+            type: 'compare-complex',
+            description: 'Cкладні порівняння',
+            thumbnail: 'http://www.highcharts.com/media/com_demo/images/highcharts/bar-negative-stack-default.svg'
+        }, {
+            type: 'pie-chart',
+            description: 'Кругова діаграма',
+            thumbnail: 'http://www.highcharts.com/media/com_demo/images/highcharts/pie-donut-default.svg'
+        }];
+
+        vm.selectGraphType = function selectGraphType (type) {
+            console.log(type, ' selected')
+            vm.showGallery = false
+            vm.showDatasets = true
+        }
 
         vm.selectDatasets = function selectDatasets () {
             vm.showDatasets = true;
@@ -20,92 +46,74 @@
             console.log(vm.selected);
         }
 
-        DatasetFactory.registerDatasetSelectedCb(function (data) {
-            console.log(data)
-        })
+        vm.displayChart = function displayChart (datasetId) {
+            vm.showDatasets = false;
+            vm.showGraph = true;
+            datasetId = 0;
+            console.log(vm.datasets[0])
 
-        // vm.clearSearchTerm = function clearSearchTerm () {
-        //     console.log('clear search term')
-        // }
-
-        var hardcore = {
-            type: 'compare',
-            title: 'Порівняння наборів даних X і Y',
-            commonField: 'year',
-            datasets: [{
-                name: 'Населення',
-                meta: {
-                    fieldsToAnalyze: ['population'],
-                    fieldsMeta: {
-                        year: {
-                            max: 2015,
-                            min: 2010,
-                            unitOfMeasurement: 'Роки'
-                        },
-                        population: {
-                            max: 12909,
-                            min: 9300,
-                            unitOfMeasurement: 'Населення'
-                        }
-                    }
+            vm.chartConfig = {
+                options: {
+                    chart: {
+                        type: 'line' // hardcore
+                    },
+                    title: {
+                        text: 'text2'
+                    },
+                    colors: ['#90ed7d','#f45b5b']
                 },
-                data: [{
-                    year: 2010,
-                    population: 10354
-                }, {
-                    year: 2011,
-                    population: 11043
-                }, {
-                    year: 2012,
-                    population: 12909
-                }, {
-                    year: 2013,
-                    population: 10001
-                }, {
-                    year: 2014,
-                    population: 9534
-                }, {
-                    year: 2015,
-                    population: 8500
-                }]
-            }, {
-                name: 'Викиди промисловості',
-                meta: {
-                    fieldsToAnalyze: ['wastes'],
-                    fieldsMeta: {
-                        year: {
-                            max: 2015,
-                            min: 2010,
-                            unitOfMeasurement: 'Роки'
-                        },
-                        wastes: {
-                            max: 876,
-                            min: 432,
-                            unitOfMeasurement: 'Тонни'
-                        }
-                    }
+                yAxis: {
+                    title: ''
                 },
-                data: [{
-                    year: 2010,
-                    wastes: 500
+                xAxis: {
+                  categories: _.map(vm.datasets[0].result.records, function (data) {
+                      var key = vm.datasets[0].selectedX[0];
+                      return data[key.charAt(0).toUpperCase() + key.slice(1)];
+                  }),
+                  title: 'test2'
+                },
+                series: [{
+                    name: vm.datasets[0].selectedY[0],
+                    data: _.map(vm.datasets[0].result.records, function (d) {
+                        return +d[vm.datasets[0].selectedY[0]]
+                    }) 
                 }, {
-                    year: 2011,
-                    wastes: 432
-                }, {
-                    year: 2012,
-                    wastes: 450
-                }, {
-                    year: 2013,
-                    wastes: 723
-                }, {
-                    year: 2014,
-                    wastes: 800
-                }, {
-                    year: 2015,
-                    wastes: 876
-                }]
-            }]
+                    name: vm.datasets[0].selectedY[1],
+                    data: _.map(vm.datasets[0].result.records, function (d) {
+                        return +d[vm.datasets[0].selectedY[1]]
+                    })
+                }],
+                size: {
+                    width: 600,
+                    height: 500
+                }
+            };
+            console.log(vm.chartConfig)
         }
+
+        DatasetFactory.registerDatasetSelectedCb(function (data) {
+            // data.fields = [{id: 'code'}, {id: 'Plan'}, {id: 'Fact'}, {id: 'Fond'}]
+            if (!_.has(data, 'id')) {
+                console.warn('This dataset has no id');
+                return;
+            }
+            if (_.findWhere(vm.datasets, {id: data.id})) {
+                // we already have this one
+
+                return;
+            }
+            DatasetFactory.getDatasetById(data.id)
+              .then(function (dataset) {
+
+                  console.log(dataset);
+                  vm.datasets.push(angular.extend({}, data, dataset));
+
+
+              })
+              .catch(function (err) {
+                  console.error(err)
+              })
+        })
 
         var graphMap = {
             'compare': ['line', 'area', 'column']
@@ -119,46 +127,11 @@
 
         vm.selected = vm.options[0];
 
-        DatasetFactory.getUnitedDataset(function(dataset) {
-            var DEFAULT_TYPE = 'line';
-            vm.dataset = dataset;
-            setConfig(dataset);
-            vm.chartConfig = {
-                options: {
-                    chart: {
-                        type: vm.selected.type
-                    },
-                    title: {
-                        text: hardcore.title
-                    },
-                    colors: ['#90ed7d','#f45b5b']
-                },
-                yAxis: {
-                    title: ''
-                },
-                xAxis: {
-                    categories: _.range(hardcore.datasets[0].meta.fieldsMeta[hardcore.commonField].min,
-                                        hardcore.datasets[0].meta.fieldsMeta[hardcore.commonField].max + 1),
-                    title: {text: hardcore.datasets[0].meta.fieldsMeta[hardcore.commonField].unitOfMeasurement}
-                },
-                series: [{
-                    name: hardcore.datasets[0].name,
-                    data: _.map(hardcore.datasets[0].data, function (d) {
-                        return d[hardcore.datasets[0].meta.fieldsToAnalyze[0]]
-                    })
-                }, {
-                    name: hardcore.datasets[1].name,
-                    data: _.map(hardcore.datasets[1].data, function (d) {
-                        var hardcodedCoefficient = 11;
-                        return hardcodedCoefficient * d[hardcore.datasets[1].meta.fieldsToAnalyze[0]]
-                    })
-                }],
-                size: {
-                    width: 600,
-                    height: 500
-                }
-            };
-        });
+        // DatasetFactory.getUnitedDataset(function(dataset) {
+        //     var DEFAULT_TYPE = 'line';
+        //     vm.dataset = dataset;
+        //     setConfig(dataset);
+        // });
 
         function setConfig(data) {
             console.log('setconfig(data);');

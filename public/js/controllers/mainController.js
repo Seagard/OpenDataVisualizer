@@ -14,10 +14,18 @@ angular.module('main').controller('mainController', [
   vm.buttonClicked = function($index) {
       vm.selectedIndex = $index;
   };
+  vm.selectedTab = 0;
 
   function activate() {
     $rootScope.$on('$stateChangeStart', function(event, toState){
         vm.isDataStateActive = toState.name == 'data';
+        vm.selectedTab = 1;
+    });
+
+    DatasetFactory.registerOnDatasetUploadedEvent(function() {
+      DatasetFactory.getDatasetList().then(function(datasets) {
+        vm.datasetList = datasets;
+      })
     });
 
     DatasetFactory.getDatasetList().then(function(datasets) {
@@ -25,8 +33,8 @@ angular.module('main').controller('mainController', [
     })
   }
   vm.openDataset = function(dataset) {
-    DatasetFactory.getDatasetById(dataset.name);
-    DatasetFactory.notifyDatasetSelected(dataset)
+    // DatasetFactory.getDatasetById(dataset.name); This will not work!
+    DatasetFactory.notifyDatasetSelected(dataset);
     //TODO: open dataset
   };
 

@@ -1,35 +1,81 @@
-<div ng-controller="GraphicController as graphic">
-    <div ng-hide="graphic.showDatasets"
-         layout="row"
-         layout-align="center center">
-        <md-button md-no-ink
+<div ng-controller="GraphicController as g">
+    <div ng-if="g.showGallery">
+        <h1 class="md-display-1"
+            layout="row"
+            layout-align="center center">
+            Оберіть тип інфографіки
+        </h1>
+        <md-content class="md-padding"
+                    layout-xs="column"
+                    layout="row">
+            <div flex-xs
+                 flex-gt-xs="50"
+                 layout="column"
+                 ng-repeat="sample in g.gallery"
+            >
+                <md-card class="demo-container"
+                         ng-click="g.selectGraphType(sample.type)">
+                    <img ng-src="{{sample.thumbnail}}" class="md-card-image" alt="{{sample.type}}">
+                    <md-card-title>
+                        <md-card-title-text layout="row" layout-align="center center">
+                            <span class="md-headline">{{sample.description}}</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                </md-card>
+            </div>
+        </md-content>
+    </div>
+
+    <md-content ng-if="g.showDatasets"
+                class="md-padding"
+                layout-xs="column"
+                layout="row">
+    <!--<div ng-show="g.showDatasets"-->
+         <!--layout="row"-->
+         <!--layout-align="center center">-->
+        <h2 ng-show="!g.datasets.length">Оберіть набори для порівняння</h2>
+        <div ng-repeat="ds in g.datasets">
+            <h3>{{ds.name}}</h3>
+
+            <md-input-container>
+                <label>Колонки для порівняння по осі X</label>
+                <md-select ng-model="ds.selectedX"
+                           data-md-container-class="selectdemoSelectHeader"
+                           ng-change="g.selectedthings()"
+                           multiple>
+                    <md-optgroup label="Колонки">
+                        <md-option ng-value="field.id"
+                                   ng-repeat="field in ds.result.fields">{{field.id}}
+                        </md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+            <br>
+            <md-input-container>
+                <label>Колонки для порівняння по осі Y</label>
+                <md-select ng-model="ds.selectedY"
+                           data-md-container-class="selectdemoSelectHeader"
+                           ng-change="g.selectedthings()"
+                           multiple>
+                    <md-optgroup label="Колонки">
+                        <md-option ng-value="field.id"
+                                   ng-repeat="field in ds.result.fields">{{field.id}}
+                        </md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+            <br>
+        </div>
+        <md-button ng-show="g.datasets.length"
+                   md-no-ink
                    class="md-primary"
-                   ng-click="graphic.selectDatasets()">Порівняти набори даних
+                   ng-click="g.displayChart(ds.id)">Візуалізувати
         </md-button>
+    </md-content>
+
     </div>
-    <div ng-show="graphic.showDatasets"
-         layout="row"
-         layout-align="center center">
-
-        <h3>Dataset 1</h3>
-
-        <md-input-container>
-            <label>Колонки для порівняння</label>
-            <md-select ng-model="graphic.selected"
-                       data-md-container-class="selectdemoSelectHeader"
-                       ng-change="graphic.selectedthings()"
-                       multiple>
-                <md-optgroup label="Колонки">
-                    <md-option ng-value="option.text"
-                               ng-repeat="option in graphic.options">{{option.text}}
-                    </md-option>
-                </md-optgroup>
-            </md-select>
-        </md-input-container>
-    </div>
-
-    <div ng-show="graphic.showGraph">
-        <highchart id="chart" config="graphic.chartConfig" style=" height:100%;"></highchart>
-        <select ng-model="graphic.selected" ng-options="option.text for option in graphic.options" ng-change="graphic.changeChartSettings()"></select>
+    <div ng-show="g.showGraph">
+        <highchart id="chart" config="g.chartConfig" style=" height:100%;"></highchart>
+        <select ng-model="g.selected" ng-options="option.text for option in g.options" ng-change="g.changeChartSettings()"></select>
     </div>
 </div>

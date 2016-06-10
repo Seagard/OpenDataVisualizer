@@ -79,3 +79,21 @@ html, body, #map_canvas {
     border:1px solid #e4e4e4;
     opacity: 0.35;
 }
+
+.demo-container:hover {
+    color: #000;
+    transform: translateY(-5px);
+    -webkit-transform: translateY(-5px);
+    -moz-transform: translateY(-5px);
+    -ms-transform: translateY(-5px);
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+.demo-container {
+    cursor: pointer;
+    color: #7E7E7E;
+    transition: transform .2s ease-in-out;
+    -webkit-transition: -webkit-transform .2s ease-in-out;
+    -moz-transition: -moz-transform .2s ease-in-out;
+    -ms-transition: -ms-transform .2s ease-in-out;
+}
