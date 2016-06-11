@@ -2,147 +2,80 @@
     "use strict";
     angular
         .module('main')
-        .controller('GraphicController', graphicController);
+        .controller('GraphicController', graphicController)
 
-    graphicController.$inject = ['DatasetFactory', 'FilterFactory'];
+    graphicController.$inject = ['$state', 'ChartService']
 
-    function graphicController(DatasetFactory, FilterFactory) {
-        var vm = this;
-        angular.extend(vm, {
-            showDatasets: false,
-            showGraph: false,
-            datasets: []
-        })
-        vm.showGallery = true;
-        vm.gallery = [{
-            type: 'compare-line',
-            description: 'Порівняти дані',
-            thumbnail: 'http://www.highcharts.com/media/com_demo/images/highcharts/line-basic-default.svg'
-        }, {
-            type: 'compare-timeline',
-            description: 'Порівняння на відрізку часу',
-            thumbnail: 'http://www.highcharts.com/media/com_demo/images/highcharts/area-stacked-default.svg'
-        }, {
-            type: 'compare-complex',
-            description: 'Cкладні порівняння',
-            thumbnail: 'http://www.highcharts.com/media/com_demo/images/highcharts/bar-negative-stack-default.svg'
-        }, {
-            type: 'pie-chart',
-            description: 'Кругова діаграма',
-            thumbnail: 'http://www.highcharts.com/media/com_demo/images/highcharts/pie-donut-default.svg'
-        }];
+    function graphicController($state, ChartService) {
+      var vm = this
+      angular.extend(vm, {
+          showDatasets: false,
+          showGraph: false,
+          datasets: []
+      })
+      vm.gallery = [{
+          type: 'compare-line',
+          description: 'Порівняти дані',
+          thumbnail: '/images/compare-line.svg'
+      }, {
+          type: 'compare-timeline',
+          description: 'Порівняння на відрізку часу',
+          thumbnail: '/images/compare-timeline.svg'
+      }, {
+          type: 'compare-complex',
+          description: 'Cкладні порівняння',
+          thumbnail: '/images/compare-complex.svg'
+      }, {
+          type: 'pie-chart',
+          description: 'Кругова діаграма',
+          thumbnail: '/images/pie-chart.svg'
+      }];
 
-        vm.selectGraphType = function selectGraphType (type) {
-            console.log(type, ' selected')
-            vm.showGallery = false
-            vm.showDatasets = true
-        }
+      vm.selectGraphType = function selectGraphType (type) {
+        console.log(type, ' selected')
+        ChartService.setChartType(type)
+        $state.go('add-dataset')
+      }
+      vm.selectedthings = function selectedthings () {
+          console.log(vm.selected);
+      }
 
-        vm.selectDatasets = function selectDatasets () {
-            vm.showDatasets = true;
-        }
+      // vm.displayChart = function displayChart (datasetId) {
+      //     vm.showDatasets = false;
+      //     vm.showGraph = true;
+      //     datasetId = 0;
+      //     console.log(vm.datasets[0])
+      //
+      // }
 
-        vm.selectedthings = function selectedthings () {
-            console.log(vm.selected);
-        }
+      var graphMap = {
+          'compare': ['line', 'area', 'column']
+      }
 
-        vm.displayChart = function displayChart (datasetId) {
-            vm.showDatasets = false;
-            vm.showGraph = true;
-            datasetId = 0;
-            console.log(vm.datasets[0])
+      vm.options = [
+          {id: 1, text: 'Line chart',      type: 'line'},
+          {id: 2, text: 'Area chart',     type: 'area'},
+          {id: 3, text: 'Bar chart', type: 'bar'}
+      ];
 
-            vm.chartConfig = {
-                options: {
-                    chart: {
-                        type: 'line' // hardcore
-                    },
-                    title: {
-                        text: 'text2'
-                    },
-                    colors: ['#90ed7d','#f45b5b']
-                },
-                yAxis: {
-                    title: ''
-                },
-                xAxis: {
-                  categories: _.map(vm.datasets[0].result.records, function (data) {
-                      var key = vm.datasets[0].selectedX[0];
-                      return data[key.charAt(0).toUpperCase() + key.slice(1)];
-                  }),
-                  title: 'test2'
-                },
-                series: [{
-                    name: vm.datasets[0].selectedY[0],
-                    data: _.map(vm.datasets[0].result.records, function (d) {
-                        return +d[vm.datasets[0].selectedY[0]]
-                    }) 
-                }, {
-                    name: vm.datasets[0].selectedY[1],
-                    data: _.map(vm.datasets[0].result.records, function (d) {
-                        return +d[vm.datasets[0].selectedY[1]]
-                    })
-                }],
-                size: {
-                    width: 600,
-                    height: 500
-                }
-            };
-            console.log(vm.chartConfig)
-        }
+      vm.selected = vm.options[0];
 
-        DatasetFactory.registerDatasetSelectedCb(function (data) {
-            // data.fields = [{id: 'code'}, {id: 'Plan'}, {id: 'Fact'}, {id: 'Fond'}]
-            if (!_.has(data, 'id')) {
-                console.warn('This dataset has no id');
-                return;
-            }
-            if (_.findWhere(vm.datasets, {id: data.id})) {
-                // we already have this one
+      // DatasetFactory.getUnitedDataset(function(dataset) {
+      //     var DEFAULT_TYPE = 'line';
+      //     vm.dataset = dataset;
+      //     setConfig(dataset);
+      // });
 
-                return;
-            }
-            DatasetFactory.getDatasetById(data.id)
-              .then(function (dataset) {
+      function setConfig(data) {
+          console.log('setconfig(data);');
+          console.log(data);
+      }
 
-                  console.log(dataset);
-                  vm.datasets.push(angular.extend({}, data, dataset));
-
-
-              })
-              .catch(function (err) {
-                  console.error(err)
-              })
-        })
-
-        var graphMap = {
-            'compare': ['line', 'area', 'column']
-        }
-
-        vm.options = [
-            {id: 1, text: 'Line chart',      type: 'line'},
-            {id: 2, text: 'Area chart',     type: 'area'},
-            {id: 3, text: 'Bar chart', type: 'bar'}
-        ];
-
-        vm.selected = vm.options[0];
-
-        // DatasetFactory.getUnitedDataset(function(dataset) {
-        //     var DEFAULT_TYPE = 'line';
-        //     vm.dataset = dataset;
-        //     setConfig(dataset);
-        // });
-
-        function setConfig(data) {
-            console.log('setconfig(data);');
-            console.log(data);
-        }
-
-        vm.changeChartSettings = function() {
-            console.log(vm.selected);
-            vm.options.type = vm.selected.type;
-            _.each(vm.chartConfig.series, (s) => { s.type = vm.selected.type });
-            console.log(vm.chartConfig.series);
-        };
+      vm.changeChartSettings = function() {
+          console.log(vm.selected);
+          vm.options.type = vm.selected.type;
+          _.each(vm.chartConfig.series, (s) => { s.type = vm.selected.type });
+          console.log(vm.chartConfig.series);
+      };
     }
 })();

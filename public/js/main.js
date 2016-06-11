@@ -7,10 +7,6 @@
       'ngMaterial'
     ])
     .config(function($locationProvider, $stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
-      $locationProvider.html5Mode({
-        enabled: true,
-        requireBase: false
-      }).hashPrefix('!');
       $urlRouterProvider.otherwise('/data');
       $stateProvider
         .state('data', {
@@ -23,9 +19,22 @@
                 DatasetFactory.getDatasetById($stateParams.datasetId);
           }]
         })
-        .state('graphic', {
-          url: '/graphic',
+        .state('index', {
+          url: '/data',
+          templateUrl: '../pages/data.html',
+          controller: 'DataController'
+        })
+        .state('list', {
+          url: '/graphic/list',
           templateUrl: '../pages/graphic.html'
+        })
+        .state('add-dataset', {
+          url: '/graphic/add-dataset',
+          templateUrl: '../pages/add-dataset.html'
+        })
+        .state('chart', {
+          url: '/graphic/chart',
+          templateUrl: '../pages/chart.html'
         })
         .state('map', {
           url: '/map',

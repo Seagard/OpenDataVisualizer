@@ -1,0 +1,4 @@
+<div ng-controller="ChartController as g">
+    <highchart ng-if="g.chartConfig" id="chart" config="g.chartConfig" style=" height:100%;"></highchart>
+    <!--<select ng-model="g.selected" ng-options="option.text for option in g.options" ng-change="g.changeChartSettings()"></select>-->
+</div>

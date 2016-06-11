@@ -1,5 +1,5 @@
 <div ng-controller="GraphicController as g">
-    <div ng-if="g.showGallery">
+    <div>
         <h1 class="md-display-1"
             layout="row"
             layout-align="center center">
@@ -24,58 +24,5 @@
                 </md-card>
             </div>
         </md-content>
-    </div>
-
-    <md-content ng-if="g.showDatasets"
-                class="md-padding"
-                layout-xs="column"
-                layout="row">
-    <!--<div ng-show="g.showDatasets"-->
-         <!--layout="row"-->
-         <!--layout-align="center center">-->
-        <h2 ng-show="!g.datasets.length">Оберіть набори для порівняння</h2>
-        <div ng-repeat="ds in g.datasets">
-            <h3>{{ds.name}}</h3>
-
-            <md-input-container>
-                <label>Колонки для порівняння по осі X</label>
-                <md-select ng-model="ds.selectedX"
-                           data-md-container-class="selectdemoSelectHeader"
-                           ng-change="g.selectedthings()"
-                           multiple>
-                    <md-optgroup label="Колонки">
-                        <md-option ng-value="field.id"
-                                   ng-repeat="field in ds.result.fields">{{field.id}}
-                        </md-option>
-                    </md-optgroup>
-                </md-select>
-            </md-input-container>
-            <br>
-            <md-input-container>
-                <label>Колонки для порівняння по осі Y</label>
-                <md-select ng-model="ds.selectedY"
-                           data-md-container-class="selectdemoSelectHeader"
-                           ng-change="g.selectedthings()"
-                           multiple>
-                    <md-optgroup label="Колонки">
-                        <md-option ng-value="field.id"
-                                   ng-repeat="field in ds.result.fields">{{field.id}}
-                        </md-option>
-                    </md-optgroup>
-                </md-select>
-            </md-input-container>
-            <br>
-        </div>
-        <md-button ng-show="g.datasets.length"
-                   md-no-ink
-                   class="md-primary"
-                   ng-click="g.displayChart(ds.id)">Візуалізувати
-        </md-button>
-    </md-content>
-
-    </div>
-    <div ng-show="g.showGraph">
-        <highchart id="chart" config="g.chartConfig" style=" height:100%;"></highchart>
-        <select ng-model="g.selected" ng-options="option.text for option in g.options" ng-change="g.changeChartSettings()"></select>
     </div>
 </div>
