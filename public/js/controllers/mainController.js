@@ -14,10 +14,12 @@ angular.module('main').controller('mainController', [
   vm.buttonClicked = function($index) {
       vm.selectedIndex = $index;
   };
+  vm.selectedTab = 0;
 
   function activate() {
     $rootScope.$on('$stateChangeStart', function(event, toState){
         vm.isDataStateActive = toState.name == 'data';
+        vm.selectedTab = 1;
     });
 
     DatasetFactory.registerOnDatasetUploadedEvent(function() {

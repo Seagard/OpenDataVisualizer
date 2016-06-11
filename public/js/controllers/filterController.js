@@ -15,8 +15,11 @@ angular.module('main').controller('FilterController', function(DatasetFactory, F
     });
 
     DatasetFactory.registerOnDatasetLoadedEvent(function(data) {
-        console.log('Dataset loaded: ', data.result);
         vm.dataset = data.result;
+        vm.fields = [];
+        vm.filteredDataset = {};
+        vm.filteredDataset.fields = [];
+        vm.filteredDataset.records = [];
         datasetsLoaded();
     });
 
