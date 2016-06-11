@@ -7,7 +7,7 @@
                              coords="'self'"
                              idkey="id"
                              events="markerEvents"
-                             doCluster="true"
+                             doCluster="doCluster" options="markerOptions"
                              clusterOptions="clusterOpt" click="'onClick'" >
                 <ui-gmap-windows show="show">
                     <div ng-non-bindable>{{latitude + ' ' + longitude}}
@@ -17,7 +17,29 @@
             </ui-gmap-markers>
 
         </ui-gmap-google-map>
-        <div class="rainbow">
+        </div>
+    <div id="mapControls">
+        <!--<h4>Налаштування</h4>-->
+        <!--<h5>Оберiть колip маркеру</h5>-->
+        <div class="actions" ng-show="dataset">
+            <md-button class="md-primary" ng-click="highlight(map)"> Показати об'екти </md-button>
+            <md-checkbox class="blue" ng-class="{'md-checked': doCluster}" ng-click="toggleCluster()" ng-show="map.markers.length">Cluster</md-checkbox>
+            <md-button class="md-primary" ng-click="highlightRegions(map)"> Статiстика за районами </md-button>
+
+            <!--<md-select class="fieldSelect" ng-model="field" >-->
+                <!--<md-option ng-repeat="field in dataset.fields | filter: removeWrongFields"-->
+                           <!--value="{{field.id}}" ng-disabled="$index === 1">-->
+                    <!--{{field.id}}-->
+                <!--</md-option>-->
+            <!--</md-select>-->
+
+            <select class="fieldSelect" ng-if="dataset" ng-options="field.id for field in dataset.fields | filter: removeWrongFields" ng-model="field"
+                    ng-change="setCriteria(field)"></select>
+
+            <md-button class="md-primary" ng-click="reset(map)">Очистити</md-button>
+        </div>
+
+        <div class="rainbow" ng-show="dataset">
             <div class="box-wrap">
                 <div class="box"></div><div>0</div>
             </div>
@@ -37,18 +59,8 @@
                 <div class="box" style="background:red;"></div><div>80-100</div>
             </div>
         </div>
-        </div>
-    <select ng-options="dataset.name for dataset in datasets"
-            ng-model="selectedItem"
-            ng-change="getDataset()">
-    </select>
-
-    <br>
-    <div class="actions">
-        <button class="action" ng-click="highlight(map)">Показати об'екти</button>
-        <button class="action" ng-click="highlightRegions(map)">Статiстика за районами</button>
-        <button class="action" ng-click="reset(map)">Очистити</button>
     </div>
+
 
 
 </div>

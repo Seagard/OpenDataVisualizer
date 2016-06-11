@@ -7,10 +7,13 @@ angular.module('main')
     vm.isDataLoaded = false;
 
     function activate() {
-        DatasetFactory.registerOnDatasetLoadedEvent(function(data) {
-            vm.dataset = data.result;
-            vm.isDataLoaded = true;
-        });
+        DatasetFactory.registerDatasetSelectedCb(function (dataset) {
+            vm.isDataLoaded = false;
+            DatasetFactory.getDatasetById(dataset.id)
+                .then(function (dataset) {
+                    $scope.dataset = dataset.result;
+                });
+        })
     }
 
     DatasetFactory.getDatasetList().then(function(result) {
@@ -19,20 +22,7 @@ angular.module('main')
     activate();
 
     $scope.getDataset = function() {
-        DatasetFactory.getDatasetById($scope.selectedItem.name)
-            .then(function(dataset) {
-                return dataset.result.records;
-            })
-            .then(function(dataset) {
-                $scope.dataset = dataset;
-                    $scope.districts.forEach(function (data) {
-                        data.memorials = [];
-                        $scope.dataset.forEach(function (record) {
-                            if (data.district == record.Rajon)
-                                data.memorials.push(record);
-                        })
-                    })
-            })
+
     }
 
     $scope.options = {scrollwheel: false};
@@ -101,6 +91,18 @@ angular.module('main')
         })
     };
 
+    $scope.doCluster = true;
+
+    $scope.toggleCluster = function() {
+      $scope.doCluster = !$scope.doCluster;
+    };
+
+    $scope.markerImages = {
+        red: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+        green: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+        blue: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+    };
+
     $scope.highlight = function (map) {
         $scope.clusterOpt = {
             styles: [
@@ -113,7 +115,7 @@ angular.module('main')
             averageCenter: true
         }
         var i = 0;
-        $scope.dataset.forEach(function (data) {
+        $scope.dataset.records.forEach(function (data) {
             $scope.polygons.forEach(function(polygon) {
                 if (google.maps.geometry.poly.containsLocation(new google.maps.LatLng(data.lat, data.lon),
                         polygon.control.getPlurals().get(polygon.id).gObject))
@@ -137,20 +139,45 @@ angular.module('main')
             model.show = !model.show;
         };
 
+        var markers = [];
+
     $scope.highlightRegions = function() {
+        $scope.dataset.records.forEach(function (data) {
+            $scope.polygons.forEach(function(polygon) {
+                if (google.maps.geometry.poly.containsLocation(new google.maps.LatLng(data.lat, data.lon),
+                        polygon.control.getPlurals().get(polygon.id).gObject))
+                    data.area = polygon.id;
+            });
+            var marker = {
+                data: data
+            };
+            markers.push(marker);
+        });
+
         $scope.polygons.forEach(function (polygon) {
-            polygon.markers = 0;
-            $scope.map.markers.forEach(function (marker) {
+            polygon.markers = [];
+            markers.forEach(function (marker) {
                 if (marker.data.area === polygon.id)
-                    polygon.markers++;
+                    polygon.markers.push(marker);
             })
         });
 
         $scope.polygons.forEach(function(polygon) {
-            if (polygon.markers == 0) {
+            var fillColor;
+            polygon.totalValue = 0;
+
+            polygon.markers.forEach(function(item) {
+                var criteria = parseFloat(item.data[$scope.field.id]);
+
+                if(!isNaN(criteria)) {
+                    polygon.totalValue += criteria;
+                }
+            });
+
+            if (polygon.totalValue == 0)  {
                 fillColor = "#C3E1FF";
             }
-            else if (defineRange(polygon.markers, 0, 10)) {
+            else if (defineRange(polygon.totalValue, 0, 10)) {
                 fillColor = "blue";
             }
             else  {
@@ -158,8 +185,16 @@ angular.module('main')
             }
             var area = polygon.control.getPlurals().get(polygon.id).model;
             area.fill.color = fillColor;
-        })
+        });
     };
+
+    $scope.setCriteria = function(field) {
+        $scope.field = field;
+    }
+
+    $scope.removeWrongFields = function(itm) {
+        return itm.id !== "lat" && itm.id !== "lon";
+    }
 
     $scope.reset = function(map) {
         $scope.polygons.forEach(function(polygon) {
