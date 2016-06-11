@@ -148,7 +148,7 @@ angular.module('main')
 
         $scope.polygons.forEach(function(polygon) {
             if (polygon.markers == 0) {
-                fillColor = "#ffffff";
+                fillColor = "#C3E1FF";
             }
             else if (defineRange(polygon.markers, 0, 10)) {
                 fillColor = "blue";
@@ -162,8 +162,11 @@ angular.module('main')
     };
 
     $scope.reset = function(map) {
-        $scope.polygons = [];
-        $scope.initialize();
+        $scope.polygons.forEach(function(polygon) {
+            var area = polygon.control.getPlurals().get(polygon.id).model;
+            area.fill.color = '#C3E1FF';
+        })
+        $scope.map.markers = [];
     }
 
     function defineRange(value, min, max) {
