@@ -13,6 +13,7 @@
                            ng-change="addData.selectedthings()">
                     <md-optgroup label="Колонки">
                         <md-option ng-value="field.id"
+                                   ng-if="field.type == 'text'"
                                    ng-repeat="field in addData.selected.fields">{{field.id}}
                         </md-option>
                     </md-optgroup>
@@ -27,6 +28,7 @@
                            multiple>
                     <md-optgroup label="Колонки">
                         <md-option ng-value="field.id"
+                                   ng-if="field.type != 'text'"
                                    ng-repeat="field in addData.selected.fields">{{field.id}}
                         </md-option>
                     </md-optgroup>

@@ -18,9 +18,10 @@
       case 'compare-line':
         vm.chartConfig = {
           options: {
-            chart: { type: 'line' },
+            chart: { type: 'column' },
             title: { text: '' },
-            colors: ['#90ed7d','#f45b5b']
+            colors: ['#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#1aadce',
+              '#492970', '#f28f43', '#77a1e5', '#c42525', '#a6c96a']
           },
           yAxis: { title: '' },
           xAxis: {
