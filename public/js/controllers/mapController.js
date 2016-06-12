@@ -21,10 +21,6 @@ angular.module('main')
     })
     activate();
 
-    $scope.getDataset = function() {
-
-    }
-
     $scope.options = {scrollwheel: false};
     $scope.polygons = [];
     $scope.datasets = DatasetFactory.getExampleDatasets();
@@ -41,6 +37,7 @@ angular.module('main')
     }
 
     function click(polygon, e, model, args) {
+        $scope.click = true;
     }
 
     function mouseOver(polygon, e, model, args) {
@@ -68,7 +65,6 @@ angular.module('main')
             control: {}
         };
 
-        var pId = 0;
         $scope.districts.forEach(function (data) {
             $scope.polygons.push({
                 id: data.district,
@@ -141,51 +137,135 @@ angular.module('main')
 
         var markers = [];
 
+    var colors = [
+        {
+         minValue: 0,
+         maxValue:0,
+         color: '#C3E1FF'
+        },
+        {
+            minValue: 0.0001,
+            maxValue:1,
+            color: '#FF8AF4'
+        },
+        {
+            minValue:1,
+            maxValue:10,
+            color: '#6501AB'
+        },
+        {
+            minValue: 10,
+            maxValue:30,
+            color: '#010BAB'
+        },
+        {
+            minValue: 30,
+            maxValue:50,
+            color: '#001AFF'
+        },
+        {
+            minValue: 50,
+            maxValue:75,
+            color: '#30B8FF'
+        },
+        {
+            minValue: 75,
+            maxValue:100,
+            color: '#5CFFE4'
+        },
+        {
+            minValue: 100,
+            maxValue:200,
+            color: '#1FB951'
+        },
+        {
+            minValue: 200,
+            maxValue:300,
+            color: '#2EFF00'
+        },
+        {
+            minValue: 300,
+            maxValue:400,
+            color: '#F6FF00'
+        },
+        {
+            minValue: 400,
+            maxValue:500,
+            color: '#FFCD00'
+        },
+        {
+            minValue: 500,
+            maxValue:600,
+            color: '#FF9E00'
+        },
+        {
+            minValue: 600,
+            maxValue:800,
+            color: '#FF7800'
+        },
+        {
+            minValue: 800,
+            maxValue:1000,
+            color: '#FF3400'
+        },
+        {
+            minValue: 1000,
+            maxValue:1000000,
+            color: '#FF0000'
+        },
+    ]
+
     $scope.highlightRegions = function() {
-        $scope.dataset.records.forEach(function (data) {
+        if($scope.field) {
+            $scope.dataset.records.forEach(function (data) {
+                $scope.polygons.forEach(function(polygon) {
+                    if (google.maps.geometry.poly.containsLocation(new google.maps.LatLng(data.lat, data.lon),
+                            polygon.control.getPlurals().get(polygon.id).gObject))
+                        data.area = polygon.id;
+                });
+                var marker = {
+                    data: data
+                };
+                markers.push(marker);
+            });
+
+            $scope.polygons.forEach(function (polygon) {
+                polygon.markers = [];
+                markers.forEach(function (marker) {
+                    if (marker.data.area === polygon.id)
+                        polygon.markers.push(marker);
+                })
+            });
+
             $scope.polygons.forEach(function(polygon) {
-                if (google.maps.geometry.poly.containsLocation(new google.maps.LatLng(data.lat, data.lon),
-                        polygon.control.getPlurals().get(polygon.id).gObject))
-                    data.area = polygon.id;
-            });
-            var marker = {
-                data: data
-            };
-            markers.push(marker);
-        });
+                var fillColor;
+                polygon.totalValue = 0;
 
-        $scope.polygons.forEach(function (polygon) {
-            polygon.markers = [];
-            markers.forEach(function (marker) {
-                if (marker.data.area === polygon.id)
-                    polygon.markers.push(marker);
-            })
-        });
+                polygon.markers.forEach(function(item) {
+                    var criteria = parseFloat(item.data[$scope.field]);
 
-        $scope.polygons.forEach(function(polygon) {
-            var fillColor;
-            polygon.totalValue = 0;
+                    if(!isNaN(criteria)) {
+                        polygon.totalValue += criteria;
+                    }
+                });
 
-            polygon.markers.forEach(function(item) {
-                var criteria = parseFloat(item.data[$scope.field.id]);
-
-                if(!isNaN(criteria)) {
-                    polygon.totalValue += criteria;
+                if (polygon.totalValue == 0)  {
+                    fillColor = "#C3E1FF";
                 }
-            });
+                else {
+                    colors.forEach(function(color) {
+                        if(defineRange(polygon.totalValue, color.minValue, color.maxValue))
+                            fillColor = color.color;
+                    });
+                }
 
-            if (polygon.totalValue == 0)  {
-                fillColor = "#C3E1FF";
-            }
-            else if (defineRange(polygon.totalValue, 0, 10)) {
-                fillColor = "blue";
-            }
-            else  {
-                fillColor = "red";
-            }
-            var area = polygon.control.getPlurals().get(polygon.id).model;
-            area.fill.color = fillColor;
-        });
+                var area = polygon.control.getPlurals().get(polygon.id).model;
+                area.fill.color = fillColor;
+            });
+                   console.log($scope.polygons);
+        } else {
+            alert('Оберiть показник для вiдображення статiстики');
+        }
     };
 
     $scope.setCriteria = function(field) {

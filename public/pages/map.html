@@ -3,6 +3,7 @@
         <ui-gmap-google-map center="map.center" zoom="map.zoom" options="options">
             <ui-gmap-polygons id="id" models="polygons" path="'path'" stroke="'stroke'"
              visible="true" fill="'fill'" static="true" events="events" control="polygonControl"></ui-gmap-polygons>
+
             <ui-gmap-markers models="map.markers"
                              coords="'self'"
                              idkey="id"
@@ -26,39 +27,39 @@
             <md-checkbox class="blue" ng-class="{'md-checked': doCluster}" ng-click="toggleCluster()" ng-show="map.markers.length">Cluster</md-checkbox>
             <md-button class="md-primary" ng-click="highlightRegions(map)"> Статiстика за районами </md-button>
 
-            <!--<md-select class="fieldSelect" ng-model="field" >-->
-                <!--<md-option ng-repeat="field in dataset.fields | filter: removeWrongFields"-->
-                           <!--value="{{field.id}}" ng-disabled="$index === 1">-->
-                    <!--{{field.id}}-->
-                <!--</md-option>-->
-            <!--</md-select>-->
+            <md-select class="fieldSelect" ng-model="field" >
+                <md-option ng-repeat="field in dataset.fields | filter: removeWrongFields"
+                           value="{{field.id}}" ng-disabled="$index === 1">
+                    {{field.id}}
+                </md-option>
+            </md-select>
 
-            <select class="fieldSelect" ng-if="dataset" ng-options="field.id for field in dataset.fields | filter: removeWrongFields" ng-model="field"
-                    ng-change="setCriteria(field)"></select>
+            <!--<select class="fieldSelect" ng-if="dataset" ng-options="field.id for field in dataset.fields | filter: removeWrongFields" ng-model="field"-->
+                    <!--ng-change="setCriteria(field)"></select>-->
 
             <md-button class="md-primary" ng-click="reset(map)">Очистити</md-button>
         </div>
 
-        <div class="rainbow" ng-show="dataset">
-            <div class="box-wrap">
-                <div class="box"></div><div>0</div>
-            </div>
-            <div class="box-wrap">
-                <div class="box" style="background:blue;"></div><div>1-10</div>
-            </div>
-            <div class="box-wrap">
-                <div class="box" style="background:green;"></div><div>11-25</div>
-            </div>
-            <div class="box-wrap">
-                <div class="box" style="background:yellow;"></div><div>26-50</div>
-            </div>
-            <div class="box-wrap">
-                <div class="box" style="background:orange;"></div><div>51-79</div>
-            </div>
-            <div class="box-wrap">
-                <div class="box" style="background:red;"></div><div>80-100</div>
-            </div>
-        </div>
+        <!--<div class="rainbow" ng-show="dataset">-->
+            <!--<div class="box-wrap">-->
+                <!--<div class="box"></div><div>0</div>-->
+            <!--</div>-->
+            <!--<div class="box-wrap">-->
+                <!--<div class="box" style="background:blue;"></div><div>1-10</div>-->
+            <!--</div>-->
+            <!--<div class="box-wrap">-->
+                <!--<div class="box" style="background:green;"></div><div>11-25</div>-->
+            <!--</div>-->
+            <!--<div class="box-wrap">-->
+                <!--<div class="box" style="background:yellow;"></div><div>26-50</div>-->
+            <!--</div>-->
+            <!--<div class="box-wrap">-->
+                <!--<div class="box" style="background:orange;"></div><div>51-79</div>-->
+            <!--</div>-->
+            <!--<div class="box-wrap">-->
+                <!--<div class="box" style="background:red;"></div><div>80-100</div>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 
 
