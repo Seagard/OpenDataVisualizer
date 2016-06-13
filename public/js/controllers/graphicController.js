@@ -17,18 +17,6 @@
           type: 'compare-line',
           description: 'Порівняти дані',
           thumbnail: '/images/compare-line.svg'
-      }, {
-          type: 'compare-timeline',
-          description: 'Порівняння на відрізку часу',
-          thumbnail: '/images/compare-timeline.svg'
-      }, {
-          type: 'compare-complex',
-          description: 'Cкладні порівняння',
-          thumbnail: '/images/compare-complex.svg'
-      }, {
-          type: 'pie-chart',
-          description: 'Кругова діаграма',
-          thumbnail: '/images/pie-chart.svg'
       }];
 
       vm.selectGraphType = function selectGraphType (type) {

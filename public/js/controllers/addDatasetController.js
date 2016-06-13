@@ -7,6 +7,12 @@
   AddDatasetController.$inject = ['DatasetFactory', 'ChartService', '$state']
 
   function AddDatasetController(DatasetFactory, ChartService, $state) {
+
+    if (!ChartService.getChartType()) {
+      $state.go('list')
+      return
+    }
+    console.log(ChartService.getChartType())
     var vm = this
 
     vm.displayChart = function displayChart () {

@@ -25,7 +25,7 @@
         return {
           name: selected,
           data: _.map(dataset.records, function (record) {
-            return +record[selected]
+            return +record[selected] // cast to number !important
           })
         }
       })
