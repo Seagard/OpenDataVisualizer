@@ -5,7 +5,7 @@ angular.module('main').controller('mainController', [
   //vm.buttons = ['Дані', 'Інфографіка', 'Карта'];
   vm.buttons = [
     {name: 'Дані', sref: 'data'},
-    {name: 'Інфографіка', sref: 'list'},
+    {name: 'Інфографіка', sref: 'add-dataset'},
     {name: 'Карта', sref: 'map'},
     {name: 'Завантаження', sref: 'editor'}
   ];

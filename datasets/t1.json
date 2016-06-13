@@ -1,1 +1,251 @@
-{"help":"Search a datastore table. :param resource_id: id or alias of the data that is going to be selected.","success":true,"result":{"fields":[{"id":"Code","type":"text"},{"id":"Plan","type":"int"},{"id":"Fact","type":"int"},{"id":"fond","type":"text"}],"resource_id":["98fd372c-0aec-4c47-9ffd-63c5e8d545fe"],"limit":24,"total":"24","records":[{"Code":"Податкові надходження","Plan":"110556582","Fact":"102940385","fond":"загальний фонд","feeds_flatstore_entry_id":"1","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Податкові надходження","Plan":"0","Fact":"3314","fond":"спеціальний фонд (інші кошти)","feeds_flatstore_entry_id":"2","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Податки на доходи","Plan":"49283958","Fact":"39334288","fond":"загальний фонд","feeds_flatstore_entry_id":"3","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Податок на доходи фіз. осіб","Plan":"49120300","Fact":"39222209","fond":"загальний фонд","feeds_flatstore_entry_id":"4","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Податок на доходи (податкові агенти)","Plan":"38760300","Fact":"31108412","fond":"загальний фонд","feeds_flatstore_entry_id":"5","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Податок на доходи (грошове забезпечення)","Plan":"5760000","Fact":"4508297","fond":"загальний фонд","feeds_flatstore_entry_id":"6","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Податок на доходи (податкові агенти)","Plan":"3000000","Fact":"1663132","fond":"загальний фонд","feeds_flatstore_entry_id":"7","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Податок на доходи (річне декларування)","Plan":"1600000","Fact":"1584572","fond":"загальний фонд","feeds_flatstore_entry_id":"8","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Податок на прибуток підприємств","Plan":"163658","Fact":"112079","fond":"загальний фонд","feeds_flatstore_entry_id":"9","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Податок на прибуток підприємств (комунальна власність)","Plan":"163658","Fact":"112079","fond":"загальний фонд","feeds_flatstore_entry_id":"10","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Збори за спеціальне використання природних ресурсів ","Plan":"115631","Fact":"184013","fond":"загальний фонд","feeds_flatstore_entry_id":"11","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Збір за спеціальне використання лісових ресурсів ","Plan":"6751","Fact":"10738","fond":"загальний фонд","feeds_flatstore_entry_id":"12","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Збір за спеціальне використання лісових ресурсів (інші)","Plan":"6751","Fact":"10738","fond":"загальний фонд","feeds_flatstore_entry_id":"13","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Збір за спеціальне використання води ","Plan":"0","Fact":"714","fond":"загальний фонд","feeds_flatstore_entry_id":"14","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Збір за спеціальне використання води (об'єкти місцевого значення)","Plan":"0","Fact":"25","fond":"загальний фонд","feeds_flatstore_entry_id":"15","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Збір за спеціальне використання води (підприємства ЖКГ)","Plan":"0","Fact":"689","fond":"загальний фонд","feeds_flatstore_entry_id":"16","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Плата за користування надрами","Plan":"108880","Fact":"172560","fond":"загальний фонд","feeds_flatstore_entry_id":"17","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Плата за видобування копалин місцевого значення ","Plan":"108880","Fact":"172550","fond":"загальний фонд","feeds_flatstore_entry_id":"18","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Плата за користування надрами (інші цілі)","Plan":"0","Fact":"10","fond":"загальний фонд","feeds_flatstore_entry_id":"19","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Внутрішні податки на товари та послуги","Plan":"16986956","Fact":"27239901","fond":"загальний фонд","feeds_flatstore_entry_id":"20","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Окремі збори (до місцевих бюджетів)","Plan":"0","Fact":"1061","fond":"загальний фонд","feeds_flatstore_entry_id":"21","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Місцеві податки і збори (до 01.01.2011)","Plan":"0","Fact":"1061","fond":"загальний фонд","feeds_flatstore_entry_id":"22","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Збір за видачу ордера на квартиру","Plan":"0","Fact":"41","fond":"загальний фонд","feeds_flatstore_entry_id":"23","timestamp":"1444330902","feeds_entity_id":"239"},{"Code":"Збір за видачу дозволу на розміщення об'єктів торгівлі та послуг","Plan":"0","Fact":"1020","fond":"загальний фонд","feeds_flatstore_entry_id":"24","timestamp":"1444330902","feeds_entity_id":"239"}],"name":"test1"}}
+{
+  "help": "Search a datastore table. :param resource_id: id or alias of the data that is going to be selected.",
+  "success": true,
+  "result": {
+    "fields": [
+      {
+        "id": "Code",
+        "type": "text",
+        "graphics": "line"
+      },
+      {
+        "id": "Plan",
+        "type": "int",
+        "graphics": "line"
+      },
+      {
+        "id": "Fact",
+        "type": "int",
+        "graphics": "line"
+      },
+      {
+        "id": "fond",
+        "type": "text"
+      }
+    ],
+    "resource_id": [
+      "98fd372c-0aec-4c47-9ffd-63c5e8d545fe"
+    ],
+    "limit": 24,
+    "total": "24",
+    "records": [
+      {
+        "Code": "Податкові надходження",
+        "Plan": "110556582",
+        "Fact": "102940385",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "1",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Податкові надходження",
+        "Plan": "0",
+        "Fact": "3314",
+        "fond": "спеціальний фонд (інші кошти)",
+        "feeds_flatstore_entry_id": "2",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Податки на доходи",
+        "Plan": "49283958",
+        "Fact": "39334288",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "3",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Податок на доходи фіз. осіб",
+        "Plan": "49120300",
+        "Fact": "39222209",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "4",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Податок на доходи (податкові агенти)",
+        "Plan": "38760300",
+        "Fact": "31108412",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "5",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Податок на доходи (грошове забезпечення)",
+        "Plan": "5760000",
+        "Fact": "4508297",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "6",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Податок на доходи (податкові агенти)",
+        "Plan": "3000000",
+        "Fact": "1663132",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "7",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Податок на доходи (річне декларування)",
+        "Plan": "1600000",
+        "Fact": "1584572",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "8",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Податок на прибуток підприємств",
+        "Plan": "163658",
+        "Fact": "112079",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "9",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Податок на прибуток підприємств (комунальна власність)",
+        "Plan": "163658",
+        "Fact": "112079",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "10",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Збори за спеціальне використання природних ресурсів ",
+        "Plan": "115631",
+        "Fact": "184013",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "11",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Збір за спеціальне використання лісових ресурсів ",
+        "Plan": "6751",
+        "Fact": "10738",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "12",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Збір за спеціальне використання лісових ресурсів (інші)",
+        "Plan": "6751",
+        "Fact": "10738",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "13",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Збір за спеціальне використання води ",
+        "Plan": "0",
+        "Fact": "714",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "14",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Збір за спеціальне використання води (об'єкти місцевого значення)",
+        "Plan": "0",
+        "Fact": "25",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "15",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Збір за спеціальне використання води (підприємства ЖКГ)",
+        "Plan": "0",
+        "Fact": "689",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "16",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Плата за користування надрами",
+        "Plan": "108880",
+        "Fact": "172560",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "17",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Плата за видобування копалин місцевого значення ",
+        "Plan": "108880",
+        "Fact": "172550",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "18",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Плата за користування надрами (інші цілі)",
+        "Plan": "0",
+        "Fact": "10",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "19",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Внутрішні податки на товари та послуги",
+        "Plan": "16986956",
+        "Fact": "27239901",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "20",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Окремі збори (до місцевих бюджетів)",
+        "Plan": "0",
+        "Fact": "1061",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "21",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Місцеві податки і збори (до 01.01.2011)",
+        "Plan": "0",
+        "Fact": "1061",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "22",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Збір за видачу ордера на квартиру",
+        "Plan": "0",
+        "Fact": "41",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "23",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      },
+      {
+        "Code": "Збір за видачу дозволу на розміщення об'єктів торгівлі та послуг",
+        "Plan": "0",
+        "Fact": "1020",
+        "fond": "загальний фонд",
+        "feeds_flatstore_entry_id": "24",
+        "timestamp": "1444330902",
+        "feeds_entity_id": "239"
+      }
+    ],
+    "name": "test1"
+  }
+}

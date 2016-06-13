@@ -24,10 +24,6 @@
           templateUrl: '../pages/data.html',
           controller: 'DataController'
         })
-        .state('list', {
-          url: '/graphic/list',
-          templateUrl: '../pages/graphic.html'
-        })
         .state('add-dataset', {
           url: '/graphic/add-dataset',
           templateUrl: '../pages/add-dataset.html'

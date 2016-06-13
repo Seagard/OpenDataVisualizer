@@ -25,7 +25,9 @@
         return {
           name: selected,
           data: _.map(dataset.records, function (record) {
-            return +record[selected] // cast to number !important
+            // return +record[selected] // cast to number !important
+            // todo: remove DIRTY HACK
+            return (+record[selected] < 0) ? 0 : +record[selected]
           })
         }
       })
