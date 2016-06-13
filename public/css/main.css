@@ -23,7 +23,7 @@
     display: none !important;
 }
 
-html, body, #map_canvas {
+html, body {
     height: 100%;
     width: 100%;
     margin: 0px;
@@ -31,6 +31,17 @@ html, body, #map_canvas {
 
 #map_canvas {
     position: relative;
+    display:inline-block;
+    width:calc(100% - 295px);
+    height:100%;
+    margin: 0px;
+}
+
+#mapControls {
+    width:290px;
+    height:100%;
+    display: inline-block;
+    vertical-align: top;
 }
 
 #map_wrapper {
@@ -58,9 +69,6 @@ html, body, #map_canvas {
     border:1px solid #e4e4e4;
     padding:15px;
     font-size: 12px;
-    position: absolute;
-    right:0;
-    bottom:-80px;
 }
 
 .box-wrap {
@@ -96,4 +104,12 @@ html, body, #map_canvas {
     -webkit-transition: -webkit-transform .2s ease-in-out;
     -moz-transition: -moz-transform .2s ease-in-out;
     -ms-transition: -ms-transform .2s ease-in-out;
+}
+
+.fieldSelect {
+    width:100%;
+}
+
+md-checkbox.md-checked.blue .md-icon {
+    background-color: rgb(63,81,181)
 }
