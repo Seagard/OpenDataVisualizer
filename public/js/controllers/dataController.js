@@ -4,9 +4,10 @@ angular.module('main').controller('DataController', function(DatasetFactory, Fil
     vm.isDataLoaded = false;
 
     function activate() {
-        DatasetFactory.getUnitedDataset(function(data) {
-            vm.dataset = data;
-            vm.isDataLoaded = true;
+        DatasetFactory.getDatasetList().then(function(list) {
+           DatasetFactory.getDatasetById(list[0].id).then(function(dataset) {
+               vm.dataset = dataset.result;
+           })
         });
         DatasetFactory.registerOnDatasetLoadedEvent(function(data) {
             console.log('Dataset loaded: ', data.result);
