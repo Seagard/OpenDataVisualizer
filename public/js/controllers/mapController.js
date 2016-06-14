@@ -12,6 +12,7 @@ angular.module('main')
             DatasetFactory.getDatasetById(dataset.id)
                 .then(function (dataset) {
                     $scope.dataset = dataset.result;
+                    console.log($scope.dataset);
                 });
         })
     }
@@ -93,6 +94,10 @@ angular.module('main')
       $scope.doCluster = !$scope.doCluster;
     };
 
+    $scope.toggleColorTable = function() {
+        $scope.showColorTable = !$scope.showColorTable;
+    };
+
     $scope.markerImages = {
         red: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
         green: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
@@ -103,8 +108,10 @@ angular.module('main')
         $scope.clusterOpt = {
             styles: [
                 {
-                    url: "images/alien.png",width:63,height:93
-                },
+                    url: "images/m1.png",
+                    width:80,
+                    height:80
+                }
             ],
             maxZoom: 10,
             minimumClusterSize: 10,
@@ -122,8 +129,9 @@ angular.module('main')
                 id: i,
                 latitude: data.lat,
                 longitude: data.lon,
-                data: data
-            };
+                data: data,
+                keys: Object.keys(data)
+        };
             map.markers.push(marker);
 
         });
@@ -131,20 +139,19 @@ angular.module('main')
     };
 
         $scope.onClick = function(marker, eventName, model) {
-            console.log("Clicked!");
             model.show = !model.show;
         };
 
         var markers = [];
 
-    var colors = [
+    $scope.colors = [
         {
          minValue: 0,
          maxValue:0,
          color: '#C3E1FF'
         },
         {
-            minValue: 0.0001,
+            minValue: 0,
             maxValue:1,
             color: '#FF8AF4'
         },
@@ -155,69 +162,75 @@ angular.module('main')
         },
         {
             minValue: 10,
-            maxValue:30,
+            maxValue:50,
             color: '#010BAB'
         },
         {
-            minValue: 30,
-            maxValue:50,
-            color: '#001AFF'
-        },
-        {
             minValue: 50,
-            maxValue:75,
-            color: '#30B8FF'
-        },
-        {
-            minValue: 75,
             maxValue:100,
-            color: '#5CFFE4'
+            color: '#001AFF'
         },
         {
             minValue: 100,
             maxValue:200,
-            color: '#1FB951'
+            color: '#30B8FF'
         },
         {
             minValue: 200,
-            maxValue:300,
-            color: '#2EFF00'
-        },
-        {
-            minValue: 300,
             maxValue:400,
-            color: '#F6FF00'
+            color: '#5CFFE4'
         },
         {
             minValue: 400,
-            maxValue:500,
-            color: '#FFCD00'
-        },
-        {
-            minValue: 500,
-            maxValue:600,
-            color: '#FF9E00'
-        },
-        {
-            minValue: 600,
             maxValue:800,
-            color: '#FF7800'
+            color: '#1FB951'
         },
         {
             minValue: 800,
-            maxValue:1000,
+            maxValue:1600,
+            color: '#2EFF00'
+        },
+        {
+            minValue: 1600,
+            maxValue:3200,
+            color: '#F6FF00'
+        },
+        {
+            minValue: 3200,
+            maxValue:6400,
+            color: '#FFCD00'
+        },
+        {
+            minValue: 6400,
+            maxValue:12800,
+            color: '#FF9E00'
+        },
+        {
+            minValue: 12800,
+            maxValue:25600,
+            color: '#FF7800'
+        },
+        {
+            minValue: 25600,
+            maxValue:51200,
             color: '#FF3400'
         },
         {
-            minValue: 1000,
-            maxValue:1000000,
+            minValue: 51200,
+            maxValue:Infinity,
             color: '#FF0000'
-        },
+        }
     ]
 
     $scope.highlightRegions = function() {
+        $scope.polygons.forEach(function (polygon) {
+            polygon.totalValue = 0;
+        });
+
         if($scope.field) {
+            $scope.showCheckbox = true;
             $scope.dataset.records.forEach(function (data) {
+                localStorage.data = data;
                 $scope.polygons.forEach(function(polygon) {
                     if (google.maps.geometry.poly.containsLocation(new google.maps.LatLng(data.lat, data.lon),
                             polygon.control.getPlurals().get(polygon.id).gObject))
@@ -253,7 +266,7 @@ angular.module('main')
                     fillColor = "#C3E1FF";
                 }
                 else {
-                    colors.forEach(function(color) {
+                    $scope.colors.forEach(function(color) {
                         if(defineRange(polygon.totalValue, color.minValue, color.maxValue))
                             fillColor = color.color;
                     });
@@ -262,7 +275,6 @@ angular.module('main')
                 var area = polygon.control.getPlurals().get(polygon.id).model;
                 area.fill.color = fillColor;
             });
-                   console.log($scope.polygons);
         } else {
             alert('Оберiть показник для вiдображення статiстики');
         }
@@ -273,14 +285,15 @@ angular.module('main')
     }
 
     $scope.removeWrongFields = function(itm) {
-        return itm.id !== "lat" && itm.id !== "lon";
+        return itm.type == "int" || itm.type == "float";
     }
 
     $scope.reset = function(map) {
         $scope.polygons.forEach(function(polygon) {
             var area = polygon.control.getPlurals().get(polygon.id).model;
             area.fill.color = '#C3E1FF';
-        })
+        });
+        $scope.showCheckbox = false;
         $scope.map.markers = [];
     }
 
