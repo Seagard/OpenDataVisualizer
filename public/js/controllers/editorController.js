@@ -20,6 +20,7 @@ angular.module('main').controller('EditorController', [
     $scope.isDatasetLoading = false;
     $scope.isEditingActive = false;
     $scope.selectedDownloadedDataset = null;
+    $scope.fieldsIdentifiers = [];
 
     function activate() {
       loadDatasetList();
@@ -32,16 +33,24 @@ angular.module('main').controller('EditorController', [
     }
 
     $scope.loadDataset = function (url) {
-      $scope.isDatasetLoading = true;
-
-      DatasetFactory.loadDatasetFromUrl(url).then(function(resp) {
-        DatasetFactory.getDatasetList().then(function(datasetList) {
-          $scope.datasetsList = datasetList;
-          $scope.isDatasetLoading = false;
-          $scope.isEditingActive = true;
-          $scope.dataset = resp.result;
+      var matched = url.match(/data\.ngorg\.od\.ua\/uk\/api\/action\/datastore\/search\.json\?resource_id=/);
+      $scope.isInvalidUrl = false;
+      if(matched) {
+        $scope.isDatasetLoading = true;
+        DatasetFactory.loadDatasetFromUrl(url).then(function(resp) {
+          DatasetFactory.getDatasetList().then(function(datasetList) {
+            $scope.datasetsList = datasetList;
+            $scope.isDatasetLoading = false;
+            $scope.isEditingActive = true;
+            $scope.dataset = resp.result;
+            $scope.dataset.fields.forEach(function(field) {
+              $scope.fieldsIdentifiers.push(field.id);
+            });
+          });
         });
-      });
+      } else {
+        $scope.isInvalidUrl = true;
+      }
     };
 
     $scope.save = function() {
@@ -59,6 +68,7 @@ angular.module('main').controller('EditorController', [
         $scope.showActionToast();
         $scope.isDatasetLoading = false;
         $scope.isEditingActive = false;
+        $scope.fieldsIdentifiers = [];
         loadDatasetList();
       })
     };

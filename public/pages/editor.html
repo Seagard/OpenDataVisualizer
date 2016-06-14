@@ -14,7 +14,7 @@
     <div ng-switch="isEditingActive" class="view-container">
         <div class="left">
             <div ng-switch-when="false">
-                <p>Вкажіть посилання або ідентифікатор набору даних (для порталу data.ngorg.od.ua)</p>
+                <p>Вкажіть посилання набору даних (для порталу data.ngorg.od.ua)</p>
                 <form ng-submit="loadDataset(datasetOrIdentifier)">
                     <div layout-gt-xs="row">
                         <md-input-container class="md-block" flex-gt-xs>
@@ -25,6 +25,7 @@
                             <md-button type="submit" class="md-raised md-primary">Відкрити</md-button>
                         </md-input-container>
                     </div>
+                    <span ng-show="isInvalidUrl" style="color: firebrick">Неправильне посилання</span>
                 </form>
                 <md-progress-linear ng-show="isDatasetLoading" md-mode="indeterminate"></md-progress-linear>
                 <span ng-show="isDatasetLoading">Завантаження...</span>
