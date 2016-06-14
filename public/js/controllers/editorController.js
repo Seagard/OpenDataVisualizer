@@ -45,6 +45,15 @@ angular.module('main').controller('EditorController', [
     };
 
     $scope.save = function() {
+      $scope.dataset.fields.forEach(function(field, index) {
+        if(field.id !== $scope.fieldsIdentifiers[index]) {
+          $scope.dataset.records.forEach(function(record) {
+            var fieldData = record[$scope.fieldsIdentifiers[index]];
+            delete record[$scope.fieldsIdentifiers[index]];
+            record[field.id] = fieldData;
+          });
+        }
+      });
       DatasetFactory.updateDataset($scope.dataset).then(function() {
         $scope.selectedDownloadedDataset = null;
         $scope.showActionToast();
@@ -65,6 +74,10 @@ angular.module('main').controller('EditorController', [
       DatasetFactory.getDatasetById($scope.selectedDownloadedDataset)
         .then(function(dataset) {
         $scope.dataset = dataset.result;
+        $scope.fieldsIdentifiers = [];
+        $scope.dataset.fields.forEach(function(field) {
+          $scope.fieldsIdentifiers.push(field.id);
+        });
         $scope.isDatasetLoading = false;
         $scope.isEditingActive = true;
       })
