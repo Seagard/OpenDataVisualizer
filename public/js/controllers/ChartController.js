@@ -6,7 +6,10 @@
   ChartController.$inject = ['ChartService', '$state']
 
   function ChartController (ChartService, $state) {
-    console.log('asdasd')
+    if (!ChartService.getDatas().series) {
+      $state.go('add-dataset')
+      return
+    }
     var CHARTS = [{type: 'line', description: 'Лінійний графік'}]
     var vm = this
       ,datas = ChartService.getDatas()

@@ -7,11 +7,12 @@
   AddDatasetController.$inject = ['DatasetFactory', 'ChartService', '$state']
 
   function AddDatasetController(DatasetFactory, ChartService, $state) {
-    
+
     console.log(ChartService.getChartType())
     var vm = this
 
     vm.displayChart = function displayChart () {
+      if (vm.selected.selectedX == '' || !vm.selected.selectedY) return
       ChartService.setSeries(angular.extend({
           selectedX: vm.selectedX,
           selectedY: vm.selectedY
