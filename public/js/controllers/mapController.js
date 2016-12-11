@@ -39,6 +39,11 @@ angular.module('main')
 
     function click(polygon, e, model, args) {
         $scope.click = true;
+        console.log('Marker was clicked (' + marker + ', ' + eventName);//+', '+mydump(model, 0)+', '+mydump(arguments)+')');
+        $scope.map.window.model = model;
+        $scope.map.window.model = model;
+        $scope.map.window.title = model.title;
+        $scope.map.window.show = true;
     }
 
     function mouseOver(polygon, e, model, args) {
@@ -131,7 +136,7 @@ angular.module('main')
                 longitude: data.lon,
                 data: data,
                 keys: Object.keys(data)
-        };
+                };
             map.markers.push(marker);
 
         });
@@ -140,6 +145,7 @@ angular.module('main')
 
         $scope.onClick = function(marker, eventName, model) {
             model.show = !model.show;
+            console.log('a');
         };
 
         var markers = [];

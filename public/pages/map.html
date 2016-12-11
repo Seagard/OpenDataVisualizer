@@ -1,6 +1,6 @@
 <div  id="map_wrapper" ng-controller="MapController">
     <div id="map_canvas" >
-        <ui-gmap-google-map center="map.center" zoom="map.zoom" options="options">
+        <ui-gmap-google-map ng-if='map.center' center="map.center" zoom="map.zoom" options="options">
             <ui-gmap-polygons id="id" models="polygons" path="'path'" stroke="'stroke'"
              visible="true" fill="'fill'" static="true" events="events" control="polygonControl"></ui-gmap-polygons>
 
