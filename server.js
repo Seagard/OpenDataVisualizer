@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var app = express();
 
 var contents = fs.readFileSync('data/regions.json');
+var regions = JSON.parse(contents);
 var data = fs.readFileSync('data/data1.json');
 
 var apiUrl = '/api';
@@ -44,11 +45,21 @@ fs.readdir(__dirname + '/datasets', function ( err, files ) {
   if (err) fs.mkdir(__dirname + '/datasets');
 } );
 
-var port = 3000;
+var port = 3001;
 if (process.env.NODE_ENV === "production") {
   port = 80;
 }
 
 app.listen(port, function() {
   console.log('Server is listening on port ' + port + '...');
+});
+
+app.post('/regions', function(req, res) {
+  console.log(req.body);
+  var regionNeeded = regions.find(function(region) {
+    return region.district.indexOf(req.body.name) !== -1;
+  });
+  if(regionNeeded)
+  res.send(regionNeeded.coords);
+  else res.send('no coords');
 });

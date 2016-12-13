@@ -13,19 +13,24 @@ angular.module('main')
                 .then(function (dataset) {
                     $scope.dataset = dataset.result;
                     console.log($scope.dataset);
-                });
+                })
         })
     }
 
     DatasetFactory.getDatasetList().then(function(result) {
         $scope.datasets = result;
-    })
+    });
+
     activate();
 
     $scope.options = {scrollwheel: false};
     $scope.polygons = [];
     $scope.datasets = DatasetFactory.getExampleDatasets();
     $scope.showActions = false;
+
+    $scope.district = {
+        name: ''
+    };
 
     $scope.events = {
         mouseover: mouseOver,
@@ -55,6 +60,7 @@ angular.module('main')
     }
 
     $http.get("/json").then(function (data) {
+        console.log(data);
         $scope.districts = data.data;
         $scope.initialize();
         return $scope.districts;
@@ -227,6 +233,24 @@ angular.module('main')
             color: '#FF0000'
         }
     ]
+
+
+    $scope.getPolygon = function () {
+        $scope.reset();
+        console.log($scope.district);
+        var regionNeeded = $scope.polygons.find(function(region) {
+            console.log(region.id.indexOf($scope.district.name) !== -1);
+            return region.id.indexOf($scope.district.name) !== -1;
+        });
+        if(regionNeeded) {
+            var area = regionNeeded.control.getPlurals().get(regionNeeded.id).model;
+            area.fill.color = '#ff0000';
+        }
+        //$http.post('/regions', $scope.district)
+        //  .then(function(response) {
+        //      $scope.polygonCoords = response.data;
+        //  })
+    };
 
     $scope.highlightRegions = function() {
         $scope.polygons.forEach(function (polygon) {

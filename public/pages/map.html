@@ -25,6 +25,11 @@
     <div id="mapControls">
         <!--<h4>Налаштування</h4>-->
         <!--<h5>Оберiть колip маркеру</h5>-->
+        <md-input-container>
+            <label>Назва району</label>
+            <input type="text" ng-model="district.name">
+            <md-button class="md-primary" ng-click="getPolygon()">Виділити</md-button>
+        </md-input-container>
         <div class="actions" ng-show="dataset">
             <md-button class="md-primary" ng-click="highlight(map)"> Показати об'екти </md-button>
             <md-checkbox class="blue" ng-class="{'md-checked': doCluster}" ng-click="toggleCluster()" ng-show="map.markers.length">Кластерiзацiя</md-checkbox>
@@ -47,6 +52,14 @@
             </div>
 
             <md-button class="md-primary" ng-click="reset(map)">Очистити</md-button>
+
+
+
+            <div ng-if="polygonCoords" style="height: 250px; overflow:auto;">
+                <div ng-repeat="set in polygonCoords">
+                    <span ng-bind="set.latitude + ' ' + set.longitude"></span>
+                </div>
+            </div>
         </div>
 
 

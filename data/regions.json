@@ -1,6 +1,6 @@
  [
     {
-      "district": "Саратський  район",
+      "district": "Саратський район",
       "coords": [
 	 	{"longitude": 29.4735244,   "latitude": 46.1591784},
 	 {"longitude": 29.479072,     "latitude": 46.1600454},
@@ -10270,7 +10270,7 @@
 },
 
 	{
-  "district": "Velykomykh",
+  "district": "Великомихайлівський",
   "coords": [
  {"longitude": 29.5674546  , "latitude": 47.1868594
   }, {"longitude": 29.5674771  , "latitude": 47.1867717
@@ -16817,7 +16817,7 @@
 },
 
 	  {
-  "district": "Ренiйскьий",
+  "district": "Ренiйський",
   "coords": [
   {"longitude": 28.2117365  , "latitude": 45.4667022
   }, {"longitude": 28.2143425  , "latitude": 45.4663901
