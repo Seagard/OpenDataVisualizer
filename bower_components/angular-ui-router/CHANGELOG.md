@@ -1,3 +1,35 @@
+<a name="0.3.2"></a>
+## [0.3.2](https://github.com/angular-ui/ui-router/compare/0.3.1...0.3.2) (2016-11-03)
+
+
+### Bug Fixes
+
+* **$state.transitionTo:** trigger $stateChangeCancel appropriately ([#3039](https://github.com/angular-ui/ui-router/issues/3039)) ([ca7c366](https://github.com/angular-ui/ui-router/commit/ca7c366)), closes [#3027](https://github.com/angular-ui/ui-router/issues/3027)
+* **promise:** avoid uncaught in promise errors due to transition rejections ([66ab048](https://github.com/angular-ui/ui-router/commit/66ab048)), closes [#2889](https://github.com/angular-ui/ui-router/issues/2889)
+* **state.includes:** compare param vals using typed parameter (not using `==`) ([6958c24](https://github.com/angular-ui/ui-router/commit/6958c24)), closes [#2696](https://github.com/angular-ui/ui-router/issues/2696)
+* **stateDirective:** using on to attach an event handler instead of bind ([#3036](https://github.com/angular-ui/ui-router/issues/3036)) ([a8aa40a](https://github.com/angular-ui/ui-router/commit/a8aa40a))
+* **urlMatcherFactory:** fix tilde edge case with "string" encoding ([#3021](https://github.com/angular-ui/ui-router/issues/3021)) ([953235a](https://github.com/angular-ui/ui-router/commit/953235a))
+
+
+
+
+<a name="0.3.1"></a>
+### 0.3.1 (2016-06-03)
+
+# obscure BC-BREAK 
+
+If you're using `element.data('$uiView').$animEnter`, switch to `element.data('$uiViewAnim').$animEnter`
+This was necessary in order to fix #2763
+
+#### Bug Fixes
+
+* **state:**
+  * fire $stateChangeError if onEnter/onExit throws. closes #2772 ([a5756c38](https://github.com/angular-ui/ui-router/commit/a5756c38a282bd2556ed5faaf870d6e493722d1b))
+  * fail transition on exceptions in transition handler ([8222fb0e](https://github.com/angular-ui/ui-router/commit/8222fb0e7fd5eaaf6382f36db9ee9077a7bdbc6d))
+* **uiView:** separate $uiView and $uiViewAnim element.data() ([d3502f3c](https://github.com/angular-ui/ui-router/commit/d3502f3c0cb6a63f4b80aac91428f748b6460396), closes [#2763](https://github.com/angular-ui/ui-router/issues/2763))
+  * Fixes this error: `Cannot read property 'name' of undefined at getUiViewName`
+
+
 <a name="0.3.0"></a>
 ## 0.3.0 (2016-05-14)
 

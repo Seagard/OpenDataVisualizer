@@ -51,14 +51,6 @@ angular.module('main')
         $scope.map.window.show = true;
     }
 
-    function mouseOver(polygon, e, model, args) {
-
-    }
-
-    function mouseOut(polygon, e, model, args) {
-
-    }
-
     $http.get("/json").then(function (data) {
         console.log(data);
         $scope.districts = data.data;
@@ -246,10 +238,6 @@ angular.module('main')
             var area = regionNeeded.control.getPlurals().get(regionNeeded.id).model;
             area.fill.color = '#ff0000';
         }
-        //$http.post('/regions', $scope.district)
-        //  .then(function(response) {
-        //      $scope.polygonCoords = response.data;
-        //  })
     };
 
     $scope.highlightRegions = function() {
