@@ -16,10 +16,10 @@ app.use(bodyParser());
 app.use(morgan('dev'));
 app.use('/', routes);
 
-app.get('/*', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile('index.html', { root: path.join(__dirname, '../public') });
 });
 
-app.listen(port, function() {
+app.listen(port, () => {
   console.log('Server is listening on port ' + port + '...');
 });

@@ -1,7 +1,7 @@
 'use strict';
 
 const portalData = require('../controllers/portalData');
-const osm = require('../controllers/openstreetmap');
+const osm = require('../controllers/osm');
 
 const express = require('express');
 const router = express.Router();

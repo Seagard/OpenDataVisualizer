@@ -1,5 +1,7 @@
-module.exports = {
+const config = {
     DATA_URL: 'data.ngorg.od.ua',
-    OSM_URL: 'nominatim.openstreetmap.org/search/',
-    POLYGON_URL: 'polygons.openstreetmap.fr/get_geojson.py'
-}
+    OSM_URL: 'http://nominatim.openstreetmap.org/search/',
+    POLYGON_URL: 'http://polygons.openstreetmap.fr/get_geojson.py'
+};
+
+module.exports = config;
