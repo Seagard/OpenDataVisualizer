@@ -1,27 +1,7 @@
-<div  id="map_wrapper" ng-controller="MapController">
+<div id="map_wrapper" ng-controller="MapController">
     <div id="map_canvas" >
-        <ui-gmap-google-map ng-if='map.center' center="map.center" zoom="map.zoom" options="options">
-            <ui-gmap-polygons id="id" models="polygons" path="'path'" stroke="'stroke'"
-             visible="true" fill="'fill'" static="true" events="events" control="polygonControl"></ui-gmap-polygons>
 
-            <ui-gmap-markers models="map.markers"
-                             coords="'self'"
-                             idkey="id"
-                             events="markerEvents"
-                             doCluster="doCluster" options="markerOptions"  clusterOptions="clusterOpt"
-                             click="'onClick'" >
-                <ui-gmap-windows show="show">
-                    <div ng-non-bindable>
-                        <div>{{data.name}}</div>
-                        <div>{{data.address}}</div>
-                        <div>{{latitude + ' ' + longitude}}</div>
-                        <div>Район: {{data.area}}</div>
-                    </div>
-                </ui-gmap-windows>
-            </ui-gmap-markers>
-
-        </ui-gmap-google-map>
-        </div>
+    </div>
     <div id="mapControls">
         <!--<h4>Налаштування</h4>-->
         <!--<h5>Оберiть колip маркеру</h5>-->
