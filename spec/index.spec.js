@@ -1,7 +1,5 @@
 const request = require("request");
 const base_url = "http://localhost:8080/";
-const express = require('express');
-const app = express();
 
 describe("app-start", function() {
     describe("GET /", function() {
