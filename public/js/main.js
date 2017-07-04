@@ -2,7 +2,8 @@
   angular.module('main',
     [
       'ui.router',
-      'ngMaterial'
+      'ngMaterial',
+      'ngResource'
     ])
     .config(function($locationProvider, $stateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/map');

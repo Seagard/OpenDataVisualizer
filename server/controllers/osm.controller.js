@@ -41,8 +41,8 @@ function transformPolygonCoords (coordinates) {
     let coordsArray  = [].concat.apply([], coordinates);
     return coordsArray.map(pair => {
         return {
-            lat: pair[0],
-            lng: pair[1]
+            lat: pair[1],
+            lng: pair[0]
         }
     })
 }
