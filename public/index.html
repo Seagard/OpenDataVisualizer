@@ -11,7 +11,7 @@
 
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaL34OGHlD9TpvJGoPT1MT4bZ_wJAjGNQ"></script>
 </head>
-<body ng-controller="mainController as main">
+<body ng-controller="MainController as main">
 
 <md-toolbar fix-top ng-cloak>
 	<div class="md-toolbar-tools">
@@ -71,20 +71,13 @@
 	</div>
 </div>
 
-<script src="/bower_components/angular/angular.min.js"></script>
-<!-- Angular modules -->
-<script src="/bower_components/angular-aria/angular-aria.js"></script>
-<script src="/bower_components/angular-animate/angular-animate.js"></script>
-<script src="/bower_components/angular-material/angular-material.js"></script>
-<script src="/bower_components/angular-resource/angular-resource.min.js"></script>
-<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-<script src="js/main.js"></script>
+
+<script type="text/javascript" src="app.bundle.js"></script>
+
 <!-- Angular modules -->
 
-<script type="text/javascript" src="/js/factories/resource/polygon.js"></script>
-<script type="text/javascript" src="/js/factories/polygon.js"></script>
+<!--<script type="text/javascript" src="/js/factories/resource/polygon.js"></script>-->
+<!--<script type="text/javascript" src="/js/factories/polygon.js"></script>-->
 
-<script type="text/javascript" src="/js/controllers/mainController.js"></script>
-<script type="text/javascript" src="/js/controllers/mapController.js"></script>
 </body>
 </html>

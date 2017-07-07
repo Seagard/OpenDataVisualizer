@@ -1,17 +1,15 @@
-(function() {
-  angular.module('main',
-    [
-      'ui.router',
-      'ngMaterial',
-      'ngResource'
-    ])
-    .config(function($locationProvider, $stateProvider, $urlRouterProvider) {
-      $urlRouterProvider.otherwise('/map');
-      $stateProvider
-        .state('map', {
-          url: '/map',
-          templateUrl: '../pages/map.html',
-          controller: 'MapController'
-        })
-  })
-})();
+import angular from 'angular';
+import uirouter from 'angular-ui-router';
+import material from 'angular-material';
+import resource from 'angular-resource';
+import routing from './routes';
+
+const app = angular.module('main', [
+  uirouter,
+  material,
+  resource
+])
+.config(routing);
+
+require('./factories/index');
+require('./controllers/index');
