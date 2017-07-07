@@ -1,13 +1,12 @@
 const webpack = require('webpack');
 
 module.exports = {
-    context: __dirname + '/public/js',
+    context: __dirname + '/client/js',
     entry: {
-        app: './main.js',
-        // vendor: ['angular']
+        app: './app.js',
     },
     output: {
-        path: __dirname + '/public',
+        path: __dirname + '/client',
         filename: 'app.bundle.js'
     },
     module: {
@@ -15,6 +14,10 @@ module.exports = {
             test: /\.js$/,
             loader: 'babel-loader',
             exclude: /node_modules/
+        },
+            {
+            test: /\.css$/,
+            loader: "style-loader!css-loader"
         }]
     }
 };

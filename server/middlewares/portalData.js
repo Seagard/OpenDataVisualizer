@@ -6,5 +6,6 @@ const express = require('express'),
 const dataController = require('../controllers/data.controller');
 
 router.get('/categories', dataController.getCategories);
+router.get('/categories/:category', dataController.getAvailableDatasets);
 
 module.exports = router;

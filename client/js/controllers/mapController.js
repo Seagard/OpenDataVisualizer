@@ -2,10 +2,10 @@ class MapController {
     constructor(Polygon) {
         this.map = new google.maps.Map(document.getElementById('map_canvas'), {
             center: {
-                lat: -34.397,
-                lng: 150.644
+                lat: 46.1147226,
+                lng: 29.9567193
             },
-            zoom: 8
+            zoom: 7
         });
         this.Polygon = Polygon;
     }
