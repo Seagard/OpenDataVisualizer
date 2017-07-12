@@ -1,13 +1,21 @@
 class MainController {
-  constructor($rootScope) {
-    this.$rootScope = $rootScope;
-
+  constructor(Dataset) {
+    this.Dataset = Dataset;
     this.buttons = [
-      {name: 'Дані', sref: 'data'},
-      {name: 'Інфографіка', sref: 'list'},
-      {name: 'Карта', sref: 'map'},
-      {name: 'Завантаження', sref: 'editor'}
+      {name: 'Карта', sref: 'map'}
     ];
+
+    this.Dataset.getCategories()
+      .then(categories => {
+        this.categories = categories;
+      });
+  }
+
+  getDatasetsByCategory(category) {
+    this.Dataset.getDatasetsByCategory(category)
+      .then(datasets => {
+        console.log(datasets);
+      })
   }
 }
 

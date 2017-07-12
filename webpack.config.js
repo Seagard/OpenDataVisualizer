@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const path = require('path');
 
 module.exports = {
     context: __dirname + '/client/js',
@@ -13,7 +14,11 @@ module.exports = {
         rules: [{
             test: /\.js$/,
             loader: 'babel-loader',
-            exclude: /node_modules/
+            exclude: /node_modules/,
+            include: [
+                path.join(__dirname + '/client/js'),
+                path.join(__dirname + '/client/test')
+            ],
         },
             {
             test: /\.css$/,

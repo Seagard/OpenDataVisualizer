@@ -1,11 +1,19 @@
 const request = require('request-promise');
 const config = require('../config/config');
+const convertToUkr = require('translit-english-ukrainian');
 
 module.exports = {
     getCategories: (req, res) => {
-        request(config.DATA_URL)
+        request('http://data.ngorg.od.ua/uk/api/3/action/group_list')
             .then(response => {
-                res.send(response.data);
+                let result = JSON.parse(response).result;
+                let categories = result.map(category => {
+                   return {
+                       name: category,
+                       ukrName: convertToUkr(category)
+                   };
+                });
+                res.send(categories);
             });
     },
 
@@ -18,10 +26,7 @@ module.exports = {
             json: true
         })
         .then(groups => {
-            let resources = groups.result.map(group => {
-                return group.resources[0]
-            })
-            res.send(resources);
+            res.send(groups.result);
         });
     }
 };

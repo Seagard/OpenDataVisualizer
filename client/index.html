@@ -30,36 +30,13 @@
 				<md-content class="md-padding">
 					<md-content layout-padding>
 						<md-list>
-							<md-list-item ng-repeat="dataset in main.datasetList"
-										  ng-click="main.openDataset(dataset)">
-								<span ng-bind="dataset.name"></span>
+							<md-list-item ng-repeat="category in main.categories"
+										  ng-click="main.getDatasetsByCategory(category.name)">
+								<a ui-sref="{{category.name}}" ng-bind="category.name"></a>
 								<md-divider></md-divider>
 							</md-list-item>
 						</md-list>
 					</md-content>
-				</md-content>
-			</md-tab>
-			<md-tab label="Фільтр" ng-if="main.isDataStateActive">
-				<md-content class="md-padding">
-					<div ng-controller="FilterController as filter">
-						<div ng-repeat="field in filter.fields">
-							<md-input-container>
-								<label ng-if="field.type == 'select'" for="{{field.id}}"><span ng-bind="field.id"></span></label>
-								<md-select ng-change="filter.applyFilter(field.id, field.selectedVal)"
-										   ng-if="field.type == 'select'" id="{{field.id}}" ng-model="field.selectedVal">
-									<md-option value="-1" selected="selected"></md-option>
-									<md-option ng-repeat="value in field.values" value="{{value.id}}">{{value.name}}</md-option>
-								</md-select>
-							</md-input-container>
-
-							<label ng-if="field.type == 'range'" for="{{field.id}}"><span ng-bind="field.id"></span></label>
-							<md-slider ng-if="field.type == 'range'" flex ng-model="field.selectedVal" min="{{field.minVal}}"
-									   max="{{field.maxVal}}" aria-label="blue" id="blue-slider" class="md-primary" id="{{field.id}}"
-									   ng-change="filter.applyFilter(field.id, field.selectedVal)">
-							</md-slider>
-							<span ng-if="field.type == 'range'">{{field.selectedVal}}</span>
-						</div>
-					</div>
 				</md-content>
 			</md-tab>
 		</md-tabs>
