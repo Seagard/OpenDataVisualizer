@@ -16,6 +16,8 @@ class MapController {
                 this.Polygon.drawPolygon(polygon, this.map);
             });
     }
+
+
 }
 
 export default MapController;

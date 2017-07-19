@@ -29,7 +29,14 @@
 			<md-tab label="Набори">
 				<md-content class="md-padding">
 					<md-content layout-padding>
-						<md-list>
+						<md-list ng-show="">
+							<md-list-item ng-repeat="category in main.categories"
+										  ng-click="main.getDatasetsByCategory(category.name)">
+								<a ui-sref="{{category.name}}" ng-bind="category.name"></a>
+								<md-divider></md-divider>
+							</md-list-item>
+						</md-list>
+						<md-list ng-show="">
 							<md-list-item ng-repeat="category in main.categories"
 										  ng-click="main.getDatasetsByCategory(category.name)">
 								<a ui-sref="{{category.name}}" ng-bind="category.name"></a>
