@@ -18,25 +18,19 @@ module.exports = {
             uri: 'http://api.openstreetmap.org/api/0.6/relation/72634'
         })
         .then(details => {
-            return new Promise((resolve, reject) => {
-                parseString(details, function (err, result) {
-                    let subareas = result.osm.relation[0].member.reduce((areas, member) => {
-                        if (member.$.role === "subarea") {
-                            areas.push(member.$)
-                        }
-                        return areas;
-                    }, []);
-                    resolve(subareas);
-                });
-            })
+            return getSubareaIds(details);
         })
-        .then(subareas => {
-            let promises = subareas.map(subarea => {
+        .then(subareaIds => {
+            let promises = subareaIds.map(id => {
                 return request({
-                    uri: 'http://api.openstreetmap.org/api/0.6/relation/' + subarea.ref
+                    uri: `http://api.openstreetmap.org/api/0.6/relation/${id}`,
+                    json: false
                 })
             })
             return Promise.all(promises)
+        })
+        .then(result => {
+            res.send(getCountyNames(result));
         })
     }
 };
@@ -65,8 +59,6 @@ function getPolygonCoords(id) {
     })
 }
 
-
-
 function transformPolygonCoords (coordinates) {
     let coordsArray  = [].concat.apply([], coordinates);
     return coordsArray.map(pair => {
@@ -75,4 +67,42 @@ function transformPolygonCoords (coordinates) {
             lng: pair[0]
         }
     })
+}
+
+function getSubareaIds(details) {
+    return new Promise((resolve, reject) => {
+        parseString(details, function (err, result) {
+            if (err) {
+                reject(err);
+            }
+            else {
+                let subareaIds = result.osm.relation[0].member.reduce((areaIds, member) => {
+                    if (member.$.role === "subarea") {
+                        areaIds.push(member.$.ref)
+                    }
+                    return areaIds;
+                }, []);
+                resolve(subareaIds);
+            }
+        })
+    })
+}
+
+function getCountyNames(result) {
+    let countyNames = [];
+    result.forEach(xml => {
+        parseString(xml, (err, record)=> {
+            let areas = record.osm.relation[0].tag.map(tag => {
+                return tag.$;
+            });
+            let names = areas.reduce((areaNames, record) => {
+                if (record.k == "name") {
+                    areaNames.push(record.v);
+                }
+                return areaNames;
+            }, []);
+            countyNames.push(names[0]);
+        });
+    });
+    return countyNames;
 }

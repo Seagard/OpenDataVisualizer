@@ -1,12 +1,14 @@
 class Polygon {
-    constructor(PolygonResource) {
+    constructor($resource, PolygonResource) {
         this.PolygonResource = PolygonResource;
         this.getCountyPolygon = this.getCountyPolygon.bind(this);
+        this.$resource = $resource;
     }
     getCountyPolygon(county) {
         return this.PolygonResource.query({
             county: county,
-            format: 'json'
+            format: 'json',
+            state: 'Odessa'
         }).$promise
     }
 
@@ -22,14 +24,17 @@ class Polygon {
         poly.setMap(map);
     }
 
-    loadAllDistricts(map) {
-        let districts = ['Измаильский', 'Одесса', 'Килийский'];
+    drawAllDistricts(map) {
         let self = this;
-        let countyPromises = districts.map(county => {
-            return self.getCountyPolygon(county);
-        });
 
-        Promise.all(countyPromises)
+        this.$resource('/osm/subareas').query().$promise
+            .then(districts => {
+                let countyPromises = districts.map(county => {
+                    return self.getCountyPolygon(county);
+                });
+
+                return Promise.all(countyPromises)
+            })
             .then(counties => {
                 counties.forEach(polygon => {
                     self.drawPolygon(polygon, map);

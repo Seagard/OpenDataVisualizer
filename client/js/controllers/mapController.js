@@ -8,6 +8,7 @@ class MapController {
             zoom: 7
         });
         this.Polygon = Polygon;
+        this.Polygon.drawAllDistricts(this.map);
     }
 
     loadPolygon() {
@@ -16,8 +17,6 @@ class MapController {
                 this.Polygon.drawPolygon(polygon, this.map);
             });
     }
-
-
 }
 
 export default MapController;
