@@ -1,8 +1,6 @@
 class Dataset {
     constructor($resource) {
         this.$resource = $resource;
-        this.getCategories = this.getCategories.bind(this);
-        this.getDatasetsByCategory = this.getDatasetsByCategory.bind(this);
     }
 
     getCategories() {
@@ -10,8 +8,22 @@ class Dataset {
     }
 
     getDatasetsByCategory(name) {
-        console.log(name);
         return this.$resource('/portaldata/categories/:name', {name: name}).query().$promise;
+    }
+
+    getDatasetData(name, id) {
+        return this.$resource('/portaldata/categories/:name/:id', {name: name, id: id})
+            .get().$promise;
+    }
+
+    displayDataset(dataset, markers, map) {
+      dataset.ds.result.records.forEach(record => {
+        let marker = new google.maps.Marker({
+          position: {lat: parseFloat(record.lat), lng: parseFloat(record.lon)},
+          map: map
+        });
+        markers.push(marker);
+      })
     }
 }
 

@@ -28,5 +28,21 @@ module.exports = {
         .then(groups => {
             res.send(groups.result);
         });
+    },
+
+    getDatasetData: (req, res) => {
+        request({
+            qs: {
+                resource_id: req.params.id
+            },
+            uri: 'http://data.ngorg.od.ua/api/action/datastore/search.json',
+            json: true
+        })
+        .then(dataset => {
+            res.send(dataset);
+        })
+        .catch(err => {
+            res.send(err);
+        })
     }
 };

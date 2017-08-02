@@ -1,15 +1,31 @@
 const request = require('request-promise');
 const config = require('../config/config');
 const parseString = require('xml2js').parseString;
+const County = require('../models/county');
 
 module.exports = {
     getCountyPolygon: (req, res) => {
+        let county = {
+            name: req.query.county
+        };
         getCountyID(req.query)
             .then(osm_id => {
+                county.osm_id = osm_id;
+                County.find({ osm_id: osm_id }, (err, county) => {
+                    console.log(county);
+                });
                 return getPolygonCoords(osm_id);
             })
             .then(polygon => {
-                res.send(polygon);
+                county.coords = polygon;
+                new County(county).save(err => {
+                    if (err)
+                        res.send(err);
+                    else res.send(county);
+                })
+            })
+            .catch(err => {
+                console.log(err);
             })
     },
 

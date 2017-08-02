@@ -5,7 +5,7 @@ class Polygon {
         this.$resource = $resource;
     }
     getCountyPolygon(county) {
-        return this.PolygonResource.query({
+        return this.PolygonResource.get({
             county: county,
             format: 'json',
             state: 'Odessa'
@@ -27,7 +27,7 @@ class Polygon {
     drawAllDistricts(map) {
         let self = this;
 
-        this.$resource('/osm/subareas').query().$promise
+        return this.$resource('/osm/subareas').query().$promise
             .then(districts => {
                 let countyPromises = districts.map(county => {
                     return self.getCountyPolygon(county);
@@ -37,8 +37,9 @@ class Polygon {
             })
             .then(counties => {
                 counties.forEach(polygon => {
-                    self.drawPolygon(polygon, map);
-                })
+                    self.drawPolygon(polygon.coords, map);
+                });
+                return counties;
             })
     }
 }
