@@ -38,7 +38,7 @@
   },
   "scripts": {
     "start": "node server/app.js",
-    "test": "./node_modules/.bin/jasmine-node spec"
+    "test": "semistandard && ./node_modules/.bin/jasmine-node spec"
   },
   "devDependencies": {
     "angular-mocks": "^1.6.5",
@@ -47,6 +47,7 @@
     "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "^1.1.0",
     "karma-ng-html2js-preprocessor": "^1.0.0",
-    "karma-webpack": "^2.0.4"
+    "karma-webpack": "^2.0.4",
+    "semistandard": "^11.0.0"
   }
 }

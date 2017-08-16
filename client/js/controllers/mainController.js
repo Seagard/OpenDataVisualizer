@@ -1,5 +1,5 @@
 class MainController {
-  constructor(Dataset, $scope) {
+  constructor (Dataset, $scope) {
     this.Dataset = Dataset;
     this.buttons = [
       {name: 'Карта', sref: 'map'}
@@ -12,21 +12,21 @@ class MainController {
       });
   }
 
-  getDatasetsByCategory(category) {
-    this.currentCategory  = category;
+  getDatasetsByCategory (category) {
+    this.currentCategory = category;
     this.Dataset.getDatasetsByCategory(category)
       .then(datasets => {
         this.datasets = datasets;
-      })
+      });
   }
 
-  displayDataset(dataset) {
+  displayDataset (dataset) {
     this.Dataset.getDatasetData(this.currentCategory, dataset.resources[0].id)
       .then(dataset => {
         this.$scope.$broadcast('getDataset', {
           ds: dataset
         });
-      })
+      });
   }
 }
 

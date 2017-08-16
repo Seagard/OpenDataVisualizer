@@ -1,4 +1,4 @@
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
     basePath: '../../',
     frameworks: ['jasmine'],
@@ -11,7 +11,7 @@ module.exports = function(config) {
       'client/test/*.test.js'
     ],
     ngHtml2JsPreprocessor: {
-        stripPrefix: 'client/pages',
+      stripPrefix: 'client/pages'
     },
     exclude: [],
     preprocessors: {
@@ -30,5 +30,5 @@ module.exports = function(config) {
     browsers: ['Chrome'],
     singleRun: false,
     concurrency: Infinity
-  })
-}
+  });
+};

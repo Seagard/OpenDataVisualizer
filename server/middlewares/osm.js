@@ -1,7 +1,7 @@
 'use strict';
 
-const express = require('express'),
-    router = express.Router();
+const express = require('express');
+const router = express.Router();
 const osmController = require('../controllers/osm.controller');
 
 router.get('/county', osmController.getCountyPolygon);
