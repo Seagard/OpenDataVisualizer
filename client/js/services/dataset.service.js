@@ -18,11 +18,6 @@ class Dataset {
 
   displayDataset (dataset, markers, map) {
     dataset.ds.result.records.forEach(record => {
-      let marker = new google.maps.Marker({
-        position: {lat: parseFloat(record.lat), lng: parseFloat(record.lon)},
-        map: map
-      });
-
       let content = '';
       delete record.feeds_flatstore_entry_id;
       delete record.timestamp;
@@ -36,8 +31,17 @@ class Dataset {
         content: content
       });
 
-      marker.addListener('click', function () {
-        infowindow.open(map, marker);
+      let marker = new google.maps.Marker({
+        position: {lat: parseFloat(record.lat), lng: parseFloat(record.lon)},
+        map: map,
+        infowindow: infowindow
+      });
+
+      marker.addListener('click', () => {
+        markers.forEach((pin) => {
+          pin.infowindow.close(map, pin);
+        });
+        marker.infowindow.open(map, marker);
       });
       markers.push(marker);
     });
