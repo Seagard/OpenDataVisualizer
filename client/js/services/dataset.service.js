@@ -22,6 +22,23 @@ class Dataset {
         position: {lat: parseFloat(record.lat), lng: parseFloat(record.lon)},
         map: map
       });
+
+      let content = '';
+      delete record.feeds_flatstore_entry_id;
+      delete record.timestamp;
+      delete record.feeds_entity_id;
+
+      _.forIn(record, (value, key) => {
+        content += '<div>' + key + ': ' + value + '</div>'
+      });
+
+      let infowindow = new google.maps.InfoWindow({
+        content: content
+      });
+
+      marker.addListener('click', function () {
+        infowindow.open(map, marker);
+      });
       markers.push(marker);
     });
   }
