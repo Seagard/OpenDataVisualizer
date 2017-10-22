@@ -8,7 +8,8 @@ module.exports = {
     getPolygonCoords(req.query.county)
             .then(polygon => {
               res.send({
-                coords: polygon
+                name: polygon.name,
+                coords: polygon.coords
               })
             })
             .catch(err => {
@@ -41,9 +42,6 @@ module.exports = {
 
 function getPolygonCoords (name) {
   return County.findOne({name: name})
-    .then(result => {
-      return result.coords
-    })
 }
 
 function transformPolygonCoords (coordinates) {

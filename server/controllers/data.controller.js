@@ -17,7 +17,6 @@ module.exports = {
         res.send(categories);
       })
       .catch(err => {
-        console.log('e', err);
         res.send(err)
       })
   },
@@ -31,7 +30,12 @@ module.exports = {
       json: true
     })
       .then(groups => {
-        res.send(groups.result);
+        if (!groups.result.length) {
+          res.status(500).send("No datasets in this group")
+        }
+        else {
+          res.send(groups.result);
+        }
       });
   },
 
@@ -45,7 +49,7 @@ module.exports = {
     })
         .then(dataset => {
           if (!dataset.success) {
-            res.status(400).send("Resource does not exist")
+            res.status(500).send("Resource does not exist")
           }
           else {
             res.send(dataset);

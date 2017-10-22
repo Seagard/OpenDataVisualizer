@@ -1,14 +1,12 @@
 <div id="map_wrapper">
     <div id="map_canvas" ></div>
     <div id="mapControls">
-        <md-input-container>
-            <label>Назва району</label>
-            <input type="text" ng-model="map.county">
-            <button ng-click="map.loadPolygon()">Load polygon</button>
-        </md-input-container>
-        <div class="actions" ng-show="dataset">
+        <div class="actions" ng-show="currentDataset">
             <md-button class="md-primary" ng-click="highlight(map)"> Показати об'екти </md-button>
-            <md-checkbox class="blue" ng-class="{'md-checked': doCluster}" ng-click="toggleCluster()" ng-show="map.markers.length">Кластерiзацiя</md-checkbox>
+            <md-checkbox class="blue"
+                         ng-class="{'md-checked': doCluster}"
+                         ng-click="toggleCluster()"
+                         ng-show="map.markers.length">Кластерiзацiя</md-checkbox>
             <md-button class="md-primary" ng-click="highlightRegions(map)"> Статiстика за районами </md-button>
 
             <md-select class="fieldSelect" ng-model="field">

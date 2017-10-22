@@ -19,7 +19,12 @@ class MainController {
     this.Dataset.getDatasetsByCategory(category)
       .then(datasets => {
         this.datasets = datasets;
-      });
+      })
+      .catch(err => {
+        this.$uibModal.open({
+          templateUrl: "../../pages/modals/errorModal.html"
+        })
+      })
   }
 
   backToCategories() {
