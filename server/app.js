@@ -10,7 +10,6 @@ const routes = require('./routes');
 let port = 8080;
 
 app.use(express.static(path.join(__dirname, '../client')));
-app.use('/bower_components', express.static(path.join(__dirname, '../bower_components')));
 app.use(bodyParser());
 app.use(morgan('dev'));
 app.use('/', routes);

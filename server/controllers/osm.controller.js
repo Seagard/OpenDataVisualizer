@@ -5,22 +5,11 @@ const County = require('../models/county');
 
 module.exports = {
   getCountyPolygon: (req, res) => {
-    let county = {
-      name: req.query.county
-    };
-    getCountyID(req.query)
-            .then(osmId => {
-              county.osm_id = osmId;
-              // County.find({ osm_id: osm_id }, (err, county) => {
-              //   console.log(county)
-              // })
-              return getPolygonCoords(osmId);
-            })
+    getPolygonCoords(req.query.county)
             .then(polygon => {
-              county.coords = polygon;
-              new County(county).save(err => {
-                if (err) { res.send(err); } else res.send(county);
-              });
+              res.send({
+                coords: polygon
+              })
             })
             .catch(err => {
               res.send(err);
@@ -49,28 +38,12 @@ module.exports = {
   }
 };
 
-function getCountyID (params) {
-  return request({
-    qs: params,
-    uri: config.OSM_URL,
-    json: true
-  })
-    .then(county => {
-      return county[0].osm_id;
-    });
-}
 
-function getPolygonCoords (id) {
-  return request({
-    qs: {
-      id: id
-    },
-    uri: config.POLYGON_URL,
-    json: true
-  })
-    .then((polygon) => {
-      return transformPolygonCoords(polygon.geometries[0].coordinates[0]);
-    });
+function getPolygonCoords (name) {
+  return County.findOne({name: name})
+    .then(result => {
+      return result.coords
+    })
 }
 
 function transformPolygonCoords (coordinates) {

@@ -16,7 +16,7 @@
 }
 
 .all-view {
-    height: 90%;
+    height: calc(100% - 64px);
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
@@ -26,7 +26,7 @@
 html, body {
     height: 100%;
     width: 100%;
-    margin: 0px;
+    margin: 0;
 }
 
 #map_canvas {

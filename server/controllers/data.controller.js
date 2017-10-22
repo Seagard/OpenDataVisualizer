@@ -1,6 +1,6 @@
 const request = require('request-promise');
 const config = require('../config/config');
-const CATEGORIES = require('../config/categories')
+const CATEGORIES = require('../config/categories');
 
 module.exports = {
   getCategories: (req, res) => {
@@ -13,7 +13,11 @@ module.exports = {
           };
         });
         res.send(categories);
-      });
+      })
+      .catch(err => {
+        console.log('e', err);
+        res.send(err)
+      })
   },
 
   getAvailableDatasets: (req, res) => {
@@ -24,9 +28,9 @@ module.exports = {
       uri: config.DATA_URL + '/group_package_show',
       json: true
     })
-        .then(groups => {
-          res.send(groups.result);
-        });
+      .then(groups => {
+        res.send(groups.result);
+      });
   },
 
   getDatasetData: (req, res) => {

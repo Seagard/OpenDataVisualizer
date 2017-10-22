@@ -29,6 +29,7 @@ class Polygon {
 
     return this.$resource('/osm/subareas').query().$promise
             .then(districts => {
+              console.log(districts)
               let countyPromises = districts.map(county => {
                 return self.getCountyPolygon(county);
               });
