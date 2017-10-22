@@ -29,14 +29,16 @@
 			<md-tab label="Набори">
 				<md-content class="md-padding">
 					<md-content layout-padding>
-						<md-list ng-if="!main.datasets">
+						<md-list ng-if="!main.datasets.length">
 							<md-list-item ng-repeat="category in main.categories"
-										  ng-click="main.getDatasetsByCategory(category.name)">
+										  ng-click="main.getDatasetsByCategory(category.portalValue)">
 								<a ui-sref="{{category.name}}" ng-bind="category.name"></a>
 								<md-divider></md-divider>
 							</md-list-item>
 						</md-list>
-						<md-list ng-if="main.datasets">
+						<md-list ng-if="main.datasets.length">
+
+							<button ng-click="main.backToCategories()"></button>
 							<md-list-item ng-repeat="dataset in main.datasets"
 										  ng-click="main.displayDataset(dataset)">
 								<a ui-sref="{{dataset.title}}" ng-bind="dataset.title"></a>

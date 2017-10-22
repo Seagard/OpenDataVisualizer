@@ -1,5 +1,6 @@
 const request = require('request-promise');
 const config = require('../config/config');
+const _ = require('lodash');
 const CATEGORIES = require('../config/categories');
 
 module.exports = {
@@ -9,7 +10,8 @@ module.exports = {
         let result = JSON.parse(response).result;
         let categories = result.map(category => {
           return {
-            name: CATEGORIES[category] || category,
+            portalValue: category,
+            name: CATEGORIES[category],
           };
         });
         res.send(categories);
@@ -42,7 +44,12 @@ module.exports = {
       json: true
     })
         .then(dataset => {
-          res.send(dataset);
+          if (!dataset.success) {
+            res.status(400).send("Resource does not exist")
+          }
+          else {
+            res.send(dataset);
+          }
         })
         .catch(err => {
           res.send(err);

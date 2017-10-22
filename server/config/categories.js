@@ -3,6 +3,7 @@ module.exports = {
   'ekonomika': 'Економiка',
   'derzhavni-torgy': 'Державнi торги',
   'socialna-sfera': 'Соцiальна сфера',
+  'gromadski-organizaciyi': "Громадськi органiзацii",
   'osvita': 'Освiта',
   'turyzm': 'Туризм',
   'zdorovya': "Здоров'я",

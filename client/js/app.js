@@ -6,10 +6,13 @@ import _ from 'lodash';
 import routing from './routes';
 import am from 'angular-material/angular-material.css';
 
+import modal from 'angular-ui-bootstrap/src/modal';
+
 export default angular.module('main', [
   uirouter,
   material,
-  resource
+  resource,
+  modal
 ])
   .constant('_', window._)
   .config(routing)
